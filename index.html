@@ -187,10 +187,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.8.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.8.1</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.8.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.8.1</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -320,6 +320,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           <button id="midiBtn" type="button">Conectar MIDI</button>
         </div>
         <p class="status" id="midiStatus">MIDI sin conectar.</p>
+        <p class="status" id="midiMon"></p>
         <label class="sel-field" for="midiOut"><span>Salida</span><select id="midiOut"><option value="">Sin puertos</option></select></label>
         <label class="sel-field" for="midiCh"><span>Canal</span><select id="midiCh"></select></label>
         <label class="field" for="midiVel"><span>Velocidad</span><input id="midiVel" type="range" min="1" max="127" value="100"><output id="midiVelO">100</output></label>
@@ -335,7 +336,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.8.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.8.1</span><span>T_T</span>
   </footer>
 </div>
 
@@ -499,6 +500,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Preset cargado, pero alguna muestra no se pudo decodificar.", "Preset loaded, but a sample could not be decoded.", "Preset carregado, mas alguma amostra não pôde ser decodificada.", "预设已载入,但有采样无法解码。", "Пресет загружен, но один из сэмплов не удалось декодировать."],
   ["Elige un preset…", "Choose a preset…", "Escolha um preset…", "选择预设…", "Выберите пресет…"],
   ["Sin presets guardados", "No saved presets", "Nenhum preset salvo", "没有已保存的预设", "Нет сохранённых пресетов"],
+  ["Enviado: {0} · Recibido: {1}", "Sent: {0} · Received: {1}", "Enviado: {0} · Recebido: {1}", "已发送:{0} · 已接收:{1}", "Отправлено: {0} · Получено: {1}"],
   ["Preset {0}", "Preset {0}", "Preset {0}", "预设 {0}", "Пресет {0}"],
   ["Preset «{0}» guardado en este navegador.", "Preset «{0}» saved in this browser.", "Preset «{0}» salvo neste navegador.", "预设“{0}”已保存到此浏览器。", "Пресет «{0}» сохранён в этом браузере."],
   ["El navegador no permite guardar aquí: el preset vive solo en esta sesión. Usa Exportar archivo.", "The browser does not allow saving here: the preset lives only in this session. Use Export file.", "O navegador não permite salvar aqui: o preset vive só nesta sessão. Use Exportar arquivo.", "浏览器不允许在此保存:预设仅存在于本次会话。请使用“导出文件”。", "Браузер не разрешает сохранение здесь: пресет живёт только в этом сеансе. Используйте «Экспорт в файл»."],
@@ -935,10 +937,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var ts = performance.now() + (audioTime - (ctx ? ctx.currentTime : 0)) * 1000;
     try { midi.out.send(bytes, ts); } catch (e) { /* puerto desconectado */ }
   }
+  var mon = { out: 0, inn: 0 };
+  function showMon() { var m = $("midiMon"); if (m) m.textContent = tr("Enviado: {0} · Recibido: {1}", mon.out, mon.inn); }
   function noteOut(t, when) {
     if (!midi.out) return;
     sendAt([0x90 | midi.ch, t.note, midi.vel], when);
     sendAt([0x80 | midi.ch, t.note, 0], when + 0.09);
+    mon.out++; showMon();
   }
   function allNotesOff() {
     if (!midi.out) return;
@@ -1059,6 +1064,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* Sincronía externa: el reloj MIDI de entrada (24 por negra) manda la fase */
   function onMidiMsg(e) {
+    if ((e.data[0] & 0xF0) === 0x90 && e.data[2] > 0) { mon.inn++; showMon(); }
     if (state.sync !== "ext") return;
     var s = e.data[0];
     if (s === 0xF8) {
@@ -1312,7 +1318,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.8.0";
+  var FW = "0.8.1";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -1634,7 +1640,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.8.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.8.1 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2141,7 +2147,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   });
 
   /* ---------- Inicio ---------- */
-  i18nStatic(); $("langSel").value = LANG;
+  i18nStatic(); $("langSel").value = LANG; showMon();
   ui.scene.value = "rumba";
   loadScene("rumba");
   setupPanels();
