@@ -187,10 +187,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.8.1</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.8.2</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.8.1</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.8.2</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -336,7 +336,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.8.1</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.8.2</span><span>T_T</span>
   </footer>
 </div>
 
@@ -988,7 +988,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   /* ---------- Disparo y planificador por fase ---------- */
   var anchor = { t0: 0, p0: 0 };
   var ext = { ticks: 0 };
-  var LOOK = 0.14, timer = null, events = [], hits = TRACKS.map(function () { return {}; });
+  var LOOK = 0.25, timer = null, tickWorker = null, events = [], hits = TRACKS.map(function () { return {}; });
   function cycleDur() { return 60 / state.bpm * state.beats; }
   function phaseAt(t) { return anchor.p0 + (t - anchor.t0) / cycleDur(); }
   function timeAt(p) { return anchor.t0 + (p - anchor.p0) * cycleDur(); }
@@ -1007,6 +1007,22 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       noteOut(t, when);
     }
     events.push({ time: when, ti: ti, step: step });
+  }
+
+  /* El temporizador corre en un Worker: el navegador no lo frena cuando la pestaña queda en segundo plano */
+  function startTimer() {
+    stopTimer();
+    try {
+      var src = "var t=null;onmessage=function(e){if(e.data==='start'){if(t)clearInterval(t);t=setInterval(function(){postMessage(0)},25)}else{clearInterval(t);t=null}}";
+      var url = URL.createObjectURL(new Blob([src], { type: "text/javascript" }));
+      tickWorker = new Worker(url);
+      tickWorker.onmessage = function () { if (ctx && state.playing) tick(); };
+      tickWorker.postMessage("start");
+    } catch (e) { tickWorker = null; timer = setInterval(tick, 25); }
+  }
+  function stopTimer() {
+    if (tickWorker) { tickWorker.terminate(); tickWorker = null; }
+    if (timer) { clearInterval(timer); timer = null; }
   }
 
   function tick() {
@@ -1051,11 +1067,11 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     enterCycle(0);
     state.playing = true; updateSongStatus();
     if (midi.out && midi.clockOut) sendAt([0xFA], anchor.t0);
-    tick(); timer = setInterval(tick, 25);
+    tick(); startTimer();
     setPlayUI();
   }
   function stop() {
-    state.playing = false; clearInterval(timer); timer = null;
+    state.playing = false; stopTimer();
     if (midi.out && midi.clockOut && state.sync === "int") { try { midi.out.send([0xFC]); } catch (e) { /* ignorar */ } }
     allNotesOff();
     state.queued = null; updateSongStatus(); renderChips();
@@ -1318,7 +1334,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.8.1";
+  var FW = "0.8.2";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -1640,7 +1656,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.8.1 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.8.2 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;

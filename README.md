@@ -1,7 +1,7 @@
 # Clave Circular — Dark Empaths (Music 4 Machines)
 
 Secuenciador de batería circular (un anillo por instrumento) en un solo archivo HTML, sin dependencias.
-Firmware actual: **FW 0.8.1**.
+Firmware actual: **FW 0.8.2**.
 
 - Patrones A–H y arreglo encadenado
 - Samples por pista y por pack, presets, kits 808/909/707/606/LinnDrum/CR-78 (sintetizados)
