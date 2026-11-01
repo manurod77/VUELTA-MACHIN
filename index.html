@@ -165,6 +165,28 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 .songhead { display: grid; gap: 8px; padding: 0 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .songhead span:nth-child(3) { text-align: center; }
 .songlist.off { opacity: 0.45; }
+.songblocks { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-2); min-height: 76px; align-content: flex-start; }
+.songblocks.off { opacity: 0.45; }
+.sblock { --c: #888; position: relative; display: flex; flex-direction: column; justify-content: space-between; height: 64px; padding: 6px 8px 6px; border: 2px solid var(--c); border-radius: 6px; background: color-mix(in srgb, var(--c) 22%, var(--panel)); color: var(--fg); cursor: grab; font: inherit; text-align: left; min-width: 52px; }
+.sblock .sl { font-family: var(--font-mono); font-size: 18px; font-weight: 700; line-height: 1; }
+.sblock .sr { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.sblock .ticks { display: flex; gap: 2px; height: 6px; }
+.sblock .ticks i { flex: 1 1 0; min-width: 2px; border-radius: 1px; background: color-mix(in srgb, var(--c) 45%, transparent); }
+.sblock .ticks i.on { background: var(--c); }
+.sblock.sel { box-shadow: 0 0 0 2px var(--fg); }
+.sblock.now { background: color-mix(in srgb, var(--c) 55%, var(--panel)); }
+.sblock.over { outline: 2px dashed var(--accent); outline-offset: 2px; }
+.sblock .sn { position: absolute; top: 3px; right: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.sbadd { height: 64px; min-width: 52px; border: 2px dashed var(--line); border-radius: 6px; background: transparent; color: var(--muted); font-size: 22px; cursor: pointer; }
+.songpal { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.songpal button { --c: #888; min-width: 34px; min-height: 34px; padding: 2px 0; border: 2px solid var(--c); background: color-mix(in srgb, var(--c) 22%, var(--panel)); color: var(--fg); border-radius: 6px; font-family: var(--font-mono); font-weight: 700; }
+.songedit { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px; border: 1px solid var(--line); border-radius: 4px; }
+.songedit[hidden] { display: none; }
+.songedit .pats { display: flex; gap: 4px; flex-wrap: wrap; }
+.songedit .pats button { --c: #888; min-width: 32px; min-height: 32px; padding: 0; border: 2px solid var(--c); background: transparent; color: var(--fg); border-radius: 6px; font-family: var(--font-mono); font-weight: 700; }
+.songedit .pats button.on { background: var(--c); color: #000; }
+.songedit .mvb button, .songedit .stepper button { min-width: 36px; padding: 4px 0; }
+.songedit .mvb { display: flex; gap: 4px; }
 .panelB { min-height: 44px; }
 .main.dragmode .panelB:not([hidden]) { outline: 2px dashed var(--line); outline-offset: 4px; }
 .mv.zz { display: none; }
@@ -187,10 +209,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.8.2</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.9.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.8.2</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.10.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -229,11 +251,17 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <label class="sel-field" for="mode"><span>Modo</span>
           <select id="mode"><option value="loop">Bucle: repite el patrón elegido</option><option value="song">Canción: toca la lista en orden</option></select></label>
         <p class="hint" id="songHint"></p>
-        <div class="songhead"><span>#</span><span>Patrón</span><span>Vueltas</span><span></span></div>
-        <div class="songlist" id="songList"></div>
+        <div class="songpal" id="songPal"><span>Añadir bloque:</span></div>
+        <div class="songblocks" id="songList"></div>
+        <div class="songedit" id="songEdit" hidden>
+          <span class="subhead" style="border:0;padding:0" id="songEditT"></span>
+          <div class="pats" id="songEditPats"></div>
+          <div class="stepper"><button id="sbDec" type="button" aria-label="Menos vueltas">−</button><output id="sbReps">×1</output><button id="sbInc" type="button" aria-label="Más vueltas">+</button></div>
+          <div class="mvb"><button id="sbLeft" type="button" aria-label="Mover a la izquierda">←</button><button id="sbRight" type="button" aria-label="Mover a la derecha">→</button><button id="sbDup" type="button">Duplicar</button><button id="sbDel" type="button" aria-label="Quitar bloque">✕</button></div>
+        </div>
         <div class="row wrap-row"><button id="songAdd" type="button">+ Sección</button><button id="songClear" type="button">Vaciar lista</button></div>
         <p class="status" id="songSum"></p>
-        <p class="note">Cada letra (A–H) es un patrón: un círculo completo con todas sus pistas. En modo Bucle suena solo el patrón elegido. En modo Canción suena la lista de arriba hacia abajo: cada fila toca su patrón durante las vueltas que indiques y, al terminar la última, la lista vuelve a empezar. Ejemplo: A ×2, B ×1, A ×2 = A dos vueltas, B una vuelta, A dos vueltas, y repite.</p>
+        <p class="note">Cada letra (A–H) es un patrón: un círculo completo con todas sus pistas. Cada bloque es un patrón y su ancho muestra cuántas vueltas dura; los bloques suenan de izquierda a derecha y, al terminar el último, vuelve el primero. Toca una letra para añadir un bloque, toca un bloque para editarlo y arrástralo para cambiar el orden. En modo Bucle suena solo el patrón elegido.</p>
         <div class="subhead">Patrón actual: <b id="curPat">A</b></div>
         <label class="sel-field" for="copyTo"><span>Copiar a</span><select id="copyTo"></select></label>
         <div class="row wrap-row"><button id="copyBtn" type="button">Copiar patrón actual</button><button id="wipe" type="button">Vaciar patrón actual</button></div>
@@ -297,11 +325,23 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           <button id="pSave" type="button">Guardar</button>
           <button id="pExport" type="button">Exportar archivo</button>
           <button id="pImportBtn" type="button">Importar archivo…</button>
-          <input id="pImport" type="file" accept=".json,application/json">
+          <button id="pShot" type="button">Guardar captura (PNG)</button>
+          <input id="pImport" type="file" accept=".json,application/json,.png,image/png">
         </div>
         <label class="sel-field" for="pList"><span>Guardados</span><select id="pList"></select></label>
         <div class="row wrap-row"><button id="pLoad" type="button">Cargar</button><button id="pDel" type="button">Borrar</button></div>
+        <div class="row wrap-row"><button id="sesReset" type="button">Empezar sesión de cero</button></div>
+        <p class="status" id="sesNote">La sesión se guarda sola en este navegador (patrones, arreglo, sonido de cada pista, mezcla y MIDI) y vuelve al abrir la página.</p>
         <p class="status" id="pStatus">Un preset guarda patrones A–H, arreglo, tempo y el sonido de cada pista. Las muestras se vuelven a enlazar por nombre desde el pack cargado.</p>
+      </div>
+
+      <div class="block" data-id="audio">
+        <div class="label">Audio</div>
+        <label class="sel-field" for="audOut"><span>Salida general</span><select id="audOut"><option value="">Predeterminada del sistema</option></select></label>
+        <div class="row wrap-row"><button id="audScan" type="button">Buscar salidas de audio</button></div>
+        <label class="check" for="audSplit"><input id="audSplit" type="checkbox"> Cada pista a su propia salida</label>
+        <div id="audTracks"></div>
+        <p class="status" id="audStatus">Para sacar el audio hacia otro programa, elige un cable virtual (por ejemplo VB-Cable) como salida. Una salida es un par estéreo: para pistas separadas hace falta un cable virtual por cada una.</p>
       </div>
 
       <div class="block" data-id="exportar">
@@ -336,7 +376,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.8.2</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.10.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -561,6 +601,63 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Canción: toca la lista en orden", "Song: plays the list in order", "Música: toca a lista em ordem", "歌曲:按顺序播放列表", "Песня: играет список по порядку"],
   ["Patrón", "Pattern", "Padrão", "节奏型", "Паттерн"],
   ["+ Sección", "+ Section", "+ Seção", "+ 段落", "+ Секция"],
+  ["Añadir bloque:", "Add block:", "Adicionar bloco:", "添加段落：", "Добавить блок:"],
+  ["Duplicar", "Duplicate", "Duplicar", "复制", "Дублировать"],
+  ["Mover a la izquierda", "Move left", "Mover para a esquerda", "向左移", "Влево"],
+  ["Mover a la derecha", "Move right", "Mover para a direita", "向右移", "Вправо"],
+  ["Quitar bloque", "Remove block", "Remover bloco", "删除段落", "Удалить блок"],
+  ["Empezar sesión de cero", "Start a fresh session", "Começar sessão do zero", "重新开始会话", "Начать сессию с нуля"],
+  ["La sesión se guarda sola en este navegador (patrones, arreglo, sonido de cada pista, mezcla y MIDI) y vuelve al abrir la página.", "The session saves itself in this browser (patterns, arrangement, each track's sound, mix and MIDI) and comes back when you open the page.", "A sessão é salva sozinha neste navegador (padrões, arranjo, som de cada pista, mistura e MIDI) e volta ao abrir a página.", "会话会自动保存在此浏览器中（节奏型、编排、各轨音色、混音和 MIDI），重新打开页面时恢复。", "Сессия сохраняется автоматически в этом браузере (паттерны, аранжировка, звук каждой дорожки, микс и MIDI) и возвращается при открытии страницы."],
+  ["Cada letra (A–H) es un patrón: un círculo completo con todas sus pistas. Cada bloque es un patrón y su ancho muestra cuántas vueltas dura; los bloques suenan de izquierda a derecha y, al terminar el último, vuelve el primero. Toca una letra para añadir un bloque, toca un bloque para editarlo y arrástralo para cambiar el orden. En modo Bucle suena solo el patrón elegido.", "Each letter (A–H) is a pattern: one full circle with all its tracks. Each block is a pattern and its width shows how many cycles it lasts; blocks play left to right and, after the last one, the first returns. Tap a letter to add a block, tap a block to edit it and drag it to change the order. In Loop mode only the chosen pattern plays.", "Cada letra (A–H) é um padrão: um círculo completo com todas as pistas. Cada bloco é um padrão e sua largura mostra quantas voltas dura; os blocos tocam da esquerda para a direita e, ao terminar o último, volta o primeiro. Toque numa letra para adicionar um bloco, toque num bloco para editá-lo e arraste para mudar a ordem. No modo Loop toca só o padrão escolhido.", "每个字母（A–H）是一个节奏型：包含所有音轨的一整圈。每个段落就是一个节奏型，宽度表示持续的圈数；段落从左到右播放，最后一个结束后回到第一个。点字母添加段落，点段落进行编辑，拖动可改变顺序。循环模式只播放所选节奏型。", "Каждая буква (A–H) — это паттерн: полный круг со всеми дорожками. Каждый блок — паттерн, его ширина показывает число кругов; блоки играют слева направо, после последнего снова идёт первый. Нажмите букву, чтобы добавить блок, нажмите блок для правки и перетащите, чтобы изменить порядок. В режиме цикла играет только выбранный паттерн."],
+  ["Sesión anterior recuperada.", "Previous session restored.", "Sessão anterior recuperada.", "已恢复上次会话。", "Предыдущая сессия восстановлена."],
+  ["Mundo y euclidianos", "World and Euclidean", "Mundo e euclidianos", "世界与欧几里得节奏", "Мир и евклидовы"],
+  ["Hip hop y bass", "Hip hop and bass", "Hip hop e bass", "嘻哈与低音", "Хип-хоп и бас"],
+  ["Reggae y caribe", "Reggae and Caribbean", "Reggae e Caribe", "雷鬼与加勒比", "Регги и Карибы"],
+  ["Pop y rock", "Pop and rock", "Pop e rock", "流行与摇滚", "Поп и рок"],
+  ["Tresillo (8)", "Tresillo (8)", "Tresillo (8)", "Tresillo（8）", "Трезильо (8)"],
+  ["Habanera (8)", "Habanera (8)", "Habanera (8)", "Habanera（8）", "Хабанера (8)"],
+  ["Cinquillo (8)", "Cinquillo (8)", "Cinquillo (8)", "Cinquillo（8）", "Синкильо (8)"],
+  ["Shiko (16)", "Shiko (16)", "Shiko (16)", "Shiko（16）", "Шико (16)"],
+  ["Aksak 9/8 (2+2+2+3)", "Aksak 9/8 (2+2+2+3)", "Aksak 9/8 (2+2+2+3)", "Aksak 9/8（2+2+2+3）", "Аксак 9/8 (2+2+2+3)"],
+  ["Búlgaro 7/8 (2+2+3)", "Bulgarian 7/8 (2+2+3)", "Búlgaro 7/8 (2+2+3)", "保加利亚 7/8（2+2+3）", "Болгарский 7/8 (2+2+3)"],
+  ["Euclidiano 5 en 13", "Euclidean 5 in 13", "Euclidiano 5 em 13", "欧几里得 13 取 5", "Евклидов 5 из 13"],
+  ["Salsa", "Salsa", "Salsa", "萨尔萨", "Сальса"],
+  ["Cumbia", "Cumbia", "Cúmbia", "昆比亚", "Кумбия"],
+  ["Merengue", "Merengue", "Merengue", "梅伦格", "Меренге"],
+  ["Reguetón (dembow)", "Reggaeton (dembow)", "Reggaeton (dembow)", "雷鬼顿（dembow）", "Реггетон (dembow)"],
+  ["Samba", "Samba", "Samba", "桑巴", "Самба"],
+  ["Afrobeat", "Afrobeat", "Afrobeat", "非洲节拍", "Афробит"],
+  ["Hip hop boom bap", "Hip hop boom bap", "Hip hop boom bap", "嘻哈 boom bap", "Хип-хоп бум-бэп"],
+  ["Trap", "Trap", "Trap", "Trap", "Трэп"],
+  ["UK garage 2-step", "UK garage 2-step", "UK garage 2-step", "英式 garage 2-step", "UK garage 2-step"],
+  ["Drum and bass", "Drum and bass", "Drum and bass", "鼓打贝斯", "Драм-н-бейс"],
+  ["Dubstep (half-time)", "Dubstep (half-time)", "Dubstep (half-time)", "Dubstep（半速）", "Дабстеп (half-time)"],
+  ["Reggae one drop", "Reggae one drop", "Reggae one drop", "雷鬼 one drop", "Регги one drop"],
+  ["Reggae steppers", "Reggae steppers", "Reggae steppers", "雷鬼 steppers", "Регги steppers"],
+  ["Ska", "Ska", "Ska", "斯卡", "Ска"],
+  ["Rock", "Rock", "Rock", "摇滚", "Рок"],
+  ["Punk", "Punk", "Punk", "朋克", "Панк"],
+  ["Post-punk", "Post-punk", "Pós-punk", "后朋克", "Пост-панк"],
+  ["Disco", "Disco", "Disco", "迪斯科", "Диско"],
+  ["Funk", "Funk", "Funk", "放克", "Фанк"],
+  ["Electro", "Electro", "Electro", "Electro", "Электро"],
+  ["Electroclash", "Electroclash", "Electroclash", "Electroclash", "Электроклэш"],
+  ["Audio", "Audio", "Áudio", "音频", "Аудио"],
+  ["Salida general", "Main output", "Saída geral", "总输出", "Общий выход"],
+  ["Predeterminada del sistema", "System default", "Padrão do sistema", "系统默认", "По умолчанию"],
+  ["Buscar salidas de audio", "Find audio outputs", "Buscar saídas de áudio", "查找音频输出", "Найти аудиовыходы"],
+  ["Cada pista a su propia salida", "Each track to its own output", "Cada pista para sua própria saída", "每个音轨单独输出", "Каждая дорожка на свой выход"],
+  ["Guardar captura (PNG)", "Save snapshot (PNG)", "Salvar captura (PNG)", "保存截图 (PNG)", "Сохранить снимок (PNG)"],
+  ["Abrir captura…", "Open snapshot…", "Abrir captura…", "打开截图…", "Открыть снимок…"],
+  ["Para sacar el audio hacia otro programa, elige un cable virtual (por ejemplo VB-Cable) como salida. Una salida es un par estéreo: para pistas separadas hace falta un cable virtual por cada una.", "To send the audio to another program, choose a virtual cable (for example VB-Cable) as the output. One output is one stereo pair: separate tracks need one virtual cable each.", "Para enviar o áudio a outro programa, escolha um cabo virtual (por exemplo VB-Cable) como saída. Uma saída é um par estéreo: para pistas separadas é preciso um cabo virtual para cada uma.", "要把音频送到其他程序，请选择虚拟线缆（例如 VB-Cable）作为输出。一个输出是一对立体声：分轨需要每轨一条虚拟线缆。", "Чтобы вывести звук в другую программу, выберите виртуальный кабель (например, VB-Cable) как выход. Один выход — стереопара: для раздельных дорожек нужен свой виртуальный кабель для каждой."],
+  ["Este navegador no permite elegir la salida. Usa Chrome o Edge reciente.", "This browser cannot choose the output. Use a recent Chrome or Edge.", "Este navegador não permite escolher a saída. Use Chrome ou Edge recente.", "此浏览器无法选择输出。请使用较新的 Chrome 或 Edge。", "Этот браузер не позволяет выбрать выход. Используйте свежий Chrome или Edge."],
+  ["Salida general: {0}", "Main output: {0}", "Saída geral: {0}", "总输出：{0}", "Общий выход: {0}"],
+  ["Salida general: predeterminada.", "Main output: system default.", "Saída geral: padrão do sistema.", "总输出：系统默认。", "Общий выход: по умолчанию."],
+  ["No se pudo usar esa salida ({0}).", "That output could not be used ({0}).", "Não foi possível usar essa saída ({0}).", "无法使用该输出（{0}）。", "Не удалось использовать этот выход ({0})."],
+  ["{0} salida(s) encontradas.", "{0} output(s) found.", "{0} saída(s) encontradas.", "找到 {0} 个输出。", "Найдено выходов: {0}."],
+  ["No se pudo crear la captura.", "The snapshot could not be created.", "Não foi possível criar a captura.", "无法创建截图。", "Не удалось создать снимок."],
+  ["Captura guardada. Contiene la sesión completa: puedes abrirla con «Importar archivo…».", "Snapshot saved. It holds the full session: open it with “Import file…”.", "Captura salva. Contém a sessão completa: abra com «Importar arquivo…».", "截图已保存。其中包含完整会话：可用“导入文件…”打开。", "Снимок сохранён. В нём вся сессия: откройте через «Импорт файла…»."],
+  ["Esta imagen no trae datos de Clave Circular.", "This image has no Clave Circular data.", "Esta imagem não traz dados do Clave Circular.", "此图片不含 Clave Circular 数据。", "В этом изображении нет данных Clave Circular."],
   ["Vaciar lista", "Clear list", "Limpar lista", "清空列表", "Очистить список"],
   ["Patrón de la sección", "Section pattern", "Padrão da seção", "段落的节奏型", "Паттерн секции"],
   ["Quitar sección", "Remove section", "Remover seção", "删除段落", "Удалить секцию"],
@@ -676,6 +773,50 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       clave: P(12, [1, 3, 5, 6, 8, 10, 12]), conga: E(12, 5), campana: P(12, [1, 4, 7, 10]),
       hatC: E(12, 6), bombo: P(12, [1, 7]), caja: P(12, [4, 10]) }),
 
+
+    habanera: S("Euclidiano y poliritmo", "Habanera (8)", 96, {
+      clave: P(8, [1, 4, 5, 7]), bombo: P(8, [1, 5]), caja: P(8, [3, 7]), hatC: E(8, 8) }),
+    shiko: S("Euclidiano y poliritmo", "Shiko (16)", 108, {
+      clave: P(16, [1, 5, 7, 11, 13]), conga: E(16, 7), campana: P(16, [1, 5, 9, 13]), bombo: P(16, [1, 9]), hatC: E(16, 8) }),
+    aksak: S("Euclidiano y poliritmo", "Aksak 9/8 (2+2+2+3)", 120, {
+      clave: P(9, [1, 3, 5, 7]), bombo: P(9, [1, 7]), caja: P(9, [5]), hatC: E(9, 9) }),
+    bulgaro: S("Euclidiano y poliritmo", "Búlgaro 7/8 (2+2+3)", 130, {
+      clave: P(7, [1, 3, 5]), bombo: P(7, [1, 5]), caja: P(7, [3]), hatC: E(7, 7) }),
+    euc57: S("Euclidiano y poliritmo", "Euclidiano 5 en 13", 110, {
+      clave: E(13, 5), conga: E(13, 3, 2), campana: E(13, 7), bombo: P(13, [1, 8]), hatC: E(13, 13) }),
+
+    salsa: S("Latinos y afro", "Salsa", 180, {
+      clave: P(16, [1, 4, 7, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(16, [1, 5, 7, 9, 13, 15]),
+      bombo: P(16, [1, 9]), hatC: E(16, 8) }),
+    cumbia: S("Latinos y afro", "Cumbia", 96, {
+      bombo: P(16, [1, 9]), caja: P(16, [5, 13]), conga: P(16, [3, 7, 11, 15]), campana: P(16, [1, 5, 9, 13]),
+      hatC: P(16, [1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 15, 16]) }),
+    merengue: S("Latinos y afro", "Merengue", 130, {
+      bombo: P(16, K4), caja: P(16, EVEN), conga: P(16, [4, 8, 12, 16]), hatC: P(16, SIX), campana: P(16, [1, 5, 9, 13]) }),
+    samba: S("Latinos y afro", "Samba", 100, {
+      bombo: P(16, [1, 9, 13]), caja: P(16, [5, 13]), campana: P(16, [1, 4, 6, 9, 12, 14]), hatC: P(16, SIX), conga: P(16, [3, 7, 11, 15]) }),
+    afrobeat: S("Latinos y afro", "Afrobeat", 112, {
+      bombo: P(16, [1, 7, 11]), caja: P(16, [5, 13]), hatC: P(16, SIX), conga: P(16, [4, 7, 10, 13, 16]), campana: P(16, [1, 4, 7, 11, 14]) }),
+
+
+    onedrop: S("Reggae y caribe", "Reggae one drop", 76, {
+      bombo: P(16, [9]), caja: P(16, [9]), clave: P(16, [9]), hatC: P(16, EIGHTH) }),
+    steppers: S("Reggae y caribe", "Reggae steppers", 140, {
+      bombo: P(16, K4), caja: P(16, [9]), hatC: P(16, EIGHTH), campana: P(16, [4, 12]) }),
+    ska: S("Reggae y caribe", "Ska", 160, {
+      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, OFF), clave: P(16, [3, 7, 11, 15]) }),
+
+    rock: S("Pop y rock", "Rock", 120, {
+      bombo: P(16, [1, 9]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
+    punk: S("Pop y rock", "Punk", 176, {
+      bombo: P(16, [1, 7, 9]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
+    postpunk: S("Pop y rock", "Post-punk", 150, {
+      bombo: P(16, [1, 3, 9, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [8, 16]) }),
+    disco: S("Pop y rock", "Disco", 118, {
+      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN), conga: P(16, [4, 8, 12, 16]) }),
+    funk: S("Pop y rock", "Funk", 100, {
+      bombo: P(16, [1, 4, 7, 11]), caja: P(16, BP), hatC: P(16, SIX), hatO: P(16, [14]) }),
+
     house: S("House", "House clásico", 124, {
       bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN) }),
     deep: S("House", "Deep house", 120, {
@@ -778,6 +919,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       if (t.p) { t.g.connect(t.p); t.p.connect(master); } else { t.g.connect(master); }
       applyMix(t);
     });
+    if (aud.master && ctx.setSinkId) ctx.setSinkId(aud.master).catch(function () { /* ignorar */ });
+    routeAll();
   }
   function applyMix(t) {
     if (!t.g) return;
@@ -1283,34 +1426,84 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     $("curPat").textContent = LETTERS[state.cur];
     renderSong();
   }
+  var songSel = -1, songDragFrom = -1;
+  function patColor(i) { return "hsl(" + (i * 45 + 8) + ",62%,55%)"; }
   function renderSong() {
-    ui.songList.innerHTML = "";
+    if (songDragFrom >= 0) return;
+    var L = ui.songList; L.innerHTML = "";
+    if (songSel >= state.song.length) songSel = state.song.length - 1;
     state.song.forEach(function (bk, bi) {
-      var row = document.createElement("div");
       var now = state.playing && state.mode === "song" && sch.pos && sch.pos.block === bi;
-      row.className = "songrow" + (now ? " now" : "");
-      row.innerHTML = '<span class="idx"></span><select class="sp" aria-label="' + tr("Patrón de la sección") + '"></select>' +
-        '<div class="stepper"><button class="dec" type="button" aria-label="' + tr("Menos vueltas") + '">−</button><output></output><button class="inc" type="button" aria-label="' + tr("Más vueltas") + '">+</button></div>' +
-        '<button class="del" type="button" aria-label="' + tr("Quitar sección") + '">✕</button>';
-      row.querySelector(".idx").textContent = String(bi + 1);
-      var sp = row.querySelector(".sp");
-      for (var i = 0; i < 8; i++) { var o = document.createElement("option"); o.value = String(i); o.textContent = tr("Patrón {0}", LETTERS[i]); if (i === bk.pat) o.selected = true; sp.appendChild(o); }
-      var out = row.querySelector("output"); out.textContent = "×" + bk.reps;
-      sp.addEventListener("change", function () { bk.pat = +sp.value; });
-      row.querySelector(".dec").addEventListener("click", function () { bk.reps = Math.max(1, bk.reps - 1); out.textContent = "×" + bk.reps; });
-      row.querySelector(".inc").addEventListener("click", function () { bk.reps = Math.min(64, bk.reps + 1); out.textContent = "×" + bk.reps; });
-      row.querySelector(".del").addEventListener("click", function () { state.song.splice(bi, 1); renderSong(); });
-      ui.songList.appendChild(row);
+      var el = document.createElement("button");
+      el.type = "button"; el.draggable = true;
+      el.className = "sblock" + (now ? " now" : "") + (bi === songSel ? " sel" : "");
+      el.style.setProperty("--c", patColor(bk.pat));
+      el.style.flex = "0 0 " + Math.max(52, Math.min(220, 26 + bk.reps * 26)) + "px";
+      var ticks = "", shown = Math.min(bk.reps, 16);
+      for (var r = 0; r < shown; r++) ticks += '<i class="' + (now && sch.pos.rep === r ? "on" : "") + '"></i>';
+      el.innerHTML = '<span class="sn"></span><span class="sl"></span><span class="sr"></span><span class="ticks">' + ticks + '</span>';
+      el.querySelector(".sn").textContent = String(bi + 1);
+      el.querySelector(".sl").textContent = LETTERS[bk.pat];
+      el.querySelector(".sr").textContent = "×" + bk.reps;
+      el.setAttribute("aria-label", tr("Sección") + " " + (bi + 1) + ": " + LETTERS[bk.pat] + " ×" + bk.reps);
+      el.addEventListener("click", function () { songSel = (songSel === bi ? -1 : bi); renderSong(); });
+      el.addEventListener("dragstart", function (e) { songDragFrom = bi; try { e.dataTransfer.setData("text/plain", String(bi)); e.dataTransfer.effectAllowed = "move"; } catch (x) { /* nada */ } });
+      el.addEventListener("dragover", function (e) { if (songDragFrom >= 0) { e.preventDefault(); el.classList.add("over"); } });
+      el.addEventListener("dragleave", function () { el.classList.remove("over"); });
+      el.addEventListener("drop", function (e) {
+        e.preventDefault();
+        var f = songDragFrom; songDragFrom = -1;
+        if (f >= 0 && f !== bi) { var mv = state.song.splice(f, 1)[0]; state.song.splice(bi, 0, mv); songSel = bi; if (state.mode === "song") sch.pos = null; }
+        renderSong();
+      });
+      el.addEventListener("dragend", function () { songDragFrom = -1; renderSong(); });
+      L.appendChild(el);
     });
-    if (!state.song.length) {
-      var p = document.createElement("p"); p.className = "note"; p.textContent = tr("La lista está vacía. Añade una sección con + Sección.");
-      ui.songList.appendChild(p);
-    }
-    ui.songList.classList.toggle("off", state.mode !== "song");
+    var add = document.createElement("button");
+    add.type = "button"; add.className = "sbadd"; add.textContent = "+"; add.setAttribute("aria-label", tr("+ Sección"));
+    add.addEventListener("click", function () { state.song.push({ pat: state.cur, reps: 1 }); songSel = state.song.length - 1; renderSong(); });
+    L.appendChild(add);
+    L.classList.toggle("off", state.mode !== "song");
+    renderSongEdit();
     $("songHint").textContent = state.mode === "song" ? "" : tr("Ahora estás en modo Bucle: la lista no suena. Cambia a Canción para usarla.");
     var tot = 0; state.song.forEach(function (b2) { tot += b2.reps; });
-    $("songSum").textContent = state.song.length ? tr("Resumen: {0} · {1} vueltas · {2} s", state.song.map(function (b2) { return LETTERS[b2.pat] + "×" + b2.reps; }).join(" → "), tot, (tot * cycleDur()).toFixed(1)) : "";
+    $("songSum").textContent = state.song.length ? tr("Resumen: {0} · {1} vueltas · {2} s", state.song.map(function (b2) { return LETTERS[b2.pat] + "×" + b2.reps; }).join(" → "), tot, (tot * cycleDur()).toFixed(1)) : tr("La lista está vacía. Añade una sección con + Sección.");
   }
+  function renderSongEdit() {
+    var E = $("songEdit"), bk = state.song[songSel];
+    if (!bk) { E.hidden = true; return; }
+    E.hidden = false;
+    $("songEditT").textContent = tr("Sección") + " " + (songSel + 1);
+    $("sbReps").textContent = "×" + bk.reps;
+    var P = $("songEditPats"); P.innerHTML = "";
+    for (var i = 0; i < 8; i++) {
+      (function (i) {
+        var b = document.createElement("button"); b.type = "button"; b.textContent = LETTERS[i];
+        b.style.setProperty("--c", patColor(i)); b.className = i === bk.pat ? "on" : "";
+        b.setAttribute("aria-label", tr("Patrón {0}", LETTERS[i]));
+        b.addEventListener("click", function () { bk.pat = i; renderSong(); });
+        P.appendChild(b);
+      })(i);
+    }
+  }
+  function buildSongPal() {
+    var pal = $("songPal");
+    for (var i = 0; i < 8; i++) {
+      (function (i) {
+        var b = document.createElement("button"); b.type = "button"; b.textContent = LETTERS[i];
+        b.style.setProperty("--c", patColor(i)); b.setAttribute("aria-label", tr("Patrón {0}", LETTERS[i]));
+        b.addEventListener("click", function () { state.song.push({ pat: i, reps: 1 }); songSel = state.song.length - 1; renderSong(); });
+        pal.appendChild(b);
+      })(i);
+    }
+  }
+  buildSongPal();
+  $("sbDec").addEventListener("click", function () { var b = state.song[songSel]; if (b) { b.reps = Math.max(1, b.reps - 1); renderSong(); } });
+  $("sbInc").addEventListener("click", function () { var b = state.song[songSel]; if (b) { b.reps = Math.min(64, b.reps + 1); renderSong(); } });
+  $("sbLeft").addEventListener("click", function () { if (songSel > 0) { var m = state.song.splice(songSel, 1)[0]; state.song.splice(--songSel, 0, m); if (state.mode === "song") sch.pos = null; renderSong(); } });
+  $("sbRight").addEventListener("click", function () { if (songSel >= 0 && songSel < state.song.length - 1) { var m = state.song.splice(songSel, 1)[0]; state.song.splice(++songSel, 0, m); if (state.mode === "song") sch.pos = null; renderSong(); } });
+  $("sbDup").addEventListener("click", function () { var b = state.song[songSel]; if (b) { state.song.splice(songSel + 1, 0, { pat: b.pat, reps: b.reps }); songSel++; renderSong(); } });
+  $("sbDel").addEventListener("click", function () { if (state.song[songSel]) { state.song.splice(songSel, 1); songSel = Math.min(songSel, state.song.length - 1); if (state.mode === "song") sch.pos = null; renderSong(); } });
   function fillCopyTo() {
     var cur = ui.copyTo.value || "1"; ui.copyTo.innerHTML = "";
     for (var ci = 0; ci < 8; ci++) { var co = document.createElement("option"); co.value = String(ci); co.textContent = tr("Patrón {0}", LETTERS[ci]); ui.copyTo.appendChild(co); }
@@ -1318,8 +1511,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
   fillCopyTo();
   ui.mode.addEventListener("change", function () { state.mode = ui.mode.value; if (state.mode === "loop") sch.pos = null; updateSongStatus(); });
-  ui.songAdd.addEventListener("click", function () { state.song.push({ pat: state.cur, reps: 1 }); renderSong(); });
-  ui.songClear.addEventListener("click", function () { state.song = []; sch.pos = null; renderSong(); });
+  ui.songAdd.addEventListener("click", function () { state.song.push({ pat: state.cur, reps: 1 }); songSel = state.song.length - 1; renderSong(); });
+  ui.songClear.addEventListener("click", function () { state.song = []; songSel = -1; sch.pos = null; renderSong(); });
   ui.copyBtn.addEventListener("click", function () {
     var d = +ui.copyTo.value;
     if (d === state.cur) return;
@@ -1334,7 +1527,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.8.2";
+  var FW = "0.10.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -1597,6 +1790,15 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     fillPorts(ui.midiIn, ins, midi.inp ? midi.inp.id : "");
     if (midi.out && !outs.some(function (p) { return p.id === midi.out.id; })) midi.out = null;
     if (midi.inp && !ins.some(function (p) { return p.id === midi.inp.id; })) midi.inp = null;
+    var sm = sesSaved && sesSaved.midi;
+    if (sm && !midi.out && sm.outName) {
+      var po = outs.filter(function (p) { return p.name === sm.outName; })[0];
+      if (po) { midi.out = po; ui.midiOut.value = po.id; resyncClock(); }
+    }
+    if (sm && !midi.inp && sm.inName) {
+      var pi2 = ins.filter(function (p) { return p.name === sm.inName; })[0];
+      if (pi2) { midi.inp = pi2; ui.midiIn.value = pi2.id; midi.inp.onmidimessage = onMidiMsg; }
+    }
     setStatus(tr("MIDI conectado: {0} salida(s), {1} entrada(s).", outs.length, ins.length), "ok");
   }
   function connectMIDI() {
@@ -1656,7 +1858,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.8.2 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.10.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -1783,7 +1985,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     syncAll(); renderSong(); updateSongStatus();
     Promise.all(jobs).then(function () {
       syncAll();
-      setPStatus(tr("Preset «{0}» cargado.", p.name || tr("sin nombre")) + (missing.length ? tr(" Faltan muestras (carga su pack): {0}", missing.join(", ")) : ""), missing.length ? "err" : "ok");
+      setPStatus((p.name === "sesión" ? tr("Sesión anterior recuperada.") : tr("Preset «{0}» cargado.", p.name || tr("sin nombre"))) + (missing.length ? tr(" Faltan muestras (carga su pack): {0}", missing.join(", ")) : ""), missing.length ? "err" : "ok");
     }).catch(function () { setPStatus(tr("Preset cargado, pero alguna muestra no se pudo decodificar."), "err"); });
   }
   function renderPList(sel) {
@@ -1966,6 +2168,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ui.pImportBtn.addEventListener("click", function () { ui.pImport.click(); });
   ui.pImport.addEventListener("change", function () {
     var f = ui.pImport.files[0]; ui.pImport.value = ""; if (!f) return;
+    if (/\.png$/i.test(f.name) || f.type === "image/png") { f.arrayBuffer().then(function (b) { importPngBuf(b, f.name); }); return; }
     f.text().then(function (txt) {
       var p; try { p = JSON.parse(txt); } catch (e) { setPStatus(tr("El archivo no es un JSON válido."), "err"); return; }
       applyPreset(p);
@@ -2162,6 +2365,217 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     }
   });
 
+  /* ---------- Salidas de audio ---------- */
+  var aud = { devs: [], master: "", masterLabel: "", split: false };
+  function audStatus(m, k) { var e = $("audStatus"); e.textContent = m; e.className = "status" + (k ? " " + k : ""); }
+  function devLabel(id) { var l = ""; aud.devs.forEach(function (d) { if (d.deviceId === id) l = d.label || id; }); return l; }
+  function fillDevSelect(sel, cur) {
+    sel.innerHTML = "";
+    var o0 = document.createElement("option"); o0.value = ""; o0.textContent = tr("Predeterminada del sistema"); sel.appendChild(o0);
+    aud.devs.forEach(function (d) { var o = document.createElement("option"); o.value = d.deviceId; o.textContent = d.label || d.deviceId.slice(0, 8); sel.appendChild(o); });
+    sel.value = cur || "";
+    if (sel.value !== (cur || "")) sel.value = "";
+  }
+  function setMasterSink(id) {
+    aud.master = id || "";
+    if (!ctx) return Promise.resolve();
+    if (!ctx.setSinkId) { audStatus(tr("Este navegador no permite elegir la salida. Usa Chrome o Edge reciente."), "err"); return Promise.resolve(); }
+    return ctx.setSinkId(id || "").then(function () { audStatus(id ? tr("Salida general: {0}", devLabel(id) || id) : tr("Salida general: predeterminada."), "ok"); })
+      .catch(function (e) { audStatus(tr("No se pudo usar esa salida ({0}).", (e && e.name) || "error"), "err"); });
+  }
+  function routeTrack(t) {
+    /* t.out vacío = va al mezclador general; con valor = sale por su propio dispositivo */
+    if (!ctx || !t.p) return;
+    var want = aud.split && t.out ? t.out : "";
+    try { t.p.disconnect(); } catch (e) { /* nada */ }
+    if (!want) {
+      t.p.connect(master);
+      if (t.el) { try { t.el.pause(); } catch (e2) { /* nada */ } t.el.srcObject = null; t.el = null; t.dest = null; }
+      return;
+    }
+    if (!t.dest) { t.dest = ctx.createMediaStreamDestination(); t.el = new Audio(); t.el.srcObject = t.dest.stream; }
+    t.p.connect(t.dest);
+    var go = function () { return t.el.play().catch(function () { /* requiere gesto */ }); };
+    if (t.el.setSinkId) t.el.setSinkId(want).then(go).catch(function (e) { audStatus(tr("No se pudo usar esa salida ({0}).", (e && e.name) || "error"), "err"); });
+    else go();
+  }
+  function routeAll() { state.tracks.forEach(routeTrack); }
+  function renderAudTracks() {
+    var box = $("audTracks"); box.innerHTML = "";
+    if (!aud.split) return;
+    state.tracks.forEach(function (t) {
+      var lab = document.createElement("label"); lab.className = "sel-field";
+      var sp = document.createElement("span"); sp.textContent = t.name; lab.appendChild(sp);
+      var sel = document.createElement("select"); lab.appendChild(sel);
+      fillDevSelect(sel, t.out);
+      sel.addEventListener("change", function () { t.out = sel.value; t.outLabel = devLabel(sel.value); routeTrack(t); });
+      box.appendChild(lab);
+    });
+  }
+  function scanDevices() {
+    var md = navigator.mediaDevices;
+    if (!md || !md.enumerateDevices) { audStatus(tr("Este navegador no permite elegir la salida. Usa Chrome o Edge reciente."), "err"); return Promise.resolve(); }
+    function list() {
+      return md.enumerateDevices().then(function (all) {
+        aud.devs = all.filter(function (d) { return d.kind === "audiooutput" && d.deviceId !== "default" && d.deviceId !== "communications"; });
+        fillDevSelect($("audOut"), aud.master); renderAudTracks();
+        audStatus(tr("{0} salida(s) encontradas.", aud.devs.length), aud.devs.length ? "ok" : "err");
+      });
+    }
+    return list().then(function () {
+      var blank = aud.devs.length && aud.devs.every(function (d) { return !d.label; });
+      if ((blank || !aud.devs.length) && md.selectAudioOutput) return md.selectAudioOutput().then(list).catch(function () { /* cancelado */ });
+    });
+  }
+  $("audScan").addEventListener("click", scanDevices);
+  $("audOut").addEventListener("change", function () { aud.masterLabel = devLabel($("audOut").value); setMasterSink($("audOut").value); });
+  $("audSplit").addEventListener("change", function () { aud.split = $("audSplit").checked; renderAudTracks(); routeAll(); });
+  function audRestore(a) {
+    if (!a) return;
+    aud.master = a.master || ""; aud.masterLabel = a.masterLabel || ""; aud.split = !!a.split; $("audSplit").checked = aud.split;
+    (a.tracks || []).forEach(function (x) { state.tracks.forEach(function (t) { if (t.id === x.id) { t.out = x.out || ""; t.outLabel = x.label || ""; } }); });
+    scanDevices().then(function () { if (aud.master) setMasterSink(aud.master); renderAudTracks(); routeAll(); });
+  }
+  function audCapture() {
+    return { master: aud.master, masterLabel: aud.masterLabel, split: aud.split,
+      tracks: state.tracks.filter(function (t) { return t.out; }).map(function (t) { return { id: t.id, out: t.out, label: t.outLabel || "" }; }) };
+  }
+
+  /* ---------- Captura PNG con metadatos ---------- */
+  var CRC_T = null;
+  function crc32(u8) {
+    if (!CRC_T) { CRC_T = []; for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1); CRC_T[n] = c >>> 0; } }
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < u8.length; i++) crc = CRC_T[(crc ^ u8[i]) & 255] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function u8FromStr(str) { var a = new Uint8Array(str.length); for (var i = 0; i < str.length; i++) a[i] = str.charCodeAt(i) & 255; return a; }
+  function pngAddText(buf, key, text) {
+    var src = new Uint8Array(buf), kb = u8FromStr(key + "\0" + text);
+    var chunk = new Uint8Array(12 + kb.length), dv = new DataView(chunk.buffer);
+    dv.setUint32(0, kb.length); chunk.set(u8FromStr("tEXt"), 4); chunk.set(kb, 8);
+    dv.setUint32(8 + kb.length, crc32(chunk.subarray(4, 8 + kb.length)));
+    var iend = src.length - 12, out = new Uint8Array(src.length + chunk.length);
+    out.set(src.subarray(0, iend), 0); out.set(chunk, iend); out.set(src.subarray(iend), iend + chunk.length);
+    return out;
+  }
+  function pngReadText(buf, key) {
+    var u = new Uint8Array(buf), dv = new DataView(buf), sig = [137, 80, 78, 71, 13, 10, 26, 10];
+    for (var i = 0; i < 8; i++) if (u[i] !== sig[i]) return null;
+    var pos = 8;
+    while (pos + 12 <= u.length) {
+      var len = dv.getUint32(pos), type = String.fromCharCode(u[pos + 4], u[pos + 5], u[pos + 6], u[pos + 7]);
+      if (type === "tEXt") {
+        var body = u.subarray(pos + 8, pos + 8 + len), z = body.indexOf(0), k = "";
+        for (var j = 0; j < z; j++) k += String.fromCharCode(body[j]);
+        if (k === key) { var t = ""; for (var m = z + 1; m < body.length; m++) t += String.fromCharCode(body[m]); return t; }
+      }
+      if (type === "IEND") break;
+      pos += 12 + len;
+    }
+    return null;
+  }
+  function b64utf8(str) { return btoa(unescape(encodeURIComponent(str))); }
+  function unb64utf8(b) { return decodeURIComponent(escape(atob(b))); }
+  function makeShot(name) {
+    var S2 = 1100, HD = 84, FT = 170, c2 = document.createElement("canvas");
+    c2.width = S2; c2.height = HD + S2 + FT;
+    var x = c2.getContext("2d");
+    x.fillStyle = theme.bg; x.fillRect(0, 0, c2.width, c2.height);
+    x.drawImage(cv, 0, HD, S2, S2);
+    x.fillStyle = theme.fg; x.font = "600 30px 'IBM Plex Mono', monospace"; x.textBaseline = "middle";
+    x.fillText("CLAVE CIRCULAR · " + (name || "sesión"), 28, HD / 2 - 8);
+    x.fillStyle = theme.muted; x.font = "18px 'IBM Plex Mono', monospace";
+    x.fillText("FW " + FW + " · " + state.bpm + " BPM · patrón " + LETTERS[state.cur] + " · " + (state.mode === "song" ? "canción " + state.song.map(function (b) { return LETTERS[b.pat] + "×" + b.reps; }).join(" → ") : "bucle"), 28, HD / 2 + 24);
+    var y = HD + S2 + 26;
+    state.tracks.forEach(function (t, i) {
+      var col = i % 2, row = Math.floor(i / 2), tx = 28 + col * 540, ty = y + row * 30;
+      x.fillStyle = t.color; x.fillRect(tx, ty - 9, 14, 14);
+      x.fillStyle = theme.fg; x.font = "17px 'IBM Plex Mono', monospace";
+      x.fillText(t.name + "  " + count(t) + "/" + t.steps + (t.rot ? "  rot " + t.rot : "") + "  " + (t.kit || "base"), tx + 24, ty - 2);
+    });
+    return c2;
+  }
+  function saveShot() {
+    var nm = (ui.pname.value || "").trim() || "captura";
+    var so = captureSession(); so.name = nm; var j = JSON.stringify(so); var meta = b64utf8(j);
+    var c2 = makeShot(nm);
+    c2.toBlob(function (blob) {
+      if (!blob) { setPStatus(tr("No se pudo crear la captura."), "err"); return; }
+      blob.arrayBuffer().then(function (buf) {
+        var out = pngAddText(buf, "ClaveCircular", meta);
+        saveBlobFile("clave_" + slug(nm) + ".png", new Blob([out], { type: "image/png" }), "Captura PNG", "image/png", ".png").then(function (ok) {
+          if (ok) setPStatus(tr("Captura guardada. Contiene la sesión completa: puedes abrirla con «Importar archivo…»."), "ok");
+        });
+      });
+    }, "image/png");
+  }
+  $("pShot").addEventListener("click", saveShot);
+  function importPngBuf(buf, fname) {
+    var t = pngReadText(buf, "ClaveCircular"), p = null;
+    if (t) { try { p = JSON.parse(unb64utf8(t)); } catch (e) { p = null; } }
+    if (!p) { setPStatus(tr("Esta imagen no trae datos de Clave Circular."), "err"); return; }
+    applyPreset(p); applySessionExtras(p);
+    if (p.layout) applyLayoutData(p.layout);
+    if (p.audio) audRestore(p.audio);
+    var all = readPresets(), n = fname.replace(/\.png$/i, "").replace(/^clave_/, ""); if (validPreset(p)) { all[n] = p; writePresets(all); ui.pname.value = n; renderPList(n); }
+  }
+
+  /* ---------- Sesión (autoguardado) ---------- */
+  var SKEY = "cc.session", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
+  function captureSession() {
+    var o = capturePreset("sesión");
+    o.master = state.vol; o.kitAll = ui.kitAll.value; o.sel = state.sel; o.scene = ui.scene.value;
+    o.layout = { order: layout.order.slice(), bottom: layout.bottom.slice(), mode: layout.mode, skin: layout.skin,
+      collapsed: blocksAll().filter(function (b) { return b.querySelector(":scope > .bb").hidden; }).map(idOf) };
+    o.audio = audCapture();
+    o.midi = { ch: midi.ch, vel: midi.vel, clock: midi.clockOut, local: midi.local, on: !!midi.access,
+      outName: midi.out ? (midi.out.name || "") : (sesSaved && sesSaved.midi ? sesSaved.midi.outName : ""),
+      inName: midi.inp ? (midi.inp.name || "") : (sesSaved && sesSaved.midi ? sesSaved.midi.inName : "") };
+    return o;
+  }
+  function saveSession() {
+    if (!sesReady || sesBlock) return;
+    try { var j = JSON.stringify(captureSession()); if (j !== sesLast) { localStorage.setItem(SKEY, j); sesLast = j; } } catch (e) { /* sin almacenamiento */ }
+  }
+  function applyLayoutData(l) {
+    if (!l) return;
+    layout.order = (l.order || []).slice(); if (l.bottom) layout.bottom = l.bottom.slice();
+    layout.mode = l.mode || "auto"; layout.skin = l.skin || "eclipse";
+    applyOrder(layout.order, l.collapsed || []); applyMode(layout.mode); applySkin(layout.skin); saveLayout(); resize();
+  }
+  function applySessionExtras(o) {
+    if (!o) return;
+    if (o.sel >= 0 && o.sel < state.tracks.length) state.sel = o.sel;
+    if (typeof o.master === "number") { state.vol = Math.max(0, Math.min(1, o.master)); }
+    var m = o.midi || {};
+    if (m.ch >= 0 && m.ch <= 15) { midi.ch = m.ch; ui.midiCh.value = String(m.ch); }
+    if (m.vel >= 1 && m.vel <= 127) { midi.vel = m.vel; ui.midiVel.value = String(m.vel); ui.midiVelO.textContent = m.vel; }
+    if (typeof m.clock === "boolean") { midi.clockOut = m.clock; ui.midiClock.checked = m.clock; }
+    if (typeof m.local === "boolean") { midi.local = m.local; ui.midiLocal.checked = m.local; }
+    if (o.kitAll && ui.kitAll.querySelector('option[value="' + String(o.kitAll).replace(/"/g, '\\"') + '"]')) ui.kitAll.value = o.kitAll;
+  }
+  function restoreSession() {
+    var raw = lsGet(SKEY), o = null;
+    try { o = raw ? JSON.parse(raw) : null; } catch (e) { o = null; }
+    if (o && validPreset(o)) {
+      sesSaved = o;
+      applyPreset(o); applySessionExtras(o);
+      if (o.layout) applyLayoutData(o.layout);
+      if (o.audio) audRestore(o.audio);
+      syncAll();
+      if (o.midi && o.midi.on) connectMIDI();
+    }
+    sesReady = true; saveSession();
+  }
+  setInterval(saveSession, 2000);
+  window.addEventListener("pagehide", saveSession);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) saveSession(); });
+  $("sesReset").addEventListener("click", function () {
+    sesBlock = true; try { localStorage.removeItem(SKEY); } catch (e) { /* nada */ }
+    location.reload();
+  });
+
   /* ---------- Inicio ---------- */
   i18nStatic(); $("langSel").value = LANG; showMon();
   ui.scene.value = "rumba";
@@ -2174,7 +2588,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       addToLib(items.map(function (i) { return { pack: i.pack, name: i.name, blob: i.blob }; }), false);
       setPackStatus(tr("{0} muestra(s) recuperadas de este navegador.", items.length), "ok");
     }
-  });
+  }).catch(function () { /* sin IndexedDB */ }).then(restoreSession);
   setPlayUI();
   updateSongStatus();
   resize();
