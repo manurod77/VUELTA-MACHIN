@@ -165,6 +165,12 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 .songhead { display: grid; gap: 8px; padding: 0 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .songhead span:nth-child(3) { text-align: center; }
 .songlist.off { opacity: 0.45; }
+.bgrid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+.bstep { min-height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-2); color: var(--muted); font-family: var(--font-mono); font-size: 11px; cursor: pointer; }
+.bstep[data-s="1"] { background: color-mix(in srgb, var(--accent) 45%, var(--panel-2)); color: var(--fg); }
+.bstep[data-s="2"] { background: var(--accent); color: #000; font-weight: 700; }
+.bstep.beat { border-color: var(--muted); }
+.bstep.cur { outline: 2px solid var(--fg); outline-offset: 1px; }
 .songblocks { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-2); min-height: 76px; align-content: flex-start; }
 .songblocks.off { opacity: 0.45; }
 .sblock { --c: #888; position: relative; display: flex; flex-direction: column; justify-content: space-between; height: 64px; padding: 6px 8px 6px; border: 2px solid var(--c); border-radius: 6px; background: color-mix(in srgb, var(--c) 22%, var(--panel)); color: var(--fg); cursor: grab; font: inherit; text-align: left; min-width: 52px; }
@@ -212,7 +218,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.9.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.10.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.11.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -335,6 +341,29 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <p class="status" id="pStatus">Un preset guarda patrones A–H, arreglo, tempo y el sonido de cada pista. Las muestras se vuelven a enlazar por nombre desde el pack cargado.</p>
       </div>
 
+      <div class="block" data-id="bajo">
+        <div class="label">Bajo</div>
+        <label class="check" for="bOn"><input id="bOn" type="checkbox"> Activar bajo</label>
+        <label class="sel-field" for="bRoot"><span>Tónica</span><select id="bRoot"></select></label>
+        <label class="sel-field" for="bOct"><span>Octava</span><select id="bOct"><option value="1">1 (grave)</option><option value="2" selected>2</option><option value="3">3</option></select></label>
+        <label class="sel-field" for="bProg"><span>Progresión</span><select id="bProg"></select></label>
+        <label class="sel-field" for="bCpc"><span>Vueltas por acorde</span><select id="bCpc"><option value="1">1</option><option value="2">2</option><option value="4">4</option></select></label>
+        <p class="status" id="bInfo"></p>
+        <label class="sel-field" for="bPat"><span>Patrón del bajo</span><select id="bPat"></select></label>
+        <label class="sel-field" for="bSteps"><span>Pasos</span><select id="bSteps"><option>8</option><option>12</option><option selected>16</option><option>24</option><option>32</option></select></label>
+        <div class="bgrid" id="bGrid"></div>
+        <label class="sel-field" for="bAcc"><span>Acento</span><select id="bAcc"><option value="oct">Sube una octava</option><option value="fifth">Toca la quinta</option></select></label>
+        <label class="sel-field" for="bWave"><span>Onda</span><select id="bWave"><option value="saw">Sierra</option><option value="sqr">Cuadrada</option><option value="sub">Sierra + sub</option></select></label>
+        <label class="field" for="bCut"><span>Filtro</span><input id="bCut" type="range" min="0" max="100" value="45"></label>
+        <label class="field" for="bRes"><span>Resonancia</span><input id="bRes" type="range" min="0" max="100" value="30"></label>
+        <label class="field" for="bEnv"><span>Envolvente</span><input id="bEnv" type="range" min="0" max="100" value="60"></label>
+        <label class="field" for="bDec"><span>Caída</span><input id="bDec" type="range" min="5" max="100" value="35"></label>
+        <label class="field" for="bGlide"><span>Deslizamiento</span><input id="bGlide" type="range" min="0" max="100" value="0"></label>
+        <label class="field" for="bVol"><span>Volumen del bajo</span><input id="bVol" type="range" min="0" max="100" value="80"></label>
+        <label class="sel-field" for="bCh"><span>Canal MIDI del bajo</span><select id="bCh"></select></label>
+        <p class="note">El bajo usa el mismo reloj que las pistas. La progresión avanza una vez por vuelta (o cada 2 o 4 vueltas) y cada nota toma la fundamental del acorde, o la quinta u octava en los pasos acentuados. Toca un paso: apagado, encendido, acento.</p>
+      </div>
+
       <div class="block" data-id="audio">
         <div class="label">Audio</div>
         <label class="sel-field" for="audOut"><span>Salida general</span><select id="audOut"><option value="">Predeterminada del sistema</option></select></label>
@@ -376,7 +405,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.10.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.11.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -658,6 +687,54 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["No se pudo crear la captura.", "The snapshot could not be created.", "Não foi possível criar a captura.", "无法创建截图。", "Не удалось создать снимок."],
   ["Captura guardada. Contiene la sesión completa: puedes abrirla con «Importar archivo…».", "Snapshot saved. It holds the full session: open it with “Import file…”.", "Captura salva. Contém a sessão completa: abra com «Importar arquivo…».", "截图已保存。其中包含完整会话：可用“导入文件…”打开。", "Снимок сохранён. В нём вся сессия: откройте через «Импорт файла…»."],
   ["Esta imagen no trae datos de Clave Circular.", "This image has no Clave Circular data.", "Esta imagem não traz dados do Clave Circular.", "此图片不含 Clave Circular 数据。", "В этом изображении нет данных Clave Circular."],
+  ["Bajo", "Bass", "Baixo", "贝斯", "Бас"],
+  ["Activar bajo", "Enable bass", "Ativar baixo", "启用贝斯", "Включить бас"],
+  ["Tónica", "Root note", "Tônica", "主音", "Тоника"],
+  ["Octava", "Octave", "Oitava", "八度", "Октава"],
+  ["1 (grave)", "1 (low)", "1 (grave)", "1（低）", "1 (низкая)"],
+  ["Progresión", "Progression", "Progressão", "和弦进行", "Прогрессия"],
+  ["Vueltas por acorde", "Cycles per chord", "Voltas por acorde", "每个和弦的圈数", "Кругов на аккорд"],
+  ["Patrón del bajo", "Bass pattern", "Padrão do baixo", "贝斯节奏型", "Паттерн баса"],
+  ["Pasos", "Steps", "Passos", "步数", "Шаги"],
+  ["Acento", "Accent", "Acento", "重音", "Акцент"],
+  ["Sube una octava", "Up an octave", "Sobe uma oitava", "升高八度", "На октаву вверх"],
+  ["Toca la quinta", "Plays the fifth", "Toca a quinta", "弹五度", "Играет квинту"],
+  ["Onda", "Waveform", "Onda", "波形", "Форма волны"],
+  ["Sierra", "Saw", "Serra", "锯齿波", "Пила"],
+  ["Cuadrada", "Square", "Quadrada", "方波", "Меандр"],
+  ["Sierra + sub", "Saw + sub", "Serra + sub", "锯齿波 + 低八度", "Пила + саб"],
+  ["Filtro", "Filter", "Filtro", "滤波", "Фильтр"],
+  ["Resonancia", "Resonance", "Ressonância", "共振", "Резонанс"],
+  ["Envolvente", "Envelope", "Envelope", "包络", "Огибающая"],
+  ["Caída", "Decay", "Queda", "衰减", "Спад"],
+  ["Deslizamiento", "Glide", "Deslize", "滑音", "Глайд"],
+  ["Volumen del bajo", "Bass volume", "Volume do baixo", "贝斯音量", "Громкость баса"],
+  ["Canal MIDI del bajo", "Bass MIDI channel", "Canal MIDI do baixo", "贝斯 MIDI 通道", "MIDI-канал баса"],
+  ["El bajo usa el mismo reloj que las pistas. La progresión avanza una vez por vuelta (o cada 2 o 4 vueltas) y cada nota toma la fundamental del acorde, o la quinta u octava en los pasos acentuados. Toca un paso: apagado, encendido, acento.", "The bass uses the same clock as the tracks. The progression advances once per cycle (or every 2 or 4 cycles) and each note takes the chord root, or the fifth or octave on accented steps. Tap a step: off, on, accent.", "O baixo usa o mesmo relógio das pistas. A progressão avança uma vez por volta (ou a cada 2 ou 4 voltas) e cada nota toma a fundamental do acorde, ou a quinta ou oitava nos passos acentuados. Toque um passo: desligado, ligado, acento.", "贝斯与各音轨共用同一时钟。和弦进行每圈前进一次（或每 2、4 圈），每个音取和弦根音，重音步取五度或八度。点一个步：关、开、重音。", "Бас использует те же часы, что и дорожки. Прогрессия сдвигается раз за круг (или за 2 или 4 круга), каждая нота берёт основной тон аккорда, а на акцентах — квинту или октаву. Нажмите шаг: выкл, вкл, акцент."],
+  ["Menor", "Minor", "Menor", "小调", "Минор"],
+  ["Mayor", "Major", "Maior", "大调", "Мажор"],
+  ["Dórico", "Dorian", "Dórico", "多利亚", "Дорийский"],
+  ["Frigio", "Phrygian", "Frígio", "弗里几亚", "Фригийский"],
+  ["Corcheas", "Eighths", "Colcheias", "八分音符", "Восьмые"],
+  ["Contratiempos", "Off-beats", "Contratempos", "反拍", "Офф-бит"],
+  ["Sincopado", "Syncopated", "Sincopado", "切分", "Синкопа"],
+  ["Tresillo", "Tresillo", "Tresillo", "Tresillo", "Трезильо"],
+  ["Motor en semicorcheas", "16th drive", "Motor em semicolcheias", "十六分驱动", "Шестнадцатые"],
+  ["Seguir al bombo", "Follow the kick", "Seguir o bumbo", "跟随底鼓", "Как бочка"],
+  ["Personalizado", "Custom", "Personalizado", "自定义", "Свой"],
+  ["Raíz ahora: {0} · acorde {1} de {2}", "Root now: {0} · chord {1} of {2}", "Raiz agora: {0} · acorde {1} de {2}", "当前根音：{0} · 和弦 {1}/{2}", "Сейчас: {0} · аккорд {1} из {2}"],
+  ["Do", "C", "Dó", "C", "До"],
+  ["Do♯", "C♯", "Dó♯", "C♯", "До♯"],
+  ["Re", "D", "Ré", "D", "Ре"],
+  ["Re♯", "D♯", "Ré♯", "D♯", "Ре♯"],
+  ["Mi", "E", "Mi", "E", "Ми"],
+  ["Fa", "F", "Fá", "F", "Фа"],
+  ["Fa♯", "F♯", "Fá♯", "F♯", "Фа♯"],
+  ["Sol", "G", "Sol", "G", "Соль"],
+  ["Sol♯", "G♯", "Sol♯", "G♯", "Соль♯"],
+  ["La", "A", "Lá", "A", "Ля"],
+  ["La♯", "A♯", "Lá♯", "A♯", "Ля♯"],
+  ["Si", "B", "Si", "B", "Си"],
   ["Vaciar lista", "Clear list", "Limpar lista", "清空列表", "Очистить список"],
   ["Patrón de la sección", "Section pattern", "Padrão da seção", "段落的节奏型", "Паттерн секции"],
   ["Quitar sección", "Remove section", "Remover seção", "删除段落", "Удалить секцию"],
@@ -889,6 +966,39 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   };
 
   var LETTERS = "ABCDEFGH";
+  /* ---------- Bajo ---------- */
+  var NOTE_ES = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
+  var SCALES = { min: [0, 2, 3, 5, 7, 8, 10], maj: [0, 2, 4, 5, 7, 9, 11], dor: [0, 2, 3, 5, 7, 9, 10], phr: [0, 1, 3, 5, 7, 8, 10] };
+  var PROGS = [
+    { id: "m1", g: "Menor", sc: "min", name: "i – VI – III – VII", d: [0, 5, 2, 6] },
+    { id: "m2", g: "Menor", sc: "min", name: "i – iv – v – i", d: [0, 3, 4, 0] },
+    { id: "m3", g: "Menor", sc: "min", name: "i – VII – VI – VII", d: [0, 6, 5, 6] },
+    { id: "m4", g: "Menor", sc: "min", name: "i – VI – VII – i", d: [0, 5, 6, 0] },
+    { id: "m5", g: "Menor", sc: "min", name: "i (pedal)", d: [0] },
+    { id: "M1", g: "Mayor", sc: "maj", name: "I – V – vi – IV", d: [0, 4, 5, 3] },
+    { id: "M2", g: "Mayor", sc: "maj", name: "I – IV – V – I", d: [0, 3, 4, 0] },
+    { id: "M3", g: "Mayor", sc: "maj", name: "I – vi – IV – V", d: [0, 5, 3, 4] },
+    { id: "M4", g: "Mayor", sc: "maj", name: "ii – V – I – I", d: [1, 4, 0, 0] },
+    { id: "d1", g: "Dórico", sc: "dor", name: "i – IV", d: [0, 3] },
+    { id: "f1", g: "Frigio", sc: "phr", name: "i – ♭II", d: [0, 1] },
+    { id: "f2", g: "Frigio", sc: "phr", name: "i – ♭II – i – ♭VII", d: [0, 1, 0, 6] }
+  ];
+  var BPATS = {
+    corcheas: { n: "Corcheas", p: [1, 3, 5, 7, 9, 11, 13, 15], a: [1, 9] },
+    contra: { n: "Contratiempos", p: [3, 7, 11, 15], a: [] },
+    sinc: { n: "Sincopado", p: [1, 4, 7, 9, 12, 15], a: [1, 9] },
+    tresillo: { n: "Tresillo", p: [1, 4, 7, 11, 14], a: [1] },
+    motor: { n: "Motor en semicorcheas", p: allSteps(16), a: [1, 5, 9, 13] }
+  };
+  var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "" };
+  (function () { for (var i = 0; i < 16; i++) bass.base.push(0); [1, 4, 7, 9, 12, 15].forEach(function (p) { bass.base[p - 1] = 1; }); bass.base[0] = 2; bass.base[8] = 2; bass.pat = "sinc"; })();
+  function progOf(id) { var r = PROGS[0]; PROGS.forEach(function (x) { if (x.id === id) r = x; }); return r; }
+  function bassRootNote(cyc) {
+    var pg = progOf(bass.prog), idx = Math.floor(cyc / bass.cpc) % pg.d.length;
+    return 12 * (bass.oct + 1) + bass.root + SCALES[pg.sc][pg.d[idx]];
+  }
+  function bassNoteFor(cyc, st) { return bassRootNote(cyc) + (st === 2 ? (bass.acc === "fifth" ? 7 : 12) : 0); }
+  function mtof(n) { return 440 * Math.pow(2, (n - 69) / 12); }
   state.mode = "loop"; state.cur = 0; state.queued = null;
   state.song = [{ pat: 0, reps: 1 }];
   state.patterns = [];
@@ -909,6 +1019,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var comp = ctx.createDynamicsCompressor();
     master.connect(comp); comp.connect(ctx.destination);
     master.gain.value = state.vol;
+    bass.g = ctx.createGain(); bass.g.gain.value = bass.vol * 0.7; bass.g.connect(master);
     var len = ctx.sampleRate;
     noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
     var d = noiseBuf.getChannelData(0);
@@ -1051,6 +1162,48 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   };
 
   /* Reproduce una pista: muestra cargada o sonido del kit elegido */
+  function playBass(when, note, dur, acc) {
+    if (!ctx || !bass.g) return;
+    var at = Math.max(when, ctx.currentTime), f = mtof(note);
+    var o = ctx.createOscillator(); o.type = bass.wave === "sqr" ? "square" : "sawtooth";
+    var flt = ctx.createBiquadFilter(); flt.type = "lowpass"; flt.Q.value = 0.5 + bass.res * 14;
+    var base = 80 * Math.pow(2, bass.cut * 5.5), peak = Math.min(12000, base * Math.pow(2, bass.env * 4 * (acc ? 1.3 : 1))), d = 0.05 + bass.dec * 0.6;
+    flt.frequency.setValueAtTime(peak, at); flt.frequency.exponentialRampToValueAtTime(Math.max(40, base), at + d);
+    var amp = ctx.createGain();
+    amp.gain.setValueAtTime(0.0001, at); amp.gain.linearRampToValueAtTime(acc ? 1 : 0.8, at + 0.004);
+    amp.gain.setValueAtTime(acc ? 1 : 0.8, at + Math.max(0.006, dur)); amp.gain.exponentialRampToValueAtTime(0.0001, at + dur + 0.06);
+    if (bass.glide > 0 && bass.last != null) { o.frequency.setValueAtTime(mtof(bass.last), at); o.frequency.exponentialRampToValueAtTime(f, at + 0.01 + bass.glide * 0.12); }
+    else o.frequency.setValueAtTime(f, at);
+    bass.last = note;
+    o.connect(flt); flt.connect(amp); amp.connect(bass.g);
+    o.start(at); o.stop(at + dur + 0.1);
+    if (bass.wave === "sub") {
+      var o2 = ctx.createOscillator(), g2 = ctx.createGain(); o2.type = "sine"; o2.frequency.setValueAtTime(f / 2, at); g2.gain.value = 0.9;
+      o2.connect(g2); g2.connect(amp); o2.start(at); o2.stop(at + dur + 0.1);
+    }
+  }
+  function fireBass(when, step, cyc) {
+    var st = bass.base[step]; if (!st) return;
+    var note = bassNoteFor(cyc, st), dur = cycleDur() / bass.steps * 0.85;
+    if (midi.local && ctx) playBass(when, note, dur, st === 2);
+    sendAt([0x90 | bass.ch, note & 127, st === 2 ? 112 : 92], when);
+    sendAt([0x80 | bass.ch, note & 127, 0], when + dur);
+  }
+  function bassFeed(limitPhase, now, lookahead) {
+    /* avanza el bajo en el mismo plano de fase que las pistas */
+    if (lookahead) {
+      while (bass.nextK / bass.steps < sch.cycle + 1 - 1e-9 && timeAt(bass.nextK / bass.steps) < now + LOOK) {
+        var when = timeAt(bass.nextK / bass.steps);
+        if (when >= now - 0.02 && bass.on) fireBass(Math.max(when, now), mod(bass.nextK, bass.steps), Math.floor(bass.nextK / bass.steps));
+        bass.nextK++;
+      }
+    } else {
+      while (bass.nextK / bass.steps <= limitPhase + 1e-9) {
+        if (bass.on) fireBass(now, mod(bass.nextK, bass.steps), Math.floor(bass.nextK / bass.steps));
+        bass.nextK++;
+      }
+    }
+  }
   function playTrack(t, when) {
     if (!ctx || !t.g) return;
     OUT = t.g;
@@ -1090,7 +1243,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
   function allNotesOff() {
     if (!midi.out) return;
-    try { midi.out.send([0xB0 | midi.ch, 123, 0]); } catch (e) { /* ignorar */ }
+    try { midi.out.send([0xB0 | midi.ch, 123, 0]); midi.out.send([0xB0 | bass.ch, 123, 0]); } catch (e) { /* ignorar */ }
   }
 
   /* ---------- Patrones y arreglo ---------- */
@@ -1125,6 +1278,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var changed = idx !== state.cur;
     if (changed) { loadPattern(idx); syncAll(); }
     state.tracks.forEach(function (t) { t.nextK = c * t.steps; });
+    bass.nextK = c * bass.steps; showBassInfo();
     updateSongStatus();
   }
 
@@ -1181,6 +1335,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           t.nextK++;
         }
       });
+      bassFeed(0, now, true);
       if (timeAt(sch.cycle + 1) <= now + LOOK && guard++ < 4) { enterCycle(sch.cycle + 1); continue; }
       break;
     }
@@ -1237,6 +1392,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           t.nextK++;
         }
       });
+      bassFeed(phase, now, false);
       ext.ticks++;
     } else if (s === 0xFA) {
       initAudio(); if (ctx.state === "suspended") { try { ctx.resume(); } catch (er) { /* ignorar */ } }
@@ -1527,7 +1683,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.10.0";
+  var FW = "0.11.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -1858,11 +2014,12 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.10.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.11.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
     var G = geom(), now = ctx ? ctx.currentTime : 0;
+    bassPlayhead(now);
     g.clearRect(0, 0, W, W);
 
     while (events.length && events[0].time <= now) { var e = events.shift(); hits[e.ti][e.step] = now; }
@@ -1940,7 +2097,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function capturePreset(name) {
     state.patterns[state.cur] = snap();
     return {
-      v: 1, app: "Clave Circular " + FW, name: name,
+      v: 1, app: "Clave Circular " + FW, name: name, bass: bassData(),
       bpm: state.bpm, beats: state.beats, mode: state.mode, cur: state.cur,
       song: state.song.map(function (b) { return { pat: b.pat, reps: b.reps }; }),
       patterns: state.patterns.map(cloneSnap),
@@ -1963,6 +2120,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     state.mode = p.mode === "song" ? "song" : "loop"; ui.mode.value = state.mode;
     state.song = (p.song || []).map(function (b) { return { pat: Math.max(0, Math.min(7, +b.pat || 0)), reps: Math.max(1, Math.min(64, +b.reps || 1)) }; });
     state.patterns = p.patterns.map(cloneSnap);
+    if (p.bass) setBass(p.bass);
     state.cur = Math.max(0, Math.min(7, +p.cur || 0)); state.queued = null; sch.pos = null;
     var pat = state.patterns[state.cur];
     state.tracks.forEach(function (t, k) { t.steps = pat[k].steps; t.base = pat[k].base.slice(); t.rot = pat[k].rot || 0; });
@@ -2058,6 +2216,17 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         }
       });
     });
+    if (bass.on) {
+      var bd = Math.max(1, Math.round(PPQ * state.beats / bass.steps * 0.85));
+      plan.forEach(function (pi2, c2) {
+        for (var k2 = 0; k2 < bass.steps; k2++) {
+          var st2 = bass.base[k2]; if (!st2) continue;
+          var tk = Math.round((c2 + k2 / bass.steps) * state.beats * PPQ), nn = bassNoteFor(c2, st2) & 127;
+          ev.push({ t: tk, o: 1, b: [0x90 | bass.ch, nn, st2 === 2 ? 112 : 92] });
+          ev.push({ t: tk + bd, o: 0, b: [0x80 | bass.ch, nn, 0] });
+        }
+      });
+    }
     ev.sort(function (a, b) { return a.t - b.t || a.o - b.o; });
     var tr = [], mpq = Math.round(60000000 / state.bpm);
     tr.push(0x00, 0xFF, 0x51, 0x03, (mpq >> 16) & 255, (mpq >> 8) & 255, mpq & 255);
@@ -2096,9 +2265,9 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     if (!OAC) return Promise.reject(new Error(tr("Este navegador no tiene OfflineAudioContext.")));
     var sr = 44100, secs = plan.length * cycleDur() + 2;
     var oc = new OAC(2, Math.ceil(sr * secs), sr);
-    var sv = { ctx: ctx, master: master, noiseBuf: noiseBuf, out: OUT, gp: state.tracks.map(function (t) { return [t.g, t.p]; }) };
+    var sv = { bg: bass.g, bl: bass.last, ctx: ctx, master: master, noiseBuf: noiseBuf, out: OUT, gp: state.tracks.map(function (t) { return [t.g, t.p]; }) };
     function restore() {
-      ctx = sv.ctx; master = sv.master; noiseBuf = sv.noiseBuf; OUT = sv.out;
+      ctx = sv.ctx; master = sv.master; noiseBuf = sv.noiseBuf; OUT = sv.out; bass.g = sv.bg; bass.last = sv.bl;
       state.tracks.forEach(function (t, i) { t.g = sv.gp[i][0]; t.p = sv.gp[i][1]; });
     }
     try {
@@ -2110,6 +2279,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         t.g = oc.createGain(); t.p = oc.createStereoPanner ? oc.createStereoPanner() : null;
         if (t.p) { t.g.connect(t.p); t.p.connect(master); } else { t.g.connect(master); }
         applyMix(t);
+      });
+      bass.g = oc.createGain(); bass.g.gain.value = bass.vol * 0.7; bass.g.connect(master); bass.last = null;
+      if (bass.on) plan.forEach(function (pi3, c3) {
+        for (var k3 = 0; k3 < bass.steps; k3++) {
+          var st3 = bass.base[k3]; if (!st3) continue;
+          playBass((c3 + k3 / bass.steps) * cycleDur(), bassNoteFor(c3, st3), cycleDur() / bass.steps * 0.85, st3 === 2);
+        }
       });
       plan.forEach(function (pi, c) {
         state.tracks.forEach(function (t, ti) {
@@ -2323,7 +2499,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     LANG = l; lsSet("cc.lang", l); $("langSel").value = l;
     i18nStatic(); fillScenes(); fillCopyTo();
     renderTracks(); syncEditor(); renderChips(); updateSongStatus(); setPlayUI();
-    renderPacks(); renderKitAll(); renderPList($("pList").value); relabelPanels();
+    renderPacks(); renderKitAll(); renderPList($("pList").value); relabelPanels(); relabelBass();
   }
   $("langSel").addEventListener("change", function () { setLang($("langSel").value); });
 
@@ -2519,6 +2695,117 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     if (p.layout) applyLayoutData(p.layout);
     if (p.audio) audRestore(p.audio);
     var all = readPresets(), n = fname.replace(/\.png$/i, "").replace(/^clave_/, ""); if (validPreset(p)) { all[n] = p; writePresets(all); ui.pname.value = n; renderPList(n); }
+  }
+
+  /* ---------- Bajo: interfaz ---------- */
+  var bGridEls = [], bCurIdx = -1;
+  function noteLabel(n) { return tr(NOTE_ES[n % 12]); }
+  function showBassInfo() {
+    var e = $("bInfo"); if (!e) return;
+    var pg = progOf(bass.prog), cyc = state.playing ? sch.cycle : 0, idx = Math.floor(cyc / bass.cpc) % pg.d.length;
+    e.textContent = tr("Raíz ahora: {0} · acorde {1} de {2}", noteLabel(bassRootNote(cyc)), idx + 1, pg.d.length);
+  }
+  function renderBassGrid() {
+    var G = $("bGrid"); G.innerHTML = ""; bGridEls = []; bCurIdx = -1;
+    for (var i = 0; i < bass.steps; i++) {
+      (function (i) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "bstep" + (i % 4 === 0 ? " beat" : "");
+        b.dataset.s = String(bass.base[i] || 0); b.textContent = String(i + 1);
+        b.addEventListener("click", function () { bass.base[i] = ((bass.base[i] || 0) + 1) % 3; b.dataset.s = String(bass.base[i]); bass.pat = ""; $("bPat").value = ""; });
+        G.appendChild(b); bGridEls.push(b);
+      })(i);
+    }
+  }
+  function resizeBass(n) {
+    var old = bass.base.slice(); bass.steps = n; bass.base = [];
+    for (var i = 0; i < n; i++) bass.base.push(i < old.length ? old[i] : 0);
+    resyncBass(); renderBassGrid();
+  }
+  function resyncBass() { if (ctx && state.playing) bass.nextK = Math.ceil(curPhase(ctx.currentTime + 0.01) * bass.steps); }
+  function applyBassPat(id) {
+    if (!id) return;
+    var n = bass.steps, b = [], i;
+    if (id === "bombo") {
+      var t = null; state.tracks.forEach(function (x) { if (x.id === "bombo") t = x; });
+      if (!t) return;
+      n = t.steps; for (i = 0; i < n; i++) b.push(t.base[mod(i - t.rot, t.steps)] ? 1 : 0);
+      if (b[0]) b[0] = 2;
+    } else {
+      var d = BPATS[id]; if (!d) return;
+      for (i = 0; i < n; i++) b.push(0);
+      d.p.forEach(function (p) { if (p - 1 < n) b[p - 1] = 1; });
+      d.a.forEach(function (p) { if (p - 1 < n && b[p - 1]) b[p - 1] = 2; });
+    }
+    bass.steps = n; bass.base = b; bass.pat = id; $("bSteps").value = String(n);
+    resyncBass(); renderBassGrid();
+  }
+  function bassData() {
+    return { on: bass.on, root: bass.root, oct: bass.oct, prog: bass.prog, cpc: bass.cpc, steps: bass.steps, base: bass.base.slice(), acc: bass.acc, wave: bass.wave,
+      cut: bass.cut, res: bass.res, env: bass.env, dec: bass.dec, glide: bass.glide, vol: bass.vol, ch: bass.ch, pat: bass.pat };
+  }
+  function bassSyncUI() {
+    $("bOn").checked = bass.on; $("bRoot").value = String(bass.root); $("bOct").value = String(bass.oct); $("bProg").value = bass.prog; $("bCpc").value = String(bass.cpc);
+    $("bSteps").value = String(bass.steps); $("bAcc").value = bass.acc; $("bWave").value = bass.wave; $("bPat").value = bass.pat || "";
+    $("bCut").value = Math.round(bass.cut * 100); $("bRes").value = Math.round(bass.res * 100); $("bEnv").value = Math.round(bass.env * 100);
+    $("bDec").value = Math.round(bass.dec * 100); $("bGlide").value = Math.round(bass.glide * 100); $("bVol").value = Math.round(bass.vol * 100); $("bCh").value = String(bass.ch);
+    if (bass.g) bass.g.gain.value = bass.vol * 0.7;
+    renderBassGrid(); showBassInfo();
+  }
+  function setBass(o) {
+    if (!o || typeof o !== "object") return;
+    function nz(v, lo, hi, d) { v = +v; return v >= lo && v <= hi ? v : d; }
+    bass.on = !!o.on; bass.root = nz(o.root, 0, 11, 9) | 0; bass.oct = nz(o.oct, 1, 3, 2) | 0;
+    bass.prog = progOf(o.prog).id; bass.cpc = [1, 2, 4].indexOf(+o.cpc) >= 0 ? +o.cpc : 1;
+    bass.steps = [8, 12, 16, 24, 32].indexOf(+o.steps) >= 0 ? +o.steps : 16;
+    bass.base = []; for (var i = 0; i < bass.steps; i++) bass.base.push(Array.isArray(o.base) ? nz(o.base[i], 0, 2, 0) | 0 : 0);
+    bass.acc = o.acc === "fifth" ? "fifth" : "oct"; bass.wave = ["saw", "sqr", "sub"].indexOf(o.wave) >= 0 ? o.wave : "saw";
+    bass.cut = nz(o.cut, 0, 1, 0.45); bass.res = nz(o.res, 0, 1, 0.3); bass.env = nz(o.env, 0, 1, 0.6); bass.dec = nz(o.dec, 0.05, 1, 0.35);
+    bass.glide = nz(o.glide, 0, 1, 0); bass.vol = nz(o.vol, 0, 1, 0.8); bass.ch = nz(o.ch, 0, 15, 1) | 0; bass.pat = o.pat || "";
+    bassSyncUI(); resyncBass();
+  }
+  (function buildBassUI() {
+    for (var i = 0; i < 12; i++) { var o = document.createElement("option"); o.value = String(i); o.textContent = tr(NOTE_ES[i]); $("bRoot").appendChild(o); }
+    var gs = {}, ord = [];
+    PROGS.forEach(function (pg) {
+      if (!gs[pg.g]) { gs[pg.g] = document.createElement("optgroup"); gs[pg.g].label = tr(pg.g); ord.push(pg.g); }
+      var op = document.createElement("option"); op.value = pg.id; op.textContent = pg.name; gs[pg.g].appendChild(op);
+    });
+    ord.forEach(function (g) { $("bProg").appendChild(gs[g]); });
+    var pe = document.createElement("option"); pe.value = ""; pe.textContent = tr("Personalizado"); $("bPat").appendChild(pe);
+    Object.keys(BPATS).forEach(function (k) { var o2 = document.createElement("option"); o2.value = k; o2.textContent = tr(BPATS[k].n); $("bPat").appendChild(o2); });
+    var ob = document.createElement("option"); ob.value = "bombo"; ob.textContent = tr("Seguir al bombo"); $("bPat").appendChild(ob);
+    for (var c = 1; c <= 16; c++) { var oc2 = document.createElement("option"); oc2.value = String(c - 1); oc2.textContent = String(c); $("bCh").appendChild(oc2); }
+    $("bOn").addEventListener("change", function () { bass.on = $("bOn").checked; resyncBass(); if (!bass.on) allNotesOff(); });
+    $("bRoot").addEventListener("change", function () { bass.root = +$("bRoot").value; showBassInfo(); });
+    $("bOct").addEventListener("change", function () { bass.oct = +$("bOct").value; });
+    $("bProg").addEventListener("change", function () { bass.prog = $("bProg").value; showBassInfo(); });
+    $("bCpc").addEventListener("change", function () { bass.cpc = +$("bCpc").value; showBassInfo(); });
+    $("bPat").addEventListener("change", function () { applyBassPat($("bPat").value); });
+    $("bSteps").addEventListener("change", function () { resizeBass(+$("bSteps").value); });
+    $("bAcc").addEventListener("change", function () { bass.acc = $("bAcc").value; });
+    $("bWave").addEventListener("change", function () { bass.wave = $("bWave").value; });
+    $("bCut").addEventListener("input", function () { bass.cut = +$("bCut").value / 100; });
+    $("bRes").addEventListener("input", function () { bass.res = +$("bRes").value / 100; });
+    $("bEnv").addEventListener("input", function () { bass.env = +$("bEnv").value / 100; });
+    $("bDec").addEventListener("input", function () { bass.dec = +$("bDec").value / 100; });
+    $("bGlide").addEventListener("input", function () { bass.glide = +$("bGlide").value / 100; });
+    $("bVol").addEventListener("input", function () { bass.vol = +$("bVol").value / 100; if (bass.g) bass.g.gain.value = bass.vol * 0.7; });
+    $("bCh").addEventListener("change", function () { allNotesOff(); bass.ch = +$("bCh").value; });
+    bassSyncUI();
+  })();
+  function relabelBass() {
+    Array.prototype.forEach.call($("bRoot").options, function (o) { o.textContent = tr(NOTE_ES[+o.value]); });
+    Array.prototype.forEach.call($("bProg").querySelectorAll("optgroup"), function (g, i) { var seen = []; PROGS.forEach(function (pg) { if (seen.indexOf(pg.g) < 0) seen.push(pg.g); }); g.label = tr(seen[i]); });
+    Array.prototype.forEach.call($("bPat").options, function (o) { o.textContent = o.value === "" ? tr("Personalizado") : (o.value === "bombo" ? tr("Seguir al bombo") : tr(BPATS[o.value].n)); });
+    showBassInfo();
+  }
+  function bassPlayhead(now) {
+    var idx = -1;
+    if (state.playing && bass.on && ctx) idx = Math.floor(mod(curPhase(now) * bass.steps, bass.steps));
+    if (idx === bCurIdx) return;
+    if (bGridEls[bCurIdx]) bGridEls[bCurIdx].classList.remove("cur");
+    if (bGridEls[idx]) bGridEls[idx].classList.add("cur");
+    bCurIdx = idx;
   }
 
   /* ---------- Sesión (autoguardado) ---------- */
