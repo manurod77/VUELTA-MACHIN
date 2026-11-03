@@ -218,7 +218,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.9.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.11.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.12.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -234,6 +234,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <div class="dial" id="dial"><canvas id="cv" aria-label="Cuadrante circular del ritmo. Toca un punto para activarlo o desactivarlo."></canvas></div>
       <div class="cap">Patrones: toca una letra para verla y editarla</div>
       <div class="chips" id="chips" role="group" aria-label="Patrones"></div>
+      <p class="note" id="patLegend"></p>
       <p class="status" id="songStatus">Detenido.</p>
       <div class="panel panelB" id="panelB" hidden></div>
     </div>
@@ -245,6 +246,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           <button id="play" type="button" aria-pressed="false">▶ Tocar</button>
           <select id="scene" aria-label="Escena por género"></select>
         </div>
+        <label class="check" for="sceneFull"><input id="sceneFull" type="checkbox" checked> Cargar también variaciones, fills e intro en A–H y el arreglo</label>
         <label class="sel-field" for="kitAll"><span>Kit global</span>
           <select id="kitAll"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option></select></label>
         <label class="field" for="bpm"><span>Tempo</span><input id="bpm" type="range" min="50" max="200" value="100"><output id="bpmO">100</output></label>
@@ -405,7 +407,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.11.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.12.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -735,6 +737,16 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["La", "A", "Lá", "A", "Ля"],
   ["La♯", "A♯", "Lá♯", "A♯", "Ля♯"],
   ["Si", "B", "Si", "B", "Си"],
+  ["Principal", "Main groove", "Principal", "主节奏", "Основной"],
+  ["Variación", "Variation", "Variação", "变奏", "Вариация"],
+  ["Breakdown", "Breakdown", "Breakdown", "分解段", "Брейкдаун"],
+  ["Subida", "Build-up", "Subida", "推进段", "Нарастание"],
+  ["Intro", "Intro", "Intro", "前奏", "Интро"],
+  ["Fill corto", "Short fill", "Fill curto", "短过门", "Короткий филл"],
+  ["Fill largo", "Long fill", "Fill longo", "长过门", "Длинный филл"],
+  ["Final", "Ending", "Final", "结尾", "Финал"],
+  ["Cargar también variaciones, fills e intro en A–H y el arreglo", "Also load variations, fills and intro into A–H and the arrangement", "Carregar também variações, fills e intro em A–H e o arranjo", "同时把变奏、过门和前奏载入 A–H 与编排", "Также загрузить вариации, филлы и интро в A–H и аранжировку"],
+  ["Género cargado: A–H con variaciones y arreglo (Intro → Principal → Fill → Variación…). Pásalo a modo Canción para oírlo completo.", "Genre loaded: A–H with variations and arrangement (Intro → Main → Fill → Variation…). Switch to Song mode to hear it in full.", "Gênero carregado: A–H com variações e arranjo (Intro → Principal → Fill → Variação…). Mude para o modo Canção para ouvir completo.", "已载入该风格：A–H 含变奏与编排（前奏 → 主节奏 → 过门 → 变奏…）。切换到歌曲模式可完整试听。", "Жанр загружен: A–H с вариациями и аранжировкой (Интро → Основной → Филл → Вариация…). Переключитесь в режим песни, чтобы услышать целиком."],
   ["Vaciar lista", "Clear list", "Limpar lista", "清空列表", "Очистить список"],
   ["Patrón de la sección", "Section pattern", "Padrão da seção", "段落的节奏型", "Паттерн секции"],
   ["Quitar sección", "Remove section", "Remover seção", "删除段落", "Удалить секцию"],
@@ -850,49 +862,6 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       clave: P(12, [1, 3, 5, 6, 8, 10, 12]), conga: E(12, 5), campana: P(12, [1, 4, 7, 10]),
       hatC: E(12, 6), bombo: P(12, [1, 7]), caja: P(12, [4, 10]) }),
 
-
-    habanera: S("Euclidiano y poliritmo", "Habanera (8)", 96, {
-      clave: P(8, [1, 4, 5, 7]), bombo: P(8, [1, 5]), caja: P(8, [3, 7]), hatC: E(8, 8) }),
-    shiko: S("Euclidiano y poliritmo", "Shiko (16)", 108, {
-      clave: P(16, [1, 5, 7, 11, 13]), conga: E(16, 7), campana: P(16, [1, 5, 9, 13]), bombo: P(16, [1, 9]), hatC: E(16, 8) }),
-    aksak: S("Euclidiano y poliritmo", "Aksak 9/8 (2+2+2+3)", 120, {
-      clave: P(9, [1, 3, 5, 7]), bombo: P(9, [1, 7]), caja: P(9, [5]), hatC: E(9, 9) }),
-    bulgaro: S("Euclidiano y poliritmo", "Búlgaro 7/8 (2+2+3)", 130, {
-      clave: P(7, [1, 3, 5]), bombo: P(7, [1, 5]), caja: P(7, [3]), hatC: E(7, 7) }),
-    euc57: S("Euclidiano y poliritmo", "Euclidiano 5 en 13", 110, {
-      clave: E(13, 5), conga: E(13, 3, 2), campana: E(13, 7), bombo: P(13, [1, 8]), hatC: E(13, 13) }),
-
-    salsa: S("Latinos y afro", "Salsa", 180, {
-      clave: P(16, [1, 4, 7, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(16, [1, 5, 7, 9, 13, 15]),
-      bombo: P(16, [1, 9]), hatC: E(16, 8) }),
-    cumbia: S("Latinos y afro", "Cumbia", 96, {
-      bombo: P(16, [1, 9]), caja: P(16, [5, 13]), conga: P(16, [3, 7, 11, 15]), campana: P(16, [1, 5, 9, 13]),
-      hatC: P(16, [1, 3, 4, 5, 7, 8, 9, 11, 12, 13, 15, 16]) }),
-    merengue: S("Latinos y afro", "Merengue", 130, {
-      bombo: P(16, K4), caja: P(16, EVEN), conga: P(16, [4, 8, 12, 16]), hatC: P(16, SIX), campana: P(16, [1, 5, 9, 13]) }),
-    samba: S("Latinos y afro", "Samba", 100, {
-      bombo: P(16, [1, 9, 13]), caja: P(16, [5, 13]), campana: P(16, [1, 4, 6, 9, 12, 14]), hatC: P(16, SIX), conga: P(16, [3, 7, 11, 15]) }),
-    afrobeat: S("Latinos y afro", "Afrobeat", 112, {
-      bombo: P(16, [1, 7, 11]), caja: P(16, [5, 13]), hatC: P(16, SIX), conga: P(16, [4, 7, 10, 13, 16]), campana: P(16, [1, 4, 7, 11, 14]) }),
-
-
-    onedrop: S("Reggae y caribe", "Reggae one drop", 76, {
-      bombo: P(16, [9]), caja: P(16, [9]), clave: P(16, [9]), hatC: P(16, EIGHTH) }),
-    steppers: S("Reggae y caribe", "Reggae steppers", 140, {
-      bombo: P(16, K4), caja: P(16, [9]), hatC: P(16, EIGHTH), campana: P(16, [4, 12]) }),
-    ska: S("Reggae y caribe", "Ska", 160, {
-      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, OFF), clave: P(16, [3, 7, 11, 15]) }),
-
-    rock: S("Pop y rock", "Rock", 120, {
-      bombo: P(16, [1, 9]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
-    punk: S("Pop y rock", "Punk", 176, {
-      bombo: P(16, [1, 7, 9]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
-    postpunk: S("Pop y rock", "Post-punk", 150, {
-      bombo: P(16, [1, 3, 9, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [8, 16]) }),
-    disco: S("Pop y rock", "Disco", 118, {
-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN), conga: P(16, [4, 8, 12, 16]) }),
-    funk: S("Pop y rock", "Funk", 100, {
-      bombo: P(16, [1, 4, 7, 11]), caja: P(16, BP), hatC: P(16, SIX), hatO: P(16, [14]) }),
 
     house: S("House", "House clásico", 124, {
       bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN) }),
@@ -1448,9 +1417,102 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     ui.midiCh.appendChild(oc);
   }
 
+  /* ---------- Variaciones, fills e intros por género (PROPUESTO: reglas por familia, ajusta de oído) ---------- */
+  var PNAMES = ["Principal", "Variación", "Breakdown", "Subida", "Intro", "Fill corto", "Fill largo", "Final"];
+  var FAM = { rumba: "latin", son: "latin", bossa: "latin", bembe: "latin",
+    breakbeat: "breaks", bigbeat: "breaks", dnb: "breaks", jungle: "breaks", garage: "breaks", boombap: "breaks", trap: "breaks", dubstep: "breaks", dembow: "breaks", dub: "breaks",
+    poli: "euclid", cinquillo: "euclid", tresillo: "euclid" };
+  function famOf(key) { return FAM[key] || "club"; }
+  function gridOf(sc) {
+    var e = {};
+    TRACKS.forEach(function (t) {
+      var d = sc.t[t.id] || P(16, []), a = [];
+      for (var i = 0; i < d.steps; i++) a.push(d.base[mod(i - d.rot, d.steps)] ? 1 : 0);
+      e[t.id] = a;
+    });
+    return e;
+  }
+  function gcopy(e) { var o = {}; Object.keys(e).forEach(function (k) { o[k] = e[k].slice(); }); return o; }
+  function gidx(a, p16) { return Math.round((p16 - 1) * a.length / 16) % a.length; }
+  function gadd(e, id, list) { list.forEach(function (p) { e[id][gidx(e[id], p)] = 1; }); }
+  function gset(e, id, list) { e[id] = e[id].map(function () { return 0; }); gadd(e, id, list); }
+  function gclr(e, ids) { ids.forEach(function (id) { e[id] = e[id].map(function () { return 0; }); }); }
+  function gkeep(e, ids) { Object.keys(e).forEach(function (id) { if (ids.indexOf(id) < 0) gclr(e, [id]); }); }
+  function grng(e, id, from, to, v) { e[id] = e[id].map(function (x, i) { var p = i * 16 / e[id].length + 1; return (p >= from - 1e-9 && p <= to + 1e-9) ? v : x; }); }
+  function gshift(e, id, k) { var a = e[id], n = a.length; e[id] = a.map(function (_, i) { return a[mod(i - k, n)]; }); }
+  var ALL16 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], EV16 = [2, 4, 6, 8, 10, 12, 14, 16], OD8 = [1, 3, 5, 7, 9, 11, 13, 15];
+  var VAR = {
+    club: [
+      function (e) { gadd(e, "hatC", EV16); gadd(e, "campana", [4, 12]); },
+      function (e) { gkeep(e, ["hatC", "campana", "conga", "clave"]); gset(e, "hatC", [3, 7, 11, 15]); },
+      function (e) { gkeep(e, ["bombo", "clap", "caja", "hatC"]); gset(e, "hatC", ALL16); gset(e, "clap", [9, 11, 13, 14, 15, 16]); },
+      function (e) { gkeep(e, ["bombo", "hatC", "campana"]); },
+      function (e) { grng(e, "bombo", 13, 16, 0); grng(e, "clap", 13, 16, 1); },
+      function (e) { grng(e, "bombo", 10, 16, 0); grng(e, "caja", 9, 16, 1); grng(e, "clap", 13, 16, 1); },
+      function (e) { gkeep(e, ["bombo", "clap", "hatO"]); gset(e, "bombo", [1]); gset(e, "clap", [1]); gset(e, "hatO", [1]); }
+    ],
+    breaks: [
+      function (e) { gadd(e, "bombo", [7, 15]); gadd(e, "caja", [12]); gadd(e, "hatC", EV16); },
+      function (e) { gkeep(e, ["bombo", "caja", "hatC", "hatO"]); gset(e, "bombo", [1]); gclr(e, ["caja"]); gset(e, "hatC", OD8); gset(e, "hatO", [16]); },
+      function (e) { gadd(e, "caja", [9, 11, 13, 14, 15, 16]); gset(e, "hatC", ALL16); },
+      function (e) { gkeep(e, ["hatC", "hatO", "campana", "conga", "bombo"]); gset(e, "bombo", [1]); },
+      function (e) { grng(e, "bombo", 13, 16, 0); grng(e, "caja", 13, 16, 1); },
+      function (e) { grng(e, "bombo", 10, 16, 0); grng(e, "caja", 9, 16, 1); },
+      function (e) { gkeep(e, ["bombo", "caja", "hatO"]); gset(e, "bombo", [1]); gset(e, "caja", [1]); gset(e, "hatO", [1]); }
+    ],
+    latin: [
+      function (e) { gadd(e, "conga", [2, 10]); gadd(e, "campana", [3, 11]); gadd(e, "hatC", [2, 6, 10, 14]); },
+      function (e) { gkeep(e, ["clave", "conga"]); },
+      function (e) { gadd(e, "conga", [9, 11, 13, 14, 15, 16]); gset(e, "hatC", OD8); },
+      function (e) { gkeep(e, ["clave", "campana"]); },
+      function (e) { grng(e, "conga", 13, 16, 1); },
+      function (e) { grng(e, "conga", 9, 16, 1); gadd(e, "campana", [9, 13]); },
+      function (e) { gkeep(e, ["clave", "conga", "bombo"]); gset(e, "clave", [1]); gset(e, "conga", [1]); gset(e, "bombo", [1]); }
+    ],
+    euclid: [
+      function (e) { Object.keys(e).forEach(function (id) { if (id !== "bombo") gshift(e, id, Math.max(1, Math.round(e[id].length / 8))); }); },
+      function (e) { gkeep(e, ["clave", "hatC"]); },
+      function (e) { grng(e, "hatC", 1, 16, 1); gadd(e, "conga", [2, 6, 10, 14]); },
+      function (e) { gkeep(e, ["clave", "hatC"]); gset(e, "hatC", [1, 9]); },
+      function (e) { grng(e, "conga", 13, 16, 1); grng(e, "caja", 13, 16, 1); },
+      function (e) { grng(e, "caja", 9, 16, 1); },
+      function (e) { gkeep(e, ["bombo", "clave"]); gset(e, "bombo", [1]); gset(e, "clave", [1]); }
+    ]
+  };
+  /* Orden: A principal, B variación, C breakdown, D subida, E intro, F fill corto, G fill largo, H final */
+  var VORDER = [0, 1, 2, 3, 4, 5, 6];
+  var SONG_AUTO = [[4, 2], [0, 4], [5, 1], [1, 4], [3, 1], [6, 1], [0, 4], [2, 2], [1, 4], [5, 1], [0, 4], [7, 1]];
+  function buildSet(sc, key) {
+    var base = gridOf(sc), fam = VAR[famOf(key)], out = [];
+    function toSnap(e) { return TRACKS.map(function (t) { return { steps: e[t.id].length, base: e[t.id].slice(), rot: 0 }; }); }
+    out.push(toSnap(base));
+    var FB = [
+      function (e) { gadd(e, "campana", [8, 16]); gadd(e, "conga", [4, 12]); },
+      function (e) { gadd(e, "hatO", [8, 16]); gadd(e, "clave", [7, 15]); },
+      function (e) { gshift(e, "hatC", 1); gadd(e, "campana", [3, 11]); },
+      function (e) { gshift(e, "conga", 2); gadd(e, "hatO", [4, 12]); }
+    ];
+    fam.forEach(function (fn) {
+      var e = gcopy(base); fn(e);
+      var tries = 0, js = JSON.stringify(toSnap(e));
+      while (out.some(function (o2) { return JSON.stringify(o2) === js; }) && tries < FB.length) { FB[tries++](e); js = JSON.stringify(toSnap(e)); }
+      out.push(toSnap(e));
+    });
+    return out;
+  }
   function loadScene(key) {
-    var sc = SCENES[key];
+    var sc = SCENES[key], full = $("sceneFull") ? $("sceneFull").checked : false;
     state.bpm = sc.bpm; state.beats = sc.beats;
+    if (full) {
+      var set = buildSet(sc, key);
+      state.patterns = set.map(cloneSnap); state.cur = 0; state.queued = null; sch.pos = null;
+      state.song = SONG_AUTO.map(function (x) { return { pat: x[0], reps: x[1] }; });
+      state.patNames = PNAMES.slice();
+      state.tracks.forEach(function (t, i) { var d = state.patterns[0][i]; t.steps = d.steps; t.base = d.base.slice(); t.rot = 0; t.mute = false; resyncTrack(i); });
+      reanchor(); resyncClock(); syncAll(); renderSong(); updateSongStatus();
+      setPStatus(tr("Género cargado: A–H con variaciones y arreglo (Intro → Principal → Fill → Variación…). Pásalo a modo Canción para oírlo completo."), "ok");
+      return;
+    }
     state.tracks.forEach(function (t, i) {
       var d = sc.t[t.id] || P(16, []);
       t.steps = d.steps; t.base = d.base.slice(); t.rot = d.rot; t.mute = false;
@@ -1549,6 +1611,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Patrones y arreglo: interfaz ---------- */
   function renderChips() {
+    var lg = $("patLegend");
+    if (lg) lg.textContent = state.patNames ? state.patNames.map(function (n, i) { return LETTERS[i] + " " + tr(n); }).join(" · ") : "";
     ui.chips.innerHTML = "";
     for (var i = 0; i < 8; i++) {
       (function (i) {
@@ -1556,7 +1620,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         b.type = "button";
         b.className = "chip" + (i === state.cur ? " cur" : "") + (state.queued === i ? " queued" : "") + (hasContent(i) ? "" : " empty");
         b.textContent = LETTERS[i];
-        b.setAttribute("aria-label", tr("Patrón {0}", LETTERS[i]));
+        b.setAttribute("aria-label", tr("Patrón {0}", LETTERS[i]) + (state.patNames ? " · " + tr(state.patNames[i]) : ""));
+        if (state.patNames) b.title = tr(state.patNames[i]);
         b.setAttribute("aria-pressed", i === state.cur ? "true" : "false");
         b.addEventListener("click", function () { pickPattern(i); });
         ui.chips.appendChild(b);
@@ -1602,6 +1667,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       el.querySelector(".sl").textContent = LETTERS[bk.pat];
       el.querySelector(".sr").textContent = "×" + bk.reps;
       el.setAttribute("aria-label", tr("Sección") + " " + (bi + 1) + ": " + LETTERS[bk.pat] + " ×" + bk.reps);
+      if (state.patNames) el.title = tr(state.patNames[bk.pat]);
       el.addEventListener("click", function () { songSel = (songSel === bi ? -1 : bi); renderSong(); });
       el.addEventListener("dragstart", function (e) { songDragFrom = bi; try { e.dataTransfer.setData("text/plain", String(bi)); e.dataTransfer.effectAllowed = "move"; } catch (x) { /* nada */ } });
       el.addEventListener("dragover", function (e) { if (songDragFrom >= 0) { e.preventDefault(); el.classList.add("over"); } });
@@ -1683,7 +1749,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.11.0";
+  var FW = "0.12.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2014,7 +2080,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.11.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.12.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2097,7 +2163,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function capturePreset(name) {
     state.patterns[state.cur] = snap();
     return {
-      v: 1, app: "Clave Circular " + FW, name: name, bass: bassData(),
+      v: 1, app: "Clave Circular " + FW, name: name, names: state.patNames || null, bass: bassData(),
       bpm: state.bpm, beats: state.beats, mode: state.mode, cur: state.cur,
       song: state.song.map(function (b) { return { pat: b.pat, reps: b.reps }; }),
       patterns: state.patterns.map(cloneSnap),
@@ -2121,6 +2187,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     state.song = (p.song || []).map(function (b) { return { pat: Math.max(0, Math.min(7, +b.pat || 0)), reps: Math.max(1, Math.min(64, +b.reps || 1)) }; });
     state.patterns = p.patterns.map(cloneSnap);
     if (p.bass) setBass(p.bass);
+    state.patNames = Array.isArray(p.names) && p.names.length === 8 ? p.names.slice() : null;
     state.cur = Math.max(0, Math.min(7, +p.cur || 0)); state.queued = null; sch.pos = null;
     var pat = state.patterns[state.cur];
     state.tracks.forEach(function (t, k) { t.steps = pat[k].steps; t.base = pat[k].base.slice(); t.rot = pat[k].rot || 0; });
