@@ -223,10 +223,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.1.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.2.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.1.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.2.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -375,6 +375,27 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <p class="note">El bajo usa el mismo reloj que las pistas. La progresión avanza una vez por vuelta (o cada 2 o 4 vueltas) y cada nota toma la fundamental del acorde, o la quinta u octava en los pasos acentuados. Toca un paso: apagado, encendido, acento.</p>
       </div>
 
+      <div class="block" data-id="arpegio">
+        <div class="label">Arpegiador</div>
+        <label class="check" for="aOn"><input id="aOn" type="checkbox"> Activar arpegiador</label>
+        <label class="sel-field" for="aPre"><span>Preset de arpegio</span><select id="aPre"></select></label>
+        <label class="sel-field" for="aMode"><span>Modo</span><select id="aMode"><option value="up">Subida</option><option value="down">Bajada</option><option value="ud">Sube y baja</option><option value="alt">Alterno</option><option value="rand">Aleatorio</option></select></label>
+        <label class="sel-field" for="aChord"><span>Acorde</span><select id="aChord"><option value="tri">Tríada</option><option value="sev">Séptima</option><option value="pow">Quinta (power)</option><option value="sus">Suspendido</option><option value="add9">Novena añadida</option></select></label>
+        <label class="sel-field" for="aSteps"><span>Notas por vuelta</span><select id="aSteps"><option value="8">Corcheas (8)</option><option value="12">Tresillos (12)</option><option value="16" selected>Semicorcheas (16)</option><option value="24">Tresillos rápidos (24)</option><option value="32">Fusas (32)</option></select></label>
+        <label class="sel-field" for="aOct"><span>Octavas</span><select id="aOct"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label>
+        <label class="sel-field" for="aBase"><span>Octava base</span><select id="aBase"><option value="2">2 (grave)</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5 (aguda)</option></select></label>
+        <label class="sel-field" for="aRhy"><span>Ritmo</span><select id="aRhy"><option value="all">Todos los pasos</option><option value="cor">Corcheas</option><option value="off">Contratiempos</option><option value="sinc">Sincopado</option><option value="gal">Galope</option></select></label>
+        <label class="field" for="aGate"><span>Duración de nota</span><input id="aGate" type="range" min="10" max="100" value="50"></label>
+        <label class="sel-field" for="aWave"><span>Onda</span><select id="aWave"><option value="saw">Sierra</option><option value="sqr">Cuadrada</option><option value="tri">Triangular</option></select></label>
+        <label class="field" for="aCut"><span>Filtro</span><input id="aCut" type="range" min="0" max="100" value="50"></label>
+        <label class="field" for="aRes"><span>Resonancia</span><input id="aRes" type="range" min="0" max="100" value="25"></label>
+        <label class="field" for="aEnv"><span>Envolvente</span><input id="aEnv" type="range" min="0" max="100" value="50"></label>
+        <label class="field" for="aDec"><span>Caída</span><input id="aDec" type="range" min="5" max="100" value="30"></label>
+        <label class="field" for="aVol"><span>Volumen del arpegio</span><input id="aVol" type="range" min="0" max="100" value="60"></label>
+        <label class="sel-field" for="aCh"><span>Canal MIDI del arpegio</span><select id="aCh"></select></label>
+        <p class="note">El arpegiador usa el mismo reloj y la misma progresión del bajo (tónica y acordes de la pestaña Bajo). Recorre las notas del acorde que suena en cada vuelta. Va por su propio canal MIDI.</p>
+      </div>
+
       <div class="block" data-id="teoria">
         <div class="label">Teoría</div>
         <label class="sel-field" for="bCircle"><span>Círculo</span><select id="bCircle"><option value="chrom">Cromático</option><option value="fifths">De quintas</option></select></label>
@@ -424,7 +445,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular · DE FW 0.1.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular · DE FW 0.2.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -787,6 +808,48 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
+  /* Arpegiador */
+  ["Arpegiador", "Arpeggiator", "Arpejador", "琶音器", "Арпеджиатор"],
+  ["Activar arpegiador", "Enable arpeggiator", "Ativar arpejador", "启用琶音器", "Включить арпеджиатор"],
+  ["Preset de arpegio", "Arpeggio preset", "Preset de arpejo", "琶音预设", "Пресет арпеджио"],
+  ["Modo", "Mode", "Modo", "模式", "Режим"],
+  ["Subida", "Up", "Subida", "上行", "Вверх"],
+  ["Bajada", "Down", "Descida", "下行", "Вниз"],
+  ["Sube y baja", "Up and down", "Sobe e desce", "上下行", "Вверх и вниз"],
+  ["Alterno", "Alternating", "Alternado", "交替", "Чередование"],
+  ["Aleatorio", "Random", "Aleatório", "随机", "Случайно"],
+  ["Acorde", "Chord", "Acorde", "和弦", "Аккорд"],
+  ["Tríada", "Triad", "Tríade", "三和弦", "Трезвучие"],
+  ["Séptima", "Seventh", "Sétima", "七和弦", "Септаккорд"],
+  ["Quinta (power)", "Fifth (power)", "Quinta (power)", "五度(强力)", "Квинта (пауэр)"],
+  ["Suspendido", "Suspended", "Suspenso", "挂留", "Субквартовый"],
+  ["Novena añadida", "Added ninth", "Nona adicionada", "加九", "С добавленной нонoй"],
+  ["Notas por vuelta", "Notes per cycle", "Notas por volta", "每圈音符数", "Нот за круг"],
+  ["Corcheas (8)", "Eighths (8)", "Colcheias (8)", "八分音符 (8)", "Восьмые (8)"],
+  ["Tresillos (12)", "Triplets (12)", "Tercinas (12)", "三连音 (12)", "Триоли (12)"],
+  ["Semicorcheas (16)", "Sixteenths (16)", "Semicolcheias (16)", "十六分音符 (16)", "Шестнадцатые (16)"],
+  ["Tresillos rápidos (24)", "Fast triplets (24)", "Tercinas rápidas (24)", "快三连音 (24)", "Быстрые триоли (24)"],
+  ["Fusas (32)", "Thirty-seconds (32)", "Fusas (32)", "三十二分音符 (32)", "Тридцать вторые (32)"],
+  ["Octavas", "Octaves", "Oitavas", "八度数", "Октавы"],
+  ["Octava base", "Base octave", "Oitava base", "起始八度", "Базовая октава"],
+  ["2 (grave)", "2 (low)", "2 (grave)", "2 (低)", "2 (низкая)"],
+  ["5 (aguda)", "5 (high)", "5 (aguda)", "5 (高)", "5 (высокая)"],
+  ["Ritmo", "Rhythm", "Ritmo", "节奏", "Ритм"],
+  ["Todos los pasos", "Every step", "Todos os passos", "每一步", "Каждый шаг"],
+  ["Contratiempos", "Offbeats", "Contratempos", "反拍", "Offbeat"],
+  ["Galope", "Gallop", "Galope", "疾驰", "Галоп"],
+  ["Duración de nota", "Note length", "Duração da nota", "音符时值", "Длина ноты"],
+  ["Triangular", "Triangle", "Triangular", "三角波", "Треугольная"],
+  ["Volumen del arpegio", "Arpeggio volume", "Volume do arpejo", "琶音音量", "Громкость арпеджио"],
+  ["Canal MIDI del arpegio", "Arpeggio MIDI channel", "Canal MIDI do arpejo", "琶音 MIDI 通道", "MIDI-канал арпеджио"],
+  ["El arpegiador usa el mismo reloj y la misma progresión del bajo (tónica y acordes de la pestaña Bajo). Recorre las notas del acorde que suena en cada vuelta. Va por su propio canal MIDI.", "The arpeggiator uses the same clock and the bass progression (root and chords from the Bass tab). It walks through the notes of the chord sounding on each cycle, on its own MIDI channel.", "O arpejador usa o mesmo relógio e a progressão do baixo (tônica e acordes da aba Baixo). Percorre as notas do acorde de cada volta, em seu próprio canal MIDI.", "琶音器使用相同的时钟和贝斯的和弦进行(贝斯页的主音与和弦),在每一圈循环当前和弦的音符,使用独立的 MIDI 通道。", "Арпеджиатор использует те же часы и прогрессию баса (тоника и аккорды вкладки Бас), проходит ноты звучащего аккорда на каждом круге и работает на своём MIDI-канале."],
+  ["Clásico ascendente", "Classic ascending", "Clássico ascendente", "Clásico ascendente", "Clásico ascendente"],
+  ["Trance en subida", "Rising trance", "Trance em subida", "Trance en subida", "Trance en subida"],
+  ["Latino sincopado", "Syncopated Latin", "Latino sincopado", "Latino sincopado", "Latino sincopado"],
+  ["Descendente suave", "Soft descending", "Descendente suave", "Descendente suave", "Descendente suave"],
+  ["Aleatorio brillante", "Bright random", "Aleatório brilhante", "Aleatorio brillante", "Aleatorio brillante"],
+  ["Tresillos", "Triplets", "Tercinas", "Tresillos", "Tresillos"],
+  ["Quintas rodantes", "Rolling fifths", "Quintas rolantes", "Quintas rodantes", "Quintas rodantes"],
   /* Escenas: categorías y nombres */
   ["Dark wave y dark synth", "Dark wave and dark synth", "Dark wave e dark synth", "暗波与暗合成器", "Дарквейв и дарк-синт"],
   ["EBM e industrial", "EBM and industrial", "EBM e industrial", "EBM 与工业", "EBM и индастриал"],
@@ -818,6 +881,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Arpegio cyberpunk", "Cyberpunk arpeggio", "Arpejo cyberpunk", "Arpegio cyberpunk", "Arpegio cyberpunk"],
   ["Pedal grave", "Low pedal", "Pedal grave", "Pedal grave", "Pedal grave"],
   ["Pedal con corcheas", "Pedal with eighths", "Pedal com colcheias", "Pedal con corcheas", "Pedal con corcheas"],
+  ["Dark synth pulsante", "Pulsing dark synth", "Dark synth pulsante", "Dark synth pulsante", "Dark synth pulsante"],
+  ["Cyberpunk cascada", "Cyberpunk cascade", "Cyberpunk cascata", "Cyberpunk cascada", "Cyberpunk cascada"],
+  ["Stab neurofunk", "Neurofunk stab", "Stab neurofunk", "Stab neurofunk", "Stab neurofunk"],
+  ["Coldwave gélido", "Icy coldwave", "Coldwave gélido", "Coldwave gélido", "Coldwave gélido"],
+  ["Secuencia EBM", "EBM sequence", "Sequência EBM", "Secuencia EBM", "Secuencia EBM"],
+  ["Hipnótico en tresillos", "Hypnotic triplets", "Hipnótico em tercinas", "Hipnótico en tresillos", "Hipnótico en tresillos"],
+  ["Industrial áspero", "Harsh industrial", "Industrial áspero", "Industrial áspero", "Industrial áspero"],
   ["Latinos y afro", "Latin and Afro", "Latinos e afro", "拉丁与非洲", "Латино и афро"],
   ["Trance y progresivo", "Trance and progressive", "Trance e progressivo", "Trance 与 Progressive", "Транс и прогрессив"],
   ["Drum & bass y jungle", "Drum & bass and jungle", "Drum & bass e jungle", "Drum & bass 与 Jungle", "Драм-н-бейс и джангл"],
@@ -943,6 +1013,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   };
 
 
+  var DE_ARP = {"darksynth": "dsynth", "cybersynth": "cyber", "darkstep": "neuro", "cybercombat": "neuro", "coldwave": "cold", "hypno": "hipno", "electroind": "ebmseq", "indtechno": "ind", "aggro": "ebmseq"};
+  Object.keys(DE_ARP).forEach(function (k) { SCENES[k].arp = DE_ARP[k]; });
   var state = {
     bpm: 100, beats: 4, vol: 0.8, playing: false, sel: 0, sync: "int",
     tracks: TRACKS.map(function (t) {
@@ -1023,6 +1095,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     master.connect(comp); comp.connect(ctx.destination);
     master.gain.value = state.vol;
     bass.g = ctx.createGain(); bass.g.gain.value = bass.vol * 0.7; bass.g.connect(master);
+    arp.g = ctx.createGain(); arp.g.gain.value = arp.vol * 0.45; arp.g.connect(master);
     var len = ctx.sampleRate;
     noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
     var d = noiseBuf.getChannelData(0);
@@ -1246,7 +1319,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
   function allNotesOff() {
     if (!midi.out) return;
-    try { midi.out.send([0xB0 | midi.ch, 123, 0]); midi.out.send([0xB0 | bass.ch, 123, 0]); } catch (e) { /* ignorar */ }
+    try { midi.out.send([0xB0 | midi.ch, 123, 0]); midi.out.send([0xB0 | bass.ch, 123, 0]); midi.out.send([0xB0 | arp.ch, 123, 0]); } catch (e) { /* ignorar */ }
   }
 
   /* ---------- Patrones y arreglo ---------- */
@@ -1281,7 +1354,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var changed = idx !== state.cur;
     if (changed) { loadPattern(idx); syncAll(); }
     state.tracks.forEach(function (t) { t.nextK = c * t.steps; });
-    bass.nextK = c * bass.steps; showBassInfo();
+    bass.nextK = c * bass.steps; arp.nextK = c * arp.steps; showBassInfo();
     updateSongStatus();
   }
 
@@ -1338,7 +1411,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           t.nextK++;
         }
       });
-      bassFeed(0, now, true);
+      bassFeed(0, now, true); arpFeed(0, now, true);
       if (timeAt(sch.cycle + 1) <= now + LOOK && guard++ < 4) { enterCycle(sch.cycle + 1); continue; }
       break;
     }
@@ -1395,7 +1468,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
           t.nextK++;
         }
       });
-      bassFeed(phase, now, false);
+      bassFeed(phase, now, false); arpFeed(phase, now, false);
       ext.ticks++;
     } else if (s === 0xFA) {
       initAudio(); if (ctx.state === "suspended") { try { ctx.resume(); } catch (er) { /* ignorar */ } }
@@ -1535,7 +1608,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function loadScene(key) {
     var sc = SCENES[key], full = $("sceneFull") ? $("sceneFull").checked : false;
     state.bpm = sc.bpm; state.beats = sc.beats;
-    if (sc.bass) { var bd = bassData(); Object.keys(sc.bass).forEach(function (k) { bd[k] = sc.bass[k]; }); bd.on = true; bd.steps = 16; setBass(bd); applyBassPat(sc.bass.pat); }
+    if (sc.bass) { var bd = bassData(); Object.keys(sc.bass).forEach(function (k) { bd[k] = sc.bass[k]; }); bd.on = true; bd.steps = 16; setBass(bd); applyBassPat(sc.bass.pat);
+      if (sc.arp) arpPreset(sc.arp, true); else if (arp.on) { arp.on = false; arpSyncUI(); allNotesOff(); } }
     if (full) {
       var set = buildSet(sc, key);
       state.patterns = set.map(cloneSnap); state.cur = 0; state.queued = null; sch.pos = null;
@@ -1782,7 +1856,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "DE 0.1.0";
+  var FW = "DE 0.2.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2114,7 +2188,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW DE 0.1.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW DE 0.2.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2198,7 +2272,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function capturePreset(name) {
     state.patterns[state.cur] = snap();
     return {
-      v: 1, app: "Clave Circular " + FW, name: name, names: state.patNames || null, bass: bassData(),
+      v: 1, app: "Clave Circular " + FW, name: name, names: state.patNames || null, bass: bassData(), arp: arpData(),
       bpm: state.bpm, beats: state.beats, mode: state.mode, cur: state.cur,
       song: state.song.map(function (b) { return { pat: b.pat, reps: b.reps }; }),
       patterns: state.patterns.map(cloneSnap),
@@ -2222,6 +2296,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     state.song = (p.song || []).map(function (b) { return { pat: Math.max(0, Math.min(7, +b.pat || 0)), reps: Math.max(1, Math.min(64, +b.reps || 1)) }; });
     state.patterns = p.patterns.map(cloneSnap);
     if (p.bass) setBass(p.bass);
+    if (p.arp) setArp(p.arp);
     state.patNames = Array.isArray(p.names) && p.names.length === 8 ? p.names.slice() : null;
     state.cur = Math.max(0, Math.min(7, +p.cur || 0)); state.queued = null; sch.pos = null;
     var pat = state.patterns[state.cur];
@@ -2329,6 +2404,17 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         }
       });
     }
+    if (arp.on) {
+      var ad = Math.max(1, Math.round(PPQ * state.beats / arp.steps * arp.gate)), apat = ARHY[arp.rhy] || [1];
+      plan.forEach(function (pi4, c4) {
+        for (var k4 = 0; k4 < arp.steps; k4++) {
+          if (!apat[k4 % apat.length]) continue;
+          var tk4 = Math.round((c4 + k4 / arp.steps) * state.beats * PPQ), nn4 = arpNoteAt(c4, k4) & 127;
+          ev.push({ t: tk4, o: 1, b: [0x90 | arp.ch, nn4, k4 % 4 === 0 ? 108 : 86] });
+          ev.push({ t: tk4 + ad, o: 0, b: [0x80 | arp.ch, nn4, 0] });
+        }
+      });
+    }
     ev.sort(function (a, b) { return a.t - b.t || a.o - b.o; });
     var tr = [], mpq = Math.round(60000000 / state.bpm);
     tr.push(0x00, 0xFF, 0x51, 0x03, (mpq >> 16) & 255, (mpq >> 8) & 255, mpq & 255);
@@ -2367,9 +2453,9 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     if (!OAC) return Promise.reject(new Error(tr("Este navegador no tiene OfflineAudioContext.")));
     var sr = 44100, secs = plan.length * cycleDur() + 2;
     var oc = new OAC(2, Math.ceil(sr * secs), sr);
-    var sv = { bg: bass.g, bl: bass.last, ctx: ctx, master: master, noiseBuf: noiseBuf, out: OUT, gp: state.tracks.map(function (t) { return [t.g, t.p]; }) };
+    var sv = { ag: arp.g, bg: bass.g, bl: bass.last, ctx: ctx, master: master, noiseBuf: noiseBuf, out: OUT, gp: state.tracks.map(function (t) { return [t.g, t.p]; }) };
     function restore() {
-      ctx = sv.ctx; master = sv.master; noiseBuf = sv.noiseBuf; OUT = sv.out; bass.g = sv.bg; bass.last = sv.bl;
+      ctx = sv.ctx; master = sv.master; noiseBuf = sv.noiseBuf; OUT = sv.out; bass.g = sv.bg; bass.last = sv.bl; arp.g = sv.ag;
       state.tracks.forEach(function (t, i) { t.g = sv.gp[i][0]; t.p = sv.gp[i][1]; });
     }
     try {
@@ -2383,6 +2469,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         applyMix(t);
       });
       bass.g = oc.createGain(); bass.g.gain.value = bass.vol * 0.7; bass.g.connect(master); bass.last = null;
+      arp.g = oc.createGain(); arp.g.gain.value = arp.vol * 0.45; arp.g.connect(master);
+      if (arp.on) { var apat2 = ARHY[arp.rhy] || [1]; plan.forEach(function (pi5, c5) {
+        for (var k5 = 0; k5 < arp.steps; k5++) {
+          if (!apat2[k5 % apat2.length]) continue;
+          playArp((c5 + k5 / arp.steps) * cycleDur(), arpNoteAt(c5, k5), Math.max(0.03, cycleDur() / arp.steps * arp.gate), k5 % 4 === 0);
+        }
+      }); }
       if (bass.on) plan.forEach(function (pi3, c3) {
         for (var k3 = 0; k3 < bass.steps; k3++) {
           var st3 = bass.base[k3]; if (!st3) continue;
@@ -2962,6 +3055,125 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     bass.glide = nz(o.glide, 0, 1, 0); bass.vol = nz(o.vol, 0, 1, 0.8); bass.ch = nz(o.ch, 0, 15, 1) | 0; bass.pat = o.pat || "";
     bassSyncUI(); resyncBass();
   }
+
+  /* ---------- Arpegiador (PROPUESTO: usa la progresión y la tónica del bajo) ---------- */
+  var ARHY = { all: [1], cor: [1, 0], off: [0, 1], sinc: [1, 0, 1, 1, 0, 1, 0, 1], gal: [1, 0, 1, 1] };
+  var ARP_PRESETS = [
+    { id: "dsynth", n: "Dark synth pulsante", mode: "ud", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.38, res: 0.35, env: 0.55, dec: 0.25, vol: 0.55 },
+    { id: "cyber", n: "Cyberpunk cascada", mode: "up", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.45, wave: "saw", cut: 0.5, res: 0.4, env: 0.6, dec: 0.3, vol: 0.55 },
+    { id: "neuro", n: "Stab neurofunk", mode: "rand", chord: "pow", steps: 16, oct: 2, base: 2, rhy: "sinc", gate: 0.3, wave: "sqr", cut: 0.55, res: 0.5, env: 0.7, dec: 0.2, vol: 0.5 },
+    { id: "cold", n: "Coldwave gélido", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.7, wave: "tri", cut: 0.6, res: 0.15, env: 0.35, dec: 0.45, vol: 0.55 },
+    { id: "ebmseq", n: "Secuencia EBM", mode: "up", chord: "pow", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.45, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
+    { id: "hipno", n: "Hipnótico en tresillos", mode: "up", chord: "sus", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.6, wave: "saw", cut: 0.35, res: 0.5, env: 0.4, dec: 0.35, vol: 0.5 },
+    { id: "ind", n: "Industrial áspero", mode: "alt", chord: "sev", steps: 16, oct: 2, base: 2, rhy: "gal", gate: 0.25, wave: "sqr", cut: 0.5, res: 0.55, env: 0.65, dec: 0.2, vol: 0.5 }
+  ];
+
+  var arp = { on: false, mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.25, env: 0.5, dec: 0.3, vol: 0.6, ch: 2, nextK: 0, g: null, pre: "" };
+  function arpNotes(cyc) {
+    var pg = progOf(bass.prog), r = pg.d[chordIdxAt(cyc)], root = 12 * (arp.base + 1) + bass.root;
+    var degs = { tri: [0, 2, 4], sev: [0, 2, 4, 6], pow: [0, 4], sus: [0, 3, 4], add9: [0, 2, 4, 8] }[arp.chord] || [0, 2, 4], out = [];
+    for (var o = 0; o < arp.oct; o++) degs.forEach(function (d) { out.push(root + degSemi(pg, r + d) + 12 * o); });
+    return out;
+  }
+  function arpNoteAt(cyc, kk) {
+    var n = arpNotes(cyc), L = n.length, m = arp.mode, seq, i;
+    if (m === "rand") return n[((Math.imul(kk + 1, 2654435761) ^ Math.imul(cyc + 7, 40503)) >>> 0) % L];
+    if (m === "down") seq = n.slice().reverse();
+    else if (m === "ud") seq = n.concat(n.slice(1, -1).reverse());
+    else if (m === "alt") { seq = []; for (i = 0; i < L; i++) seq.push(i % 2 === 0 ? n[i >> 1] : n[L - 1 - (i >> 1)]); }
+    else seq = n;
+    return seq[kk % seq.length];
+  }
+  function playArp(when, note, dur, acc) {
+    if (!ctx || !arp.g) return;
+    var at = Math.max(when, ctx.currentTime), f = mtof(note);
+    var o = ctx.createOscillator(); o.type = arp.wave === "sqr" ? "square" : (arp.wave === "tri" ? "triangle" : "sawtooth");
+    var flt = ctx.createBiquadFilter(); flt.type = "lowpass"; flt.Q.value = 0.5 + arp.res * 12;
+    var base = 200 * Math.pow(2, arp.cut * 5), peak = Math.min(14000, base * Math.pow(2, arp.env * 3.5 * (acc ? 1.25 : 1))), d = 0.04 + arp.dec * 0.5;
+    flt.frequency.setValueAtTime(peak, at); flt.frequency.exponentialRampToValueAtTime(Math.max(60, base), at + d);
+    var amp = ctx.createGain(), lv = acc ? 1 : 0.75;
+    amp.gain.setValueAtTime(0.0001, at); amp.gain.linearRampToValueAtTime(lv, at + 0.004);
+    amp.gain.setValueAtTime(lv, at + Math.max(0.006, dur)); amp.gain.exponentialRampToValueAtTime(0.0001, at + dur + 0.05 + arp.dec * 0.2);
+    o.frequency.setValueAtTime(f, at);
+    o.connect(flt); flt.connect(amp); amp.connect(arp.g);
+    o.start(at); o.stop(at + dur + 0.4);
+  }
+  function fireArp(when, kk, cyc) {
+    var pat = ARHY[arp.rhy] || [1]; if (!pat[kk % pat.length]) return;
+    var note = arpNoteAt(cyc, kk) & 127, dur = Math.max(0.03, cycleDur() / arp.steps * arp.gate), acc = kk % 4 === 0;
+    if (midi.local && ctx) playArp(when, note, dur, acc);
+    sendAt([0x90 | arp.ch, note, acc ? 108 : 86], when);
+    sendAt([0x80 | arp.ch, note, 0], when + dur);
+  }
+  function arpFeed(limitPhase, now, lookahead) {
+    if (lookahead) {
+      while (arp.nextK / arp.steps < sch.cycle + 1 - 1e-9 && timeAt(arp.nextK / arp.steps) < now + LOOK) {
+        var when = timeAt(arp.nextK / arp.steps);
+        if (when >= now - 0.02 && arp.on) fireArp(Math.max(when, now), mod(arp.nextK, arp.steps), Math.floor(arp.nextK / arp.steps));
+        arp.nextK++;
+      }
+    } else {
+      while (arp.nextK / arp.steps <= limitPhase + 1e-9) {
+        if (arp.on) fireArp(now, mod(arp.nextK, arp.steps), Math.floor(arp.nextK / arp.steps));
+        arp.nextK++;
+      }
+    }
+  }
+  function resyncArp() { if (ctx && state.playing) arp.nextK = Math.ceil(curPhase(ctx.currentTime + 0.01) * arp.steps); }
+  function arpData() {
+    return { on: arp.on, mode: arp.mode, chord: arp.chord, steps: arp.steps, oct: arp.oct, base: arp.base, rhy: arp.rhy, gate: arp.gate, wave: arp.wave,
+      cut: arp.cut, res: arp.res, env: arp.env, dec: arp.dec, vol: arp.vol, ch: arp.ch, pre: arp.pre };
+  }
+  function arpSyncUI() {
+    $("aOn").checked = arp.on; $("aMode").value = arp.mode; $("aChord").value = arp.chord; $("aSteps").value = String(arp.steps); $("aOct").value = String(arp.oct);
+    $("aBase").value = String(arp.base); $("aRhy").value = arp.rhy; $("aGate").value = Math.round(arp.gate * 100); $("aWave").value = arp.wave;
+    $("aCut").value = Math.round(arp.cut * 100); $("aRes").value = Math.round(arp.res * 100); $("aEnv").value = Math.round(arp.env * 100);
+    $("aDec").value = Math.round(arp.dec * 100); $("aVol").value = Math.round(arp.vol * 100); $("aCh").value = String(arp.ch); $("aPre").value = arp.pre || "";
+    if (arp.g) arp.g.gain.value = arp.vol * 0.45;
+  }
+  function setArp(o) {
+    if (!o || typeof o !== "object") return;
+    function nz(v, lo, hi, d) { v = +v; return v >= lo && v <= hi ? v : d; }
+    function pk(v, list, d) { return list.indexOf(v) >= 0 ? v : d; }
+    arp.on = !!o.on; arp.mode = pk(o.mode, ["up", "down", "ud", "alt", "rand"], "up"); arp.chord = pk(o.chord, ["tri", "sev", "pow", "sus", "add9"], "tri");
+    arp.steps = [8, 12, 16, 24, 32].indexOf(+o.steps) >= 0 ? +o.steps : 16; arp.oct = nz(o.oct, 1, 3, 2) | 0; arp.base = nz(o.base, 2, 5, 3) | 0;
+    arp.rhy = ARHY[o.rhy] ? o.rhy : "all"; arp.gate = nz(o.gate, 0.1, 1, 0.5); arp.wave = pk(o.wave, ["saw", "sqr", "tri"], "saw");
+    arp.cut = nz(o.cut, 0, 1, 0.5); arp.res = nz(o.res, 0, 1, 0.25); arp.env = nz(o.env, 0, 1, 0.5); arp.dec = nz(o.dec, 0.05, 1, 0.3);
+    arp.vol = nz(o.vol, 0, 1, 0.6); arp.ch = nz(o.ch, 0, 15, 2) | 0; arp.pre = o.pre || "";
+    arpSyncUI(); resyncArp();
+  }
+  function arpPreset(id, on) {
+    var p = null; ARP_PRESETS.forEach(function (x) { if (x.id === id) p = x; });
+    if (!p) return;
+    var d = arpData(); Object.keys(p).forEach(function (k) { if (k !== "n") d[k] = p[k]; });
+    d.pre = id; d.on = on !== false; setArp(d);
+  }
+  (function buildArpUI() {
+    var pe = document.createElement("option"); pe.value = ""; pe.textContent = tr("Personalizado"); $("aPre").appendChild(pe);
+    ARP_PRESETS.forEach(function (p) { var o = document.createElement("option"); o.value = p.id; o.textContent = tr(p.n); $("aPre").appendChild(o); });
+    for (var c = 1; c <= 16; c++) { var oc = document.createElement("option"); oc.value = String(c - 1); oc.textContent = String(c); $("aCh").appendChild(oc); }
+    function cust() { arp.pre = ""; $("aPre").value = ""; }
+    $("aOn").addEventListener("change", function () { arp.on = $("aOn").checked; resyncArp(); if (!arp.on) allNotesOff(); });
+    $("aPre").addEventListener("change", function () { if ($("aPre").value) arpPreset($("aPre").value, true); else arp.pre = ""; });
+    $("aMode").addEventListener("change", function () { arp.mode = $("aMode").value; cust(); });
+    $("aChord").addEventListener("change", function () { arp.chord = $("aChord").value; cust(); });
+    $("aSteps").addEventListener("change", function () { arp.steps = +$("aSteps").value; resyncArp(); cust(); });
+    $("aOct").addEventListener("change", function () { arp.oct = +$("aOct").value; cust(); });
+    $("aBase").addEventListener("change", function () { arp.base = +$("aBase").value; cust(); });
+    $("aRhy").addEventListener("change", function () { arp.rhy = $("aRhy").value; cust(); });
+    $("aGate").addEventListener("input", function () { arp.gate = +$("aGate").value / 100; cust(); });
+    $("aWave").addEventListener("change", function () { arp.wave = $("aWave").value; cust(); });
+    $("aCut").addEventListener("input", function () { arp.cut = +$("aCut").value / 100; cust(); });
+    $("aRes").addEventListener("input", function () { arp.res = +$("aRes").value / 100; cust(); });
+    $("aEnv").addEventListener("input", function () { arp.env = +$("aEnv").value / 100; cust(); });
+    $("aDec").addEventListener("input", function () { arp.dec = +$("aDec").value / 100; cust(); });
+    $("aVol").addEventListener("input", function () { arp.vol = +$("aVol").value / 100; if (arp.g) arp.g.gain.value = arp.vol * 0.45; });
+    $("aCh").addEventListener("change", function () { allNotesOff(); arp.ch = +$("aCh").value; });
+    arpSyncUI();
+  })();
+  function relabelArp() {
+    Array.prototype.forEach.call($("aPre").options, function (o) { o.textContent = o.value === "" ? tr("Personalizado") : tr(ARP_PRESETS.filter(function (p) { return p.id === o.value; })[0].n); });
+  }
   (function buildBassUI() {
     for (var i = 0; i < 12; i++) { var o = document.createElement("option"); o.value = String(i); o.textContent = tr(NOTE_ES[i]); $("bRoot").appendChild(o); }
     var gs = {}, ord = [];
@@ -3016,7 +3228,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     Array.prototype.forEach.call($("bRoot").options, function (o) { o.textContent = tr(NOTE_ES[+o.value]); });
     Array.prototype.forEach.call($("bProg").querySelectorAll("optgroup"), function (g, i) { var seen = []; PROGS.forEach(function (pg) { if (seen.indexOf(pg.g) < 0) seen.push(pg.g); }); g.label = tr(seen[i]); });
     Array.prototype.forEach.call($("bPat").options, function (o) { o.textContent = o.value === "" ? tr("Personalizado") : (o.value === "bombo" ? tr("Seguir al bombo") : tr(BPATS[o.value].n)); });
-    showBassInfo(); setView(view);
+    relabelArp(); showBassInfo(); setView(view);
   }
   function bassPlayhead(now) {
     var idx = -1;
