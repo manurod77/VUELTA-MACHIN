@@ -223,10 +223,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.2.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.3.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.2.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.3.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -398,10 +398,11 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
       <div class="block" data-id="teoria">
         <div class="label">Teoría</div>
-        <label class="sel-field" for="bCircle"><span>Círculo</span><select id="bCircle"><option value="chrom">Cromático</option><option value="fifths">De quintas</option></select></label>
+        <label class="sel-field" for="bCircle"><span>Círculo</span><select id="bCircle"><option value="chrom">Cromático</option><option value="fifths">De quintas</option><option value="tonnetz">Tonnetz (espejo)</option></select></label>
         <canvas class="theory" id="bTheory" aria-label="Círculo de las 12 notas con la escala, el acorde actual y la progresión."></canvas>
         <div class="chords" id="bChords"></div>
         <p class="note">Los puntos llenos son las notas de la escala; el anillo marca la tónica; el triángulo es el acorde que suena; las flechas siguen la progresión.</p>
+        <p class="note" id="bTonNote" hidden>Tonnetz: cada punto es una nota; subir a la derecha es una quinta, hacia arriba a la derecha una tercera mayor y hacia arriba a la izquierda una tercera menor. Cada triángulo es un acorde (apuntando arriba, mayor; abajo, menor). El espejo (R) es el triángulo vecino que comparte una arista: el acorde relativo. Esa reflexión cae sobre un eje de tritono. P es el paralelo y L el acorde líder.</p>
       </div>
 
       <div class="block" data-id="audio">
@@ -808,6 +809,12 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
+  /* Tonnetz */
+  ["Tonnetz (espejo)", "Tonnetz (mirror)", "Tonnetz (espelho)", "Tonnetz(镜像)", "Тоннетц (зеркало)"],
+  ["Espejo (relativo)", "Mirror (relative)", "Espelho (relativo)", "镜像(关系调)", "Зеркало (параллельный)"],
+  ["eje del tritono", "tritone axis", "eixo do trítono", "三全音轴", "ось тритона"],
+  ["Acorde disminuido: sin espejo", "Diminished chord: no mirror", "Acorde diminuto: sem espelho", "减和弦:无镜像", "Уменьшённый аккорд: без зеркала"],
+  ["Tonnetz: cada punto es una nota; subir a la derecha es una quinta, hacia arriba a la derecha una tercera mayor y hacia arriba a la izquierda una tercera menor. Cada triángulo es un acorde (apuntando arriba, mayor; abajo, menor). El espejo (R) es el triángulo vecino que comparte una arista: el acorde relativo. Esa reflexión cae sobre un eje de tritono. P es el paralelo y L el acorde líder.", "Tonnetz: each dot is a note; moving right is a fifth, up-right a major third and up-left a minor third. Each triangle is a chord (pointing up, major; down, minor). The mirror (R) is the neighbouring triangle sharing an edge: the relative chord. That reflection falls on a tritone axis. P is the parallel and L the leading-tone chord.", "Tonnetz: cada ponto é uma nota; para a direita é uma quinta, para cima à direita uma terça maior e para cima à esquerda uma terça menor. Cada triângulo é um acorde (para cima, maior; para baixo, menor). O espelho (R) é o triângulo vizinho que compartilha uma aresta: o acorde relativo. Essa reflexão cai sobre um eixo de trítono. P é o paralelo e L o acorde líder.", "Tonnetz:每个点是一个音;向右为五度,右上为大三度,左上为小三度。每个三角形是一个和弦(尖朝上为大,朝下为小)。镜像(R)是共享一条边的相邻三角形,即关系和弦,该反射落在三全音轴上。P 为平行和弦,L 为导音和弦。", "Тоннетц: каждая точка — нота; вправо — квинта, вверх-вправо — большая терция, вверх-влево — малая терция. Каждый треугольник — аккорд (вершиной вверх — мажор, вниз — минор). Зеркало (R) — соседний треугольник с общей стороной: параллельный аккорд; отражение проходит по оси тритона. P — одноимённый, L — аккорд ведущего тона."],
   /* Arpegiador */
   ["Arpegiador", "Arpeggiator", "Arpejador", "琶音器", "Арпеджиатор"],
   ["Activar arpegiador", "Enable arpeggiator", "Ativar arpejador", "启用琶音器", "Включить арпеджиатор"],
@@ -1856,7 +1863,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "DE 0.2.0";
+  var FW = "DE 0.3.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2188,7 +2195,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW DE 0.2.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW DE 0.3.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2926,6 +2933,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     x.clearRect(0, 0, S, S);
     var pg = progOf(bass.prog), sc = SCALES[pg.sc], inScale = {};
     sc.forEach(function (v) { inScale[(bass.root + v) % 12] = true; });
+    if ($("bCircle").value === "tonnetz") { drawTonnetz(x, S, d, col, inScale, chordIdx); return; }
     var fifths = $("bCircle").value === "fifths";
     function pos(pc) { var q = fifths ? (pc * 7) % 12 : pc, a = -Math.PI / 2 + q * Math.PI / 6; return [cx + R * Math.cos(a), cx + R * Math.sin(a)]; }
     x.lineWidth = d; x.strokeStyle = col.line; x.beginPath(); x.arc(cx, cx, R, 0, Math.PI * 2); x.stroke();
@@ -2954,6 +2962,99 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     }
     x.fillStyle = theme.fg; x.font = "600 " + (22 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(info.name, cx, cx - 8 * d);
     x.fillStyle = theme.muted; x.font = (13 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(info.num + " · " + tr(pg.g), cx, cx + 16 * d);
+  }
+  /* ---------- Tonnetz: retícula de quintas (horizontal) y terceras; triángulo = acorde; espejo = acorde relativo ---------- */
+  var TON = null, SQ3 = Math.sqrt(3) / 2;
+  function tonXY(i, j) { return [i + j / 2, -j * SQ3]; }
+  function tonBuild() {
+    TON = [];
+    for (var i = -10; i <= 10; i++) for (var j = -10; j <= 10; j++) {
+      var p = mod(7 * i + 4 * j, 12), a = [tonXY(i, j), tonXY(i + 1, j), tonXY(i, j + 1)], b = [tonXY(i + 1, j), tonXY(i, j + 1), tonXY(i + 1, j + 1)];
+      TON.push({ key: "M" + p, root: p, minor: false, pts: a, cx: (a[0][0] + a[1][0] + a[2][0]) / 3, cy: (a[0][1] + a[1][1] + a[2][1]) / 3 });
+      var rm = mod(p + 4, 12);
+      TON.push({ key: "m" + rm, root: rm, minor: true, pts: b, cx: (b[0][0] + b[1][0] + b[2][0]) / 3, cy: (b[0][1] + b[1][1] + b[2][1]) / 3 });
+    }
+  }
+  function triadKey(pcs) {
+    for (var k = 0; k < 3; k++) {
+      var r = pcs[k], s = pcs.map(function (v) { return mod(v - r, 12); }).sort(function (a, b) { return a - b; }).join(",");
+      if (s === "0,4,7") return "M" + r;
+      if (s === "0,3,7") return "m" + r;
+    }
+    return null;
+  }
+  function tonNear(key, rx, ry) {
+    var best = null, bd = 1e9;
+    TON.forEach(function (t) { if (t.key !== key) return; var dd = (t.cx - rx) * (t.cx - rx) + (t.cy - ry) * (t.cy - ry); if (dd < bd) { bd = dd; best = t; } });
+    return best;
+  }
+  function drawTonnetz(x, S, d, col, inScale, chordIdx) {
+    if (!TON) tonBuild();
+    var pg = progOf(bass.prog), ci = chordIdx >= 0 ? chordIdx : 0, info = chordInfo(ci), n = pg.d.length, ref = [0, 0], path = [], sx0 = 0, sy0 = 0, cnt = 0, k;
+    for (k = 0; k < n; k++) {
+      var tk = triadKey(chordInfo(k).pcs), t = tk ? tonNear(tk, ref[0], ref[1]) : null;
+      path.push(t); if (t) { ref = [t.cx, t.cy]; sx0 += t.cx; sy0 += t.cy; cnt++; }
+    }
+    var vx = cnt ? sx0 / cnt : 0, vy = cnt ? sy0 / cnt : 0, u = S * 0.12, cx = S / 2, cy = S * 0.5;
+    function scr(p) { return [cx + (p[0] - vx) * u, cy + (p[1] - vy) * u]; }
+    var cur = path[ci], curK = triadKey(info.pcs), MIR = "#7aa2ff";
+    x.lineWidth = d; x.strokeStyle = col.line;
+    for (var i = -10; i <= 10; i++) for (var j = -10; j <= 10; j++) {
+      var a = scr(tonXY(i, j));
+      if (a[0] < -u || a[0] > S + u || a[1] < -u || a[1] > S + u) continue;
+      [[1, 0], [0, 1], [1, -1]].forEach(function (dv) { var b = scr(tonXY(i + dv[0], j + dv[1])); x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); });
+    }
+    function tri(t, color, alpha, lw) { if (!t) return; var q = t.pts.map(scr); x.fillStyle = color; x.globalAlpha = alpha; x.beginPath(); x.moveTo(q[0][0], q[0][1]); x.lineTo(q[1][0], q[1][1]); x.lineTo(q[2][0], q[2][1]); x.closePath(); x.fill(); x.globalAlpha = 1; x.strokeStyle = color; x.lineWidth = lw * d; x.stroke(); }
+    var mirror = null, pPar = null, pLid = null, rK = null;
+    if (cur) {
+      var r = cur.root;
+      rK = cur.minor ? "M" + mod(r + 3, 12) : "m" + mod(r + 9, 12);
+      var pK = cur.minor ? "M" + r : "m" + r, lK = cur.minor ? "M" + mod(r + 8, 12) : "m" + mod(r + 4, 12);
+      mirror = tonNear(rK, cur.cx, cur.cy); pPar = tonNear(pK, cur.cx, cur.cy); pLid = tonNear(lK, cur.cx, cur.cy);
+      tri(pPar, MIR, 0.08, 1); tri(pLid, MIR, 0.08, 1); tri(mirror, MIR, 0.28, 2);
+    }
+    /* progresión: recorrido entre triángulos */
+    x.setLineDash([4 * d, 4 * d]); x.strokeStyle = theme.muted; x.lineWidth = d;
+    for (k = 0; k < n; k++) {
+      var p1 = path[k], p2 = path[(k + 1) % n]; if (!p1 || !p2 || n < 2 || p1 === p2) continue;
+      var s1 = scr([p1.cx, p1.cy]), s2 = scr([p2.cx, p2.cy]); x.beginPath(); x.moveTo(s1[0], s1[1]); x.lineTo(s2[0], s2[1]); x.stroke();
+    }
+    x.setLineDash([]);
+    tri(cur, col.accent, 0.3, 2);
+    /* eje del espejo: mediatriz de la arista compartida */
+    var axisTxt = "";
+    if (cur && mirror) {
+      var sh = cur.pts.filter(function (p) { return mirror.pts.some(function (q) { return Math.abs(p[0] - q[0]) < 1e-6 && Math.abs(p[1] - q[1]) < 1e-6; }); });
+      if (sh.length === 2) {
+        var m = [(sh[0][0] + sh[1][0]) / 2, (sh[0][1] + sh[1][1]) / 2], ex = sh[1][0] - sh[0][0], ey = sh[1][1] - sh[0][1], L = Math.sqrt(ex * ex + ey * ey), nx = -ey / L, ny = ex / L;
+        var a1 = scr([m[0] - nx * 2.6, m[1] - ny * 2.6]), a2 = scr([m[0] + nx * 2.6, m[1] + ny * 2.6]);
+        x.setLineDash([6 * d, 4 * d]); x.strokeStyle = MIR; x.lineWidth = 1.5 * d; x.beginPath(); x.moveTo(a1[0], a1[1]); x.lineTo(a2[0], a2[1]); x.stroke(); x.setLineDash([]);
+      }
+      var ax = cur.minor ? [mod(cur.root + 5, 12), mod(cur.root + 11, 12)] : [mod(cur.root + 2, 12), mod(cur.root + 8, 12)];
+      axisTxt = noteLabel(ax[0]) + "–" + noteLabel(ax[1]);
+    }
+    var inCh = {}; info.pcs.forEach(function (pc) { inCh[pc] = true; });
+    var mir = {}; if (mirror) { var rr = mirror.root; [rr, rr + (mirror.minor ? 3 : 4), rr + 7].forEach(function (pc) { mir[mod(pc, 12)] = true; }); }
+    x.font = (11 * d) + "px 'IBM Plex Mono', monospace"; x.textAlign = "center"; x.textBaseline = "middle";
+    for (var i2 = -10; i2 <= 10; i2++) for (var j2 = -10; j2 <= 10; j2++) {
+      var pp = scr(tonXY(i2, j2)), mg = 0.1 * S; if (pp[0] < mg * 0.4 || pp[0] > S - mg * 0.4 || pp[1] < mg || pp[1] > S - mg) continue;
+      var pc = mod(7 * i2 + 4 * j2, 12), on = !!inScale[pc], ic = !!inCh[pc], im = !!mir[pc] && !ic, rad = (ic ? 0.21 : 0.17) * u;
+      x.beginPath(); x.arc(pp[0], pp[1], rad, 0, Math.PI * 2);
+      if (ic) { x.fillStyle = col.accent; x.fill(); } else if (on) { x.fillStyle = "rgba(255,255,255,0.80)"; x.fill(); } else { x.strokeStyle = col.line; x.lineWidth = d; x.stroke(); }
+      if (im) { x.strokeStyle = MIR; x.lineWidth = 2 * d; x.beginPath(); x.arc(pp[0], pp[1], rad + 3 * d, 0, Math.PI * 2); x.stroke(); }
+      if (pc === bass.root % 12) { x.strokeStyle = col.accent; x.lineWidth = 1.5 * d; x.beginPath(); x.arc(pp[0], pp[1], rad + 6 * d, 0, Math.PI * 2); x.stroke(); }
+      x.fillStyle = (ic || on) ? "#000" : theme.muted; x.fillText(noteLabel(pc), pp[0], pp[1]);
+    }
+    function lab(t, s) { if (!t) return; var q = scr([t.cx, t.cy]); x.fillStyle = MIR; x.font = "600 " + (11 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(s, q[0], q[1]); }
+    lab(mirror, "R"); lab(pPar, "P"); lab(pLid, "L");
+    x.fillStyle = "rgba(8,10,16,0.78)"; x.fillRect(0, 0, S * 0.46, S * 0.12); x.fillRect(0, S * 0.92, S, S * 0.08);
+    x.textAlign = "left"; x.fillStyle = theme.fg; x.font = "600 " + (18 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(info.name, 0.04 * S, 0.05 * S);
+    x.fillStyle = theme.muted; x.font = (12 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(info.num + " · " + tr(pg.g), 0.04 * S, 0.092 * S);
+    x.textAlign = "center";
+    if (cur && mirror) {
+      var mname = noteLabel(mirror.root) + (mirror.minor ? "m" : "");
+      x.fillStyle = MIR; x.fillText(tr("Espejo (relativo)") + ": " + mname + " · " + tr("eje del tritono") + " " + axisTxt, cx, S * 0.955);
+    } else { x.fillStyle = theme.muted; x.fillText(tr("Acorde disminuido: sin espejo"), cx, S * 0.955); }
   }
   function theoryTick(now) {
     var ci = -1;
@@ -3223,7 +3324,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     else { bass.base[step] = 1; bass.deg[step] = deg; }
     bass.pat = ""; $("bPat").value = ""; renderBassGrid(); bassDirty = true;
   });
-  $("bCircle").addEventListener("change", function () { bassDirty = true; });
+  $("bCircle").addEventListener("change", function () { bassDirty = true; $("bTonNote").hidden = $("bCircle").value !== "tonnetz"; });
   function relabelBass() {
     Array.prototype.forEach.call($("bRoot").options, function (o) { o.textContent = tr(NOTE_ES[+o.value]); });
     Array.prototype.forEach.call($("bProg").querySelectorAll("optgroup"), function (g, i) { var seen = []; PROGS.forEach(function (pg) { if (seen.indexOf(pg.g) < 0) seen.push(pg.g); }); g.label = tr(seen[i]); });
