@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de Clave Circular · Dark Empaths Vanilla</title>
+<style>
+:root { --bg: #fbefd6; --panel: #fffaf0; --line: #e3a3c1; --fg: #2a0e21; --muted: #8a4a70; --accent: #e6007e; --ink: #1a0a14; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #1a0716; --panel: #2e0e28; --line: #7a2a66; --fg: #ffe6f3; --muted: #d99bc2; --accent: #ff4fa3; --ink: #000; } }
+:root[data-theme="dark"] { --bg: #1a0716; --panel: #2e0e28; --line: #7a2a66; --fg: #ffe6f3; --muted: #d99bc2; --accent: #ff4fa3; --ink: #000; }
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--fg); font: 16px/1.55 "IBM Plex Sans", system-ui, sans-serif; padding: 0 16px 60px; }
+.wrap { max-width: 860px; margin: 0 auto; }
+header.top { background: var(--ink); color: #fff3e0; border-radius: 6px; padding: 18px 20px; margin: 18px 0 8px; }
+header.top .a { font-family: "Cinzel", Georgia, serif; letter-spacing: .24em; font-size: 22px; text-transform: uppercase; }
+header.top .b { color: #ff7ac0; letter-spacing: .4em; font-size: 12px; text-transform: uppercase; margin-top: 4px; }
+h1 { font-size: 26px; margin: 22px 0 4px; }
+h2 { font-size: 21px; margin: 0 0 6px; }
+p { margin: 8px 0; }
+nav { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 18px; margin: 14px 0; }
+nav ol { margin: 6px 0 0; padding-left: 22px; columns: 2; column-gap: 28px; }
+nav a { color: var(--accent); text-decoration: none; }
+section.etapa { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; margin: 18px 0; }
+.num { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; border-radius: 999px; padding: 2px 12px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+figure { margin: 12px 0; }
+figure img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; display: block; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 4px; }
+ol.leg { list-style: none; padding: 0; margin: 10px 0; counter-reset: n; }
+ol.leg li { counter-increment: n; position: relative; padding: 4px 0 4px 40px; }
+ol.leg li::before { content: counter(n); position: absolute; left: 0; top: 4px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; text-align: center; line-height: 28px; font-size: 14px; }
+.prueba { border-left: 4px solid var(--accent); background: rgba(230, 0, 126, .08); padding: 8px 14px; margin: 12px 0; border-radius: 0 6px 6px 0; }
+.prueba b { color: var(--accent); }
+.dos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { nav ol { columns: 1; } .dos { grid-template-columns: 1fr; } }
+kbd { background: var(--bg); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 6px; font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+td, th { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: rgba(230, 0, 126, .1); }
+a.volver { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="a">Dark Empaths</div><div class="b">Vanilla</div></header>
+<h1>Manual de Clave Circular</h1>
+<p>Clave Circular es una caja de ritmos en forma de círculo. Cada anillo es un instrumento y cada punto del anillo es un momento del compás. El manual va por etapas: cada una explica un solo grupo de controles y termina con algo para probar. Los números de cada imagen coinciden con la lista que la acompaña.</p>
+<p>La aplicación abre en blanco: no hay ningún ritmo cargado. <a class="volver" href="../">Volver a la aplicación</a>.</p>
+
+<nav aria-label="Etapas"><b>Etapas</b>
+<ol>
+<li><a href="#e1">Conocer la pantalla</a></li>
+<li><a href="#e2">Tocar y cambiar el tempo</a></li>
+<li><a href="#e3">Dibujar un ritmo con puntos</a></li>
+<li><a href="#e4">Las pistas</a></li>
+<li><a href="#e5">Pasos, pulsos y rotación</a></li>
+<li><a href="#e6">Elegir el sonido</a></li>
+<li><a href="#e7">Patrones A a H</a></li>
+<li><a href="#e8">Armar una canción</a></li>
+<li><a href="#e9">El bajo</a></li>
+<li><a href="#e10">El arpegiador</a></li>
+<li><a href="#e11">Deshacer, rehacer y reiniciar</a></li>
+<li><a href="#e12">Modo Vanilla y modo Darth</a></li>
+<li><a href="#e13">Guardar y exportar</a></li>
+<li><a href="#e14">MIDI (opcional)</a></li>
+<li><a href="#e15">Resumen de atajos</a></li>
+</ol></nav>
+
+<section class="etapa" id="e1"><span class="num">Etapa 1</span><h2>Conocer la pantalla</h2>
+<p>Así se ve la aplicación al abrir, sin nada cargado.</p>
+<figure><img src="img/01-pantalla-blanca.png" alt="Pantalla inicial con números sobre los controles principales"><figcaption>Pantalla inicial.</figcaption></figure>
+<ol class="leg">
+<li><b>El círculo.</b> Aquí se dibuja el ritmo. Cada anillo es una pista.</li>
+<li><b>Tocar.</b> Empieza y detiene el sonido.</li>
+<li><b>Tempo.</b> La velocidad, en pulsos por minuto.</li>
+<li><b>Letras A a H.</b> Ocho patrones: ocho círculos distintos que se pueden guardar y combinar.</li>
+<li><b>Percusión / Bajo.</b> Cambia el círculo entre la percusión y el bajo.</li>
+<li><b>Deshacer y Rehacer.</b> Botones flotantes abajo a la derecha.</li>
+<li><b>Modo Darth.</b> Cambia los colores claros por los oscuros (y de vuelta).</li>
+<li><b>↺ Reiniciar.</b> Cada módulo tiene el suyo: lo devuelve a cero.</li>
+<li><b>Manual.</b> Abre este manual.</li>
+</ol>
+<p>Los módulos (Transporte, Arreglo, Pistas, Editar, Sonido, Bajo, Arpegio…) son los cuadros de la columna derecha. Se pueden plegar con el botón “–” y mover con las flechas.</p>
+</section>
+
+<section class="etapa" id="e2"><span class="num">Etapa 2</span><h2>Tocar y cambiar el tempo</h2>
+<figure><img src="img/05-transporte.png" alt="Módulo Transporte con números"><figcaption>Módulo Transporte.</figcaption></figure>
+<ol class="leg">
+<li><b>Tocar.</b> Arranca y detiene.</li>
+<li><b>Escena.</b> Lista de ritmos ya armados por género. Al elegir una, reemplaza lo que hay en pantalla. “Pizarra en blanco” significa que no se cargó ninguna.</li>
+<li><b>Kit global.</b> Cambia el sonido de todas las pistas a la vez (por ejemplo 808 o 909).</li>
+<li><b>Tempo.</b> Más a la derecha, más rápido.</li>
+<li><b>Tiempos/vuelta.</b> Cuántos tiempos tiene una vuelta completa del círculo.</li>
+<li><b>Volumen.</b> Volumen general.</li>
+<li><b>↺.</b> Devuelve el módulo a sus valores iniciales: tempo 100, 4 tiempos, volumen 80 y kit base.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> pulsa Tocar, mueve el Tempo mientras suena y vuelve a pulsar Tocar para detener. Sin puntos en el círculo no se oye nada: eso se hace en la etapa siguiente.</div>
+</section>
+
+<section class="etapa" id="e3"><span class="num">Etapa 3</span><h2>Dibujar un ritmo con puntos</h2>
+<p>El círculo se lee como un reloj: el paso 1 está arriba y los pasos avanzan hacia la derecha. Cada anillo es una pista. De afuera hacia adentro: Clave, Conga, Campana, Hi-hat abierto, Hi-hat cerrado, Clap, Caja y Bombo.</p>
+<p>Tocar un punto lo activa; tocarlo otra vez lo apaga.</p>
+<figure><img src="img/02-circulo-puntos.png" alt="Círculo con puntos activos en bombo, caja y hi-hat"><figcaption>Un ritmo básico dibujado a mano.</figcaption></figure>
+<ol class="leg">
+<li><b>Bombo</b> (anillo interior): puntos en los pasos 1, 5, 9 y 13.</li>
+<li><b>Caja:</b> puntos en los pasos 5 y 13.</li>
+<li><b>Hi-hat cerrado:</b> puntos en los pasos 3, 7, 11 y 15.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> toca esos puntos en el círculo y pulsa Tocar. Después agrega o quita puntos mientras suena.</div>
+</section>
+
+<section class="etapa" id="e4"><span class="num">Etapa 4</span><h2>Las pistas</h2>
+<figure><img src="img/03-pistas.png" alt="Módulo Pistas con números"><figcaption>Módulo Pistas.</figcaption></figure>
+<ol class="leg">
+<li><b>Una pista.</b> Cada fila es un anillo. Al tocar la fila queda seleccionada: los módulos Editar y Sonido trabajan sobre la pista seleccionada.</li>
+<li><b>Botón de silencio.</b> Apaga o enciende esa pista sin borrar sus puntos.</li>
+<li><b>Resumen del ritmo</b> de cada pista, por ejemplo E(4,16): 4 golpes repartidos en 16 pasos.</li>
+</ol>
+</section>
+
+<section class="etapa" id="e5"><span class="num">Etapa 5</span><h2>Pasos, pulsos y rotación</h2>
+<p>El módulo Editar arma ritmos de forma automática sobre la pista seleccionada.</p>
+<figure><img src="img/04-editar.png" alt="Módulo Editar con números"><figcaption>Módulo Editar, con la pista Clave seleccionada y 5 pulsos.</figcaption></figure>
+<ol class="leg">
+<li><b>Pasos.</b> En cuántos momentos se divide el círculo (entre 2 y 32).</li>
+<li><b>Pulsos.</b> Cuántos golpes hay. La aplicación los reparte parejo sobre los pasos.</li>
+<li><b>Rotación.</b> Gira el ritmo sin cambiarlo.</li>
+<li><b>Aleatorio.</b> Reparte golpes al azar.</li>
+<li><b>Limpiar.</b> Quita todos los golpes de la pista.</li>
+<li><b>Probar nota MIDI.</b> Solo se usa con un equipo MIDI conectado (etapa 14).</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> selecciona la pista Clave, pon Pasos en 16 y mueve Pulsos de 3 a 7. Luego mueve Rotación.</div>
+</section>
+
+<section class="etapa" id="e6"><span class="num">Etapa 6</span><h2>Elegir el sonido</h2>
+<p>El módulo Sonido cambia cómo suena la pista seleccionada.</p>
+<figure><img src="img/06-sonido.png" alt="Módulo Sonido con números"><figcaption>Módulo Sonido.</figcaption></figure>
+<ol class="leg">
+<li><b>Fuente.</b> El kit de esa pista. Incluye 808, 909, 707, 606 y tres kits nuevos: EBM potente, IDM glitch y Drill &amp; bass.</li>
+<li><b>Volumen</b> de la pista.</li>
+<li><b>Paneo.</b> Izquierda o derecha.</li>
+<li><b>Afinación.</b> Más grave o más aguda, en semitonos.</li>
+<li><b>Decay.</b> Qué tan largo dura cada golpe.</li>
+<li><b>Probar sonido.</b> Lo hace sonar una vez.</li>
+</ol>
+<p>También se pueden cargar sonidos propios con “Cargar muestra…” o con el módulo Packs de samples.</p>
+</section>
+
+<section class="etapa" id="e7"><span class="num">Etapa 7</span><h2>Patrones A a H</h2>
+<p>Cada letra es un círculo completo con todas sus pistas. Sirven, por ejemplo, para tener una parte A y una parte B distintas. Al tocar una letra, el círculo pasa a ese patrón.</p>
+<figure><img src="img/07-patrones.png" alt="Fila de letras A a H"><figcaption>Las letras de los patrones, bajo el círculo.</figcaption></figure>
+<p>En el módulo Arreglo, al final, “Copiar patrón actual” copia el patrón a otra letra y “Vaciar patrón actual” lo deja en blanco.</p>
+<div class="prueba"><b>Prueba esto:</b> dibuja un ritmo en A. Toca la letra B, dibuja otro distinto. Vuelve a A.</div>
+</section>
+
+<section class="etapa" id="e8"><span class="num">Etapa 8</span><h2>Armar una canción</h2>
+<p>El módulo Arreglo encadena patrones para que suenen uno tras otro.</p>
+<figure><img src="img/08-arreglo.png" alt="Módulo Arreglo con una lista A B A B"><figcaption>Una lista A, B, A, B en modo Canción.</figcaption></figure>
+<ol class="leg">
+<li><b>Modo.</b> “Bucle” repite el patrón elegido. “Canción” toca la lista en orden.</li>
+<li><b>Añadir bloque.</b> Toca una letra para agregar ese patrón al final de la lista.</li>
+<li><b>La lista.</b> Los bloques suenan de izquierda a derecha. Al terminar el último vuelve al primero. Tocar un bloque permite cambiar su letra, repetirlo más vueltas o moverlo.</li>
+<li><b>Vaciar lista.</b> Borra la lista (no borra los patrones).</li>
+<li><b>Copiar patrón actual.</b> Copia el patrón al que elijas en “Copiar a”.</li>
+<li><b>Vaciar patrón actual.</b> Deja en blanco el patrón en pantalla.</li>
+<li><b>↺.</b> Deja el Arreglo en cero: vacía los ocho patrones y la lista, y vuelve al modo Bucle.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> cambia el modo a Canción, agrega A, B, A, B y pulsa Tocar.</div>
+</section>
+
+<section class="etapa" id="e9"><span class="num">Etapa 9</span><h2>El bajo</h2>
+<p>El bajo se activa en su módulo y se dibuja en su propio círculo, con la pestaña Bajo.</p>
+<div class="dos">
+<figure><img src="img/09-bajo-circulo.png" alt="Círculo del bajo"><figcaption>Círculo del bajo: cada anillo es una nota de la escala.</figcaption></figure>
+<figure><img src="img/10-bajo-panel.png" alt="Módulo Bajo con números"><figcaption>Módulo Bajo.</figcaption></figure>
+</div>
+<ol class="leg">
+<li><b>Activar bajo.</b> Sin esto el bajo no suena.</li>
+<li><b>Tónica.</b> La nota base.</li>
+<li><b>Progresión.</b> La secuencia de acordes. Avanza una vez por vuelta (o cada 2 o 4 vueltas, según “Vueltas por acorde”). Hay un grupo “Tensión” con acordes disminuidos y tritonos.</li>
+<li><b>Patrón del bajo.</b> Ritmos ya armados para el bajo.</li>
+<li><b>Pasos.</b> Una casilla por paso: las rosadas están activas. Se pueden tocar para activarlas o apagarlas.</li>
+<li><b>Onda.</b> El timbre: Sierra, Cuadrada o Sub.</li>
+<li><b>Volumen del bajo.</b></li>
+<li><b>↺.</b> Apaga el bajo y deja todo en blanco.</li>
+</ol>
+<p>En el círculo del bajo, tocar un punto pone la nota de ese paso; tocarlo otra vez le da acento; otra vez la quita.</p>
+<div class="prueba"><b>Prueba esto:</b> marca “Activar bajo”, elige un patrón del bajo y pulsa Tocar. Cambia la Progresión mientras suena.</div>
+</section>
+
+<section class="etapa" id="e10"><span class="num">Etapa 10</span><h2>El arpegiador</h2>
+<p>Toca las notas de un acorde una por una. Usa la misma tónica y progresión del módulo Bajo.</p>
+<figure><img src="img/11-arpegio.png" alt="Módulo Arpegio con números"><figcaption>Módulo Arpegio.</figcaption></figure>
+<ol class="leg">
+<li><b>Activar arpegiador.</b></li>
+<li><b>Preset de arpegio.</b> Configuraciones ya armadas.</li>
+<li><b>Modo.</b> Subida, bajada, sube y baja, al azar y otros.</li>
+<li><b>Acorde.</b> Tríada, séptima y otros, incluidos disminuido y tritono.</li>
+<li><b>Notas por vuelta.</b> Qué tan rápido va el arpegio.</li>
+<li><b>Volumen del arpegio.</b></li>
+<li><b>↺.</b> Apaga el arpegiador y lo deja en cero.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> activa el bajo y el arpegiador, elige un preset de arpegio y pulsa Tocar.</div>
+</section>
+
+<section class="etapa" id="e11"><span class="num">Etapa 11</span><h2>Deshacer, rehacer y reiniciar</h2>
+<p>Si algo sale mal, se puede volver atrás.</p>
+<div class="dos">
+<figure><img src="img/12-deshacer-rehacer.png" alt="Botones Deshacer y Rehacer"><figcaption>Botones flotantes abajo a la derecha.</figcaption></figure>
+<figure><img src="img/13-reiniciar-modulo.png" alt="Botón de reinicio en la cabecera de un módulo"><figcaption>Botón ↺ en la cabecera de un módulo.</figcaption></figure>
+</div>
+<ol class="leg">
+<li><b>Deshacer y Rehacer.</b> Van un paso atrás o adelante en los cambios de ritmo, sonido, bajo, arpegio, tempo y arreglo. Atajos: <kbd>Ctrl</kbd> + <kbd>Z</kbd> deshace; <kbd>Ctrl</kbd> + <kbd>Y</kbd> (o <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd>) rehace. En Mac, <kbd>Cmd</kbd>.</li>
+<li><b>↺ de cada módulo.</b> Lo devuelve a cero. Es un cambio más: se puede deshacer.</li>
+</ol>
+<table>
+<tr><th>Módulo</th><th>Qué hace ↺</th></tr>
+<tr><td>Transporte</td><td>Tempo 100, 4 tiempos, volumen 80, kit base.</td></tr>
+<tr><td>Arreglo</td><td>Vacía los 8 patrones y la lista; modo Bucle.</td></tr>
+<tr><td>Pistas</td><td>Quita silencios y deja el sonido de cada pista en valores iniciales.</td></tr>
+<tr><td>Editar</td><td>La pista seleccionada: 16 pasos, 0 pulsos, sin rotación, sin golpes.</td></tr>
+<tr><td>Sonido</td><td>La pista seleccionada: kit base, volumen, paneo, afinación y decay iniciales.</td></tr>
+<tr><td>Bajo</td><td>Bajo apagado y en blanco.</td></tr>
+<tr><td>Arpegio</td><td>Arpegiador apagado y en valores iniciales.</td></tr>
+<tr><td>Teoría</td><td>Círculo cromático y temperamento igual.</td></tr>
+<tr><td>Audio y MIDI</td><td>Valores iniciales de esas opciones.</td></tr>
+</table>
+<p>Para empezar todo de cero está “Empezar sesión de cero” en el módulo Presets.</p>
+<div class="prueba"><b>Prueba esto:</b> pulsa ↺ en Arreglo y luego Deshacer. Los patrones vuelven.</div>
+</section>
+
+<section class="etapa" id="e12"><span class="num">Etapa 12</span><h2>Modo Vanilla y modo Darth</h2>
+<p>El botón “Modo Darth” / “Modo Vanilla” de la barra de arriba cambia los colores de toda la aplicación. El cambio no afecta al sonido ni al ritmo.</p>
+<div class="dos">
+<figure><img src="img/14-modo-vanilla.png" alt="Aplicación en modo Vanilla"><figcaption>Modo Vanilla: fondo claro.</figcaption></figure>
+<figure><img src="img/15-modo-darth.png" alt="Aplicación en modo Darth"><figcaption>Modo Darth: fondo oscuro.</figcaption></figure>
+</div>
+</section>
+
+<section class="etapa" id="e13"><span class="num">Etapa 13</span><h2>Guardar y exportar</h2>
+<p>La aplicación guarda sola lo que se hace en este navegador y lo recupera al volver a abrirla. Para guardar versiones con nombre:</p>
+<figure><img src="img/16-presets.png" alt="Módulo Presets con números"><figcaption>Módulo Presets.</figcaption></figure>
+<ol class="leg">
+<li><b>Nombre</b> del preset.</li>
+<li><b>Guardar.</b> Guarda en este navegador.</li>
+<li><b>Exportar archivo.</b> Genera un archivo que se puede enviar a otra persona.</li>
+<li><b>Cargar.</b> Carga el preset elegido en “Guardados”.</li>
+<li><b>Guardar captura (PNG).</b> Genera una imagen de la pantalla.</li>
+</ol>
+<p>Para obtener el sonido o las notas fuera de la aplicación:</p>
+<figure><img src="img/17-exportar.png" alt="Módulo Exportar con números"><figcaption>Módulo Exportar.</figcaption></figure>
+<ol class="leg">
+<li><b>Vueltas.</b> Cuántas vueltas exportar. Vacío (“auto”) exporta el arreglo completo.</li>
+<li><b>Exportar MIDI (.mid).</b> Las notas, para abrirlas en un programa de música.</li>
+<li><b>Exportar audio (.wav).</b> El sonido ya mezclado.</li>
+</ol>
+</section>
+
+<section class="etapa" id="e14"><span class="num">Etapa 14</span><h2>MIDI (opcional)</h2>
+<p>Solo sirve para conectar la aplicación a un programa o equipo MIDI. Para tocar sola no hace falta.</p>
+<figure><img src="img/18-midi.png" alt="Módulo MIDI con números"><figcaption>Módulo MIDI.</figcaption></figure>
+<ol class="leg">
+<li><b>Conectar MIDI.</b> Pide permiso al navegador y busca los puertos.</li>
+<li><b>Salida.</b> A qué puerto se envían las notas.</li>
+<li><b>Canal.</b> El canal MIDI.</li>
+<li><b>Enviar reloj, Start y Stop.</b> Para que el otro equipo siga el mismo tempo.</li>
+</ol>
+</section>
+
+<section class="etapa" id="e15"><span class="num">Etapa 15</span><h2>Resumen de atajos</h2>
+<table>
+<tr><th>Acción</th><th>Cómo</th></tr>
+<tr><td>Activar o apagar un punto</td><td>Tocar el punto en el círculo</td></tr>
+<tr><td>Cambiar de patrón</td><td>Tocar una letra A–H</td></tr>
+<tr><td>Deshacer</td><td>Botón “Deshacer” o <kbd>Ctrl</kbd> + <kbd>Z</kbd></td></tr>
+<tr><td>Rehacer</td><td>Botón “Rehacer” o <kbd>Ctrl</kbd> + <kbd>Y</kbd></td></tr>
+<tr><td>Reiniciar un módulo</td><td>Botón ↺ en su cabecera</td></tr>
+<tr><td>Cambiar colores</td><td>Botón “Modo Darth” / “Modo Vanilla”</td></tr>
+<tr><td>Empezar todo de cero</td><td>Presets → “Empezar sesión de cero”</td></tr>
+</table>
+</section>
+</div>
+</body>
+</html>

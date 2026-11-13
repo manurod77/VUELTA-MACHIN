@@ -233,26 +233,48 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   .main.layL .block { margin-bottom: 0; }
   .wrap.wide { max-width: 1080px; }
 }
+html[data-skin="dark"] {
+  --bg: #1a0716; --panel: rgba(46, 14, 40, 0.88); --panel-2: rgba(66, 20, 58, 0.94); --line: #7a2a66;
+  --fg: #ffe6f3; --muted: #d99bc2; --accent: #ff4fa3; --accent-ink: #2a0418;
+  --font-brand: "Cinzel", "Trajan Pro", Georgia, serif;
+  color-scheme: dark;
+}
+html[data-skin="dark"] .tline { display: block; background: linear-gradient(90deg, #000 0%, #7a2a66 34%, #ff4fa3 68%, #ffd1e8 100%); }
+html[data-skin="dark"] .block, html[data-skin="dark"] .strip { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 0 1px rgba(255, 79, 163, 0.18), 0 0 18px rgba(255, 79, 163, 0.12); }
+html[data-skin="dark"] .dial { background: radial-gradient(circle at 50% 50%, #3a0f33 0%, var(--bg) 74%); border-color: #ff4fa3; box-shadow: 0 0 28px rgba(255, 79, 163, 0.25); }
+html[data-skin="dark"] .maker { font-weight: 400; letter-spacing: 0.24em; font-size: 24px; }
+html[data-skin="dark"] .sub { letter-spacing: 0.4em; }
+html[data-skin="dark"] .fw { color: var(--accent); }
+html[data-skin="dark"] .tg { color: var(--fg); }
+html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #4a1240 0%, var(--bg) 60%) fixed; }
+.undo-fab { position: fixed; right: 14px; bottom: 14px; z-index: 50; display: flex; gap: 6px; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25); }
+.undo-fab button { border-radius: 999px; min-height: 36px; padding: 0 14px; }
+.undo-fab button:disabled { opacity: 0.4; cursor: default; }
+.bh button.rs { font-size: 15px; }
+.modesw { display: inline-flex; align-items: center; gap: 8px; }
 </style>
 
+<div class="undo-fab" role="group" aria-label="Deshacer y rehacer"><button id="undoBtn" type="button" disabled>↶ Deshacer</button><button id="redoBtn" type="button" disabled>↷ Rehacer</button></div>
 <div class="wrap">
   <header class="brand">
     <div class="lockup">
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Vanilla</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.1.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.2.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.1.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.2.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
-      <select id="skinSel"><option value="vanilla">Vanilla</option><option value="base">Base</option></select></label>
+      <select id="skinSel"><option value="vanilla">Vanilla</option><option value="dark">Darth</option><option value="base">Base</option></select></label>
     <label class="tool" for="layoutSel"><span>Diseño</span>
       <select id="layoutSel"><option value="auto">Automático (según la pantalla)</option><option value="layL">En L · paneles bajo el círculo</option><option value="lay1">Lateral · 1 columna</option><option value="lay2">Lateral · 2 columnas</option><option value="lay3">Círculo arriba · 3 columnas</option></select></label>
     <label class="tool" for="langSel"><span>Idioma</span>
       <select id="langSel"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option><option value="zh">中文</option><option value="ru">Русский</option></select></label>
     <button id="layoutReset" type="button">Restablecer diseño</button>
+    <button id="modeSw" type="button" aria-label="Cambiar entre modo Vanilla y modo Darth">☾ Modo Darth</button>
+    <button id="manualBtn" type="button">Manual</button>
   </div>
 
   <div class="main" id="main">
@@ -467,7 +489,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.1.0</span><span>T_T</span>
+    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.2.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -830,6 +852,16 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
+  /* Vanilla: reinicio, deshacer, modo */
+  ["Deshacer", "Undo", "Desfazer", "撤销", "Отменить"],
+  ["Rehacer", "Redo", "Refazer", "重做", "Повторить"],
+  ["Modo Darth", "Darth mode", "Modo Darth", "深色模式", "Тёмный режим"],
+  ["Modo Vanilla", "Vanilla mode", "Modo Vanilla", "香草模式", "Режим Vanilla"],
+  ["Manual", "Manual", "Manual", "手册", "Руководство"],
+  ["Reiniciar este módulo a cero", "Reset this module to zero", "Reiniciar este módulo a zero", "将此模块重置为零", "Сбросить этот модуль на ноль"],
+  ["— Pizarra en blanco —", "— Blank slate —", "— Lousa em branco —", "— 空白画布 —", "— Чистый лист —"],
+  ["↶ Deshacer", "↶ Undo", "↶ Desfazer", "↶ 撤销", "↶ Отменить"],
+  ["↷ Rehacer", "↷ Redo", "↷ Refazer", "↷ 重做", "↷ Повторить"],
   /* Kits y tensión */
   ["EBM potente", "Powerful EBM", "EBM potente", "强力 EBM", "Мощный EBM"],
   ["IDM glitch", "Glitch IDM", "IDM glitch", "故障 IDM", "Глитч-IDM"],
@@ -1820,7 +1852,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function syncAll() { renderTracks(); syncEditor(); syncTransport(); renderChips(); }
 
   ui.play.addEventListener("click", function () { state.playing ? stop() : start(); });
-  ui.scene.addEventListener("change", function () { loadScene(ui.scene.value); });
+  ui.scene.addEventListener("change", function () { if (ui.scene.value) loadScene(ui.scene.value); });
   ui.bpm.addEventListener("input", function () { state.bpm = +ui.bpm.value; ui.bpmO.textContent = state.bpm; reanchor(); });
   ui.beats.addEventListener("input", function () { reanchor(); state.beats = +ui.beats.value; ui.beatsO.textContent = state.beats; reanchor(); resyncClock(); });
   ui.vol.addEventListener("input", function () { state.vol = +ui.vol.value / 100; ui.volO.textContent = ui.vol.value; if (master) master.gain.value = state.vol; });
@@ -2001,7 +2033,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "VA 0.1.0";
+  var FW = "VA 0.2.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2333,7 +2365,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW VA 0.1.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW VA 0.2.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2465,6 +2497,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     syncAll(); renderSong(); updateSongStatus();
     Promise.all(jobs).then(function () {
       syncAll();
+      if (p.name === "__hist") return;
       setPStatus((p.name === "sesión" ? tr("Sesión anterior recuperada.") : tr("Preset «{0}» cargado.", p.name || tr("sin nombre"))) + (missing.length ? tr(" Faltan muestras (carga su pack): {0}", missing.join(", ")) : ""), missing.length ? "err" : "ok");
     }).catch(function () { setPStatus(tr("Preset cargado, pero alguna muestra no se pudo decodificar."), "err"); });
   }
@@ -2703,6 +2736,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   var defaultOrder = [];
   var SKIN_COLORS = {
     base:    ["#f2c14e", "#2dd4bf", "#ff6b6b", "#b8a1ff", "#f472b6", "#84cc16", "#fb923c", "#60a5fa"],
+    dark: ["#ff4fa3", "#ffe066", "#c77dff", "#ffffff", "#7ad7f0", "#ff9ecb", "#b5f5d6", "#ff6b6b"],
     vanilla: ["#e6007e", "#d99a00", "#8b3dff", "#2a0e21", "#0aa5c9", "#ff5fa8", "#1fa97a", "#e5483f"],
     eclipse: ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"],
     ruinas:  ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"]
@@ -2801,6 +2835,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   });
   function applySkin(k) {
     if (!SKIN_COLORS[k] || k === "eclipse" || k === "ruinas") k = "vanilla";
+    var msw = document.getElementById("modeSw"); if (msw) msw.textContent = k === "dark" ? "☀ " + tr("Modo Vanilla") : "☾ " + tr("Modo Darth");
     document.documentElement.setAttribute("data-skin", k);
     state.tracks.forEach(function (t, i) { t.color = SKIN_COLORS[k][i]; });
     readTheme(); renderTracks(); ui.skinSel.value = k; layout.skin = k;
@@ -3511,7 +3546,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
 
   /* ---------- Sesión (autoguardado) ---------- */
-  var SKEY = "ccva.session", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
+  var SKEY = "ccva.sesion2", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
   function captureSession() {
     var o = capturePreset("sesión");
     o.master = state.vol; o.kitAll = ui.kitAll.value; o.sel = state.sel; o.scene = ui.scene.value;
@@ -3565,11 +3600,101 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     location.reload();
   });
 
+  /* ---------- Pizarra en blanco, reinicio por módulo, deshacer y rehacer, modo Vanilla/Dark ---------- */
+  var DEF_BASS = null, DEF_ARP = null, DEF_MIDI = null;
+  function blankPreset() {
+    var bd = JSON.parse(JSON.stringify(DEF_BASS || bassData())), ad = JSON.parse(JSON.stringify(DEF_ARP || arpData())), i, pats = [];
+    bd.on = false; bd.steps = 16; bd.base = []; bd.deg = []; for (i = 0; i < 16; i++) { bd.base.push(0); bd.deg.push(0); } bd.pat = "";
+    ad.on = false; ad.pre = "";
+    for (i = 0; i < 8; i++) pats.push(state.tracks.map(function () { return { steps: 16, base: euclid(16, 0), rot: 0 }; }));
+    return { v: 1, app: "Clave Circular " + FW, name: "__hist", names: null, bass: bd, arp: ad, bpm: 100, beats: 4, mode: "loop", cur: 0, song: [], patterns: pats,
+      tracks: TRACKS.map(function (t) { return { id: t.id, kit: "base", vol: 1, panv: 0, pitch: 0, dec: 1, rev: false, note: t.note, mute: false, sample: null }; }) };
+  }
+  function blankSlate() {
+    applyPreset(blankPreset()); ui.kitAll.value = "base";
+    DEF_BASS = JSON.parse(JSON.stringify(bassData())); DEF_ARP = JSON.parse(JSON.stringify(arpData()));
+    DEF_MIDI = { ch: ui.midiCh.value, vel: ui.midiVel.value, clock: ui.midiClock.checked, local: ui.midiLocal.checked };
+  }
+  function setCtl(id, v) {
+    var el = $(id); if (!el) return;
+    if (el.type === "checkbox") el.checked = !!v; else el.value = String(v);
+    el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  function trackReset(c, only) {
+    var b = blankPreset();
+    c.tracks = c.tracks.map(function (t, i) {
+      if (only !== undefined && only !== i) return t;
+      var n = b.tracks[i]; n.note = t.note; if (only !== undefined) n.mute = t.mute; return n;
+    });
+    return c;
+  }
+  var RESETS = {
+    transport: function () { setCtl("bpm", 100); setCtl("beats", 4); setCtl("vol", 80); setCtl("kitAll", "base"); ui.scene.value = ""; },
+    arreglo: function () { var c = capturePreset("__hist"), b = blankPreset(); c.patterns = b.patterns; c.song = []; c.mode = "loop"; c.names = null; c.cur = 0; applyPreset(c); },
+    pistas: function () { applyPreset(trackReset(capturePreset("__hist"))); },
+    editar: function () { var n = TRACKS[state.sel] ? TRACKS[state.sel].note : 36; setCtl("steps", 16); setCtl("pulses", 0); setCtl("rot", 0); setCtl("note", n); $("clear").click(); },
+    sonido: function () { applyPreset(trackReset(capturePreset("__hist"), state.sel)); },
+    bajo: function () { setBass(blankPreset().bass); allNotesOff(); renderBassGrid(); },
+    arpegio: function () { setArp(blankPreset().arp); allNotesOff(); },
+    teoria: function () { setCtl("bCircle", "chrom"); setCtl("tMode", "eq"); },
+    audio: function () { setCtl("audSplit", false); setCtl("audOut", ""); },
+    midi: function () { setCtl("midiCh", DEF_MIDI.ch); setCtl("midiVel", DEF_MIDI.vel); setCtl("midiClock", DEF_MIDI.clock); setCtl("midiLocal", DEF_MIDI.local); }
+  };
+  function addResetButtons() {
+    Array.prototype.forEach.call(document.querySelectorAll(".block"), function (b) {
+      var id = b.getAttribute("data-id"), h = b.querySelector(".bh"), tg = h ? h.querySelector(".tg") : null;
+      if (!RESETS[id] || !h) return;
+      var bt = document.createElement("button"); bt.type = "button"; bt.className = "rs"; bt.textContent = "↺";
+      bt.setAttribute("aria-label", tr("Reiniciar este módulo a cero")); bt.title = tr("Reiniciar este módulo a cero");
+      bt.addEventListener("click", function () { histCommit(); RESETS[id](); histCommit(); });
+      h.insertBefore(bt, tg);
+    });
+  }
+  var HIST = [], HPOS = -1, hKeyLast = "", hPend = "", hReady = false;
+  function hCap() {
+    try { var o = capturePreset("__hist"), full = JSON.stringify(o); o.cur = 0; return { full: full, key: JSON.stringify(o) }; } catch (e) { return null; }
+  }
+  function histUI() {
+    var h = hCap(), pend = !!h && h.key !== hKeyLast;
+    $("undoBtn").disabled = !(HPOS > 0 || (pend && HPOS >= 0));
+    $("redoBtn").disabled = !(HPOS < HIST.length - 1) || pend;
+  }
+  function histCommit() {
+    var h = hCap(); if (!h || h.key === hKeyLast) return;
+    HIST = HIST.slice(0, HPOS + 1); HIST.push(h.full); if (HIST.length > 100) HIST.shift();
+    HPOS = HIST.length - 1; hKeyLast = h.key; histUI();
+  }
+  function histGo(d) {
+    histCommit();
+    var np = HPOS + d; if (np < 0 || np >= HIST.length) return;
+    HPOS = np; applyPreset(JSON.parse(HIST[HPOS]));
+    var h = hCap(); if (h) { HIST[HPOS] = h.full; hKeyLast = h.key; hPend = ""; }
+    histUI();
+  }
+  setInterval(function () {
+    if (!hReady) return;
+    var h = hCap(); if (!h) return;
+    if (h.key === hKeyLast) hPend = ""; else if (h.key === hPend) { histCommit(); hPend = ""; } else hPend = h.key;
+    histUI();
+  }, 300);
+  $("undoBtn").addEventListener("click", function () { histGo(-1); });
+  $("redoBtn").addEventListener("click", function () { histGo(1); });
+  document.addEventListener("keydown", function (e) {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    var t = e.target, tag = t && t.tagName ? t.tagName : "", k = (e.key || "").toLowerCase();
+    if (tag === "TEXTAREA" || (tag === "INPUT" && (t.type === "text" || t.type === "number"))) return;
+    if (k === "z" && !e.shiftKey) { e.preventDefault(); histGo(-1); }
+    else if ((k === "z" && e.shiftKey) || k === "y") { e.preventDefault(); histGo(1); }
+  });
+  $("modeSw").addEventListener("click", function () { applySkin(layout.skin === "dark" ? "vanilla" : "dark"); saveLayout(); });
+  $("manualBtn").addEventListener("click", function () { window.open("manual/", "_blank", "noopener"); });
+
   /* ---------- Inicio ---------- */
   i18nStatic(); $("langSel").value = LANG; showMon();
-  ui.scene.value = "ebm";
-  loadScene("ebm");
+  blankSlate();
   setupPanels();
+  addResetButtons();
+  (function () { var bo = document.createElement("option"); bo.value = ""; bo.textContent = tr("— Pizarra en blanco —"); ui.scene.insertBefore(bo, ui.scene.firstChild); ui.scene.value = ""; })();
   renderPacks(); renderKitAll(); renderPList();
   loadLayout();
   setView(lsGet("ccva.view") === "bass" ? "bass" : "perc");
@@ -3578,7 +3703,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       addToLib(items.map(function (i) { return { pack: i.pack, name: i.name, blob: i.blob }; }), false);
       setPackStatus(tr("{0} muestra(s) recuperadas de este navegador.", items.length), "ok");
     }
-  }).catch(function () { /* sin IndexedDB */ }).then(restoreSession);
+  }).catch(function () { /* sin IndexedDB */ }).then(restoreSession).then(function () { histCommit(); hReady = true; histUI(); });
   setPlayUI();
   updateSongStatus();
   resize();
