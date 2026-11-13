@@ -223,10 +223,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.16.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.17.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.16.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.17.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -257,7 +257,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         </div>
         <label class="check" for="sceneFull"><input id="sceneFull" type="checkbox" checked> Cargar también variaciones, fills e intro en A–H y el arreglo</label>
         <label class="sel-field" for="kitAll"><span>Kit global</span>
-          <select id="kitAll"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option></select></label>
+          <select id="kitAll"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option></select></label>
         <label class="field" for="bpm"><span>Tempo</span><input id="bpm" type="range" min="50" max="200" value="100"><output id="bpmO">100</output></label>
         <label class="field" for="beats"><span>Tiempos/vuelta</span><input id="beats" type="range" min="2" max="8" value="4"><output id="beatsO">4</output></label>
         <label class="field" for="vol"><span>Volumen</span><input id="vol" type="range" min="0" max="100" value="80"><output id="volO">80</output></label>
@@ -306,7 +306,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <div class="block" data-id="sonido">
         <div class="label" id="sndTitle">Sonido de la pista</div>
         <label class="sel-field" for="kit"><span>Fuente</span>
-          <select id="kit"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="sample">Muestra cargada</option></select></label>
+          <select id="kit"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option><option value="sample">Muestra cargada</option></select></label>
         <label class="sel-field" for="smp"><span>Muestra</span><select id="smp"></select></label>
         <div class="row wrap-row">
           <button id="loadBtn" type="button">Cargar muestra…</button>
@@ -380,7 +380,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <label class="check" for="aOn"><input id="aOn" type="checkbox"> Activar arpegiador</label>
         <label class="sel-field" for="aPre"><span>Preset de arpegio</span><select id="aPre"></select></label>
         <label class="sel-field" for="aMode"><span>Modo</span><select id="aMode"><option value="up">Subida</option><option value="down">Bajada</option><option value="ud">Sube y baja</option><option value="alt">Alterno</option><option value="rand">Aleatorio</option></select></label>
-        <label class="sel-field" for="aChord"><span>Acorde</span><select id="aChord"><option value="tri">Tríada</option><option value="sev">Séptima</option><option value="pow">Quinta (power)</option><option value="sus">Suspendido</option><option value="add9">Novena añadida</option></select></label>
+        <label class="sel-field" for="aChord"><span>Acorde</span><select id="aChord"><option value="tri">Tríada</option><option value="sev">Séptima</option><option value="pow">Quinta (power)</option><option value="sus">Suspendido</option><option value="add9">Novena añadida</option><option value="dim">Disminuido</option><option value="dim7">Disminuido 7ª</option><option value="trit">Tritono (díada)</option></select></label>
         <label class="sel-field" for="aSteps"><span>Notas por vuelta</span><select id="aSteps"><option value="8">Corcheas (8)</option><option value="12">Tresillos (12)</option><option value="16" selected>Semicorcheas (16)</option><option value="24">Tresillos rápidos (24)</option><option value="32">Fusas (32)</option></select></label>
         <label class="sel-field" for="aOct"><span>Octavas</span><select id="aOct"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></label>
         <label class="sel-field" for="aBase"><span>Octava base</span><select id="aBase"><option value="2">2 (grave)</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5 (aguda)</option></select></label>
@@ -449,7 +449,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.16.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.17.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -812,6 +812,18 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
+  /* Kits y tensión */
+  ["EBM potente", "Powerful EBM", "EBM potente", "强力 EBM", "Мощный EBM"],
+  ["IDM glitch", "Glitch IDM", "IDM glitch", "故障 IDM", "Глитч-IDM"],
+  ["Drill & bass", "Drill & bass", "Drill & bass", "Drill & bass", "Drill & bass"],
+  ["Tensión", "Tension", "Tensão", "张力", "Напряжение"],
+  ["Disminuido", "Diminished", "Diminuto", "减和弦", "Уменьшённый"],
+  ["Disminuido 7ª", "Diminished 7th", "Diminuto 7ª", "减七和弦", "Уменьшённый септаккорд"],
+  ["Tritono (díada)", "Tritone (dyad)", "Trítono (díade)", "三全音(二度叠置)", "Тритон (диада)"],
+  ["Tritono tenso", "Tense tritone", "Trítono tenso", "Tritono tenso", "Tritono tenso"],
+  ["Semitono nervioso", "Nervous semitone", "Semitom nervoso", "Semitono nervioso", "Semitono nervioso"],
+  ["Tritono pulsante", "Pulsing tritone", "Trítono pulsante", "Tritono pulsante", "Tritono pulsante"],
+  ["Sub con tritono", "Sub with tritone", "Sub com trítono", "Sub con tritono", "Sub con tritono"],
   /* Afinación */
   ["Lissajous (afinación)", "Lissajous (tuning)", "Lissajous (afinação)", "利萨如(调音)", "Лиссажу (строй)"],
   ["Temperamento", "Temperament", "Temperamento", "律制", "Строй"],
@@ -1046,7 +1058,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   var LETTERS = "ABCDEFGH";
   /* ---------- Bajo ---------- */
   var NOTE_ES = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
-  var SCALES = { min: [0, 2, 3, 5, 7, 8, 10], maj: [0, 2, 4, 5, 7, 9, 11], dor: [0, 2, 3, 5, 7, 9, 10], phr: [0, 1, 3, 5, 7, 8, 10] };
+  var SCALES = { min: [0, 2, 3, 5, 7, 8, 10], maj: [0, 2, 4, 5, 7, 9, 11], dor: [0, 2, 3, 5, 7, 9, 10], phr: [0, 1, 3, 5, 7, 8, 10], hmin: [0, 2, 3, 5, 7, 8, 11], loc: [0, 1, 3, 5, 6, 8, 10], phrd: [0, 1, 4, 5, 7, 8, 10] };
   var PROGS = [
     { id: "m1", g: "Menor", sc: "min", name: "i – VI – III – VII", d: [0, 5, 2, 6] },
     { id: "m2", g: "Menor", sc: "min", name: "i – iv – v – i", d: [0, 3, 4, 0] },
@@ -1059,9 +1071,18 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     { id: "M4", g: "Mayor", sc: "maj", name: "ii – V – I – I", d: [1, 4, 0, 0] },
     { id: "d1", g: "Dórico", sc: "dor", name: "i – IV", d: [0, 3] },
     { id: "f1", g: "Frigio", sc: "phr", name: "i – ♭II", d: [0, 1] },
-    { id: "f2", g: "Frigio", sc: "phr", name: "i – ♭II – i – ♭VII", d: [0, 1, 0, 6] }
+    { id: "f2", g: "Frigio", sc: "phr", name: "i – ♭II – i – ♭VII", d: [0, 1, 0, 6] },
+    { id: "t1", g: "Tensión", sc: "loc", name: "i° – ♭II – i° – ♭V", d: [0, 1, 0, 4] },
+    { id: "t2", g: "Tensión", sc: "phrd", name: "I – ♭II – I – ♭vii", d: [0, 1, 0, 6] },
+    { id: "t3", g: "Tensión", sc: "phr", name: "i – ♭II – v° – i", d: [0, 1, 4, 0] },
+    { id: "t4", g: "Tensión", sc: "loc", name: "i° – ♭III – ♭V – i°", d: [0, 2, 4, 0] },
+    { id: "t5", g: "Tensión", sc: "hmin", name: "i – ii° – V – i", d: [0, 1, 4, 0] },
+    { id: "t6", g: "Tensión", sc: "loc", name: "i° – ♭V (tritono)", d: [0, 4] }
   ];
   var BPATS = {
+    sem: { n: "Semitono nervioso", p: [1, 3, 4, 7, 9, 11, 12, 15], a: [1, 9, 12], g: { 3: 1, 4: 1, 11: 1, 12: 1 } },
+    trit: { n: "Tritono pulsante", p: [1, 3, 5, 7, 9, 11, 13, 15], a: [1, 9], g: { 5: 4, 13: 4 } },
+    tsub: { n: "Sub con tritono", p: [1, 4, 7, 11, 14], a: [1, 11], g: { 4: 4, 11: 1 } },
     corcheas: { n: "Corcheas", p: [1, 3, 5, 7, 9, 11, 13, 15], a: [1, 9] },
     contra: { n: "Contratiempos", p: [3, 7, 11, 15], a: [] },
     sinc: { n: "Sincopado", p: [1, 4, 7, 9, 12, 15], a: [1, 9] },
@@ -1165,6 +1186,51 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     });
   }
 
+  /* ---------- Herramientas para kits potentes: saturación, bit-crush, gate, FM y parciales ---------- */
+  var SATC = {}, CRUSH = {};
+  function satCurve(k) { if (!SATC[k]) { var c = new Float32Array(2048), tk = Math.tanh(k); for (var i = 0; i < 2048; i++) c[i] = Math.tanh((i / 1023.5 - 1) * k) / tk; SATC[k] = c; } return SATC[k]; }
+  function crushCurve(l) { if (!CRUSH[l]) { var c = new Float32Array(2048); for (var i = 0; i < 2048; i++) c[i] = Math.round((i / 1023.5 - 1) * l) / l; CRUSH[l] = c; } return CRUSH[l]; }
+  function shaper(curve) { var w = ctx.createWaveShaper(); w.curve = curve; w.oversample = "2x"; return w; }
+  function oscS(type, f0, f1, t, dec, peak, curve) {
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f0, t); if (f1) o.frequency.exponentialRampToValueAtTime(f1, t + dec);
+    env(g, t, peak, dec);
+    if (curve) { var w = shaper(curve); o.connect(w); w.connect(g); } else o.connect(g);
+    g.connect(OUT); o.start(t); o.stop(t + dec + 0.05);
+  }
+  function noiseS(t, dec, peak, ftype, freq, q, curve) {
+    var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noiseBuf; f.type = ftype; f.frequency.value = Math.min(16000, freq); f.Q.value = q || 1;
+    env(g, t, peak, dec);
+    s.connect(f);
+    if (curve) { var w = shaper(curve); f.connect(w); w.connect(g); } else f.connect(g);
+    g.connect(OUT); s.start(t, Math.random() * 0.5); s.stop(t + dec + 0.05);
+  }
+  function noiseG(t, hold, peak, ftype, freq, q, curve) {
+    var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noiseBuf; f.type = ftype; f.frequency.value = Math.min(16000, freq); f.Q.value = q || 1;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + 0.002);
+    g.gain.exponentialRampToValueAtTime(peak * 0.45, t + hold - 0.003); g.gain.setValueAtTime(0.0001, t + hold);
+    s.connect(f);
+    if (curve) { var w = shaper(curve); f.connect(w); w.connect(g); } else f.connect(g);
+    g.connect(OUT); s.start(t, Math.random() * 0.5); s.stop(t + hold + 0.03);
+  }
+  function fm(t, fc, ratio, idx, dec, peak) {
+    var c = ctx.createOscillator(), m = ctx.createOscillator(), mg = ctx.createGain(), g = ctx.createGain();
+    c.type = "sine"; m.type = "sine"; c.frequency.setValueAtTime(fc, t); m.frequency.setValueAtTime(fc * ratio, t);
+    mg.gain.setValueAtTime(idx * fc, t); mg.gain.exponentialRampToValueAtTime(Math.max(1, idx * fc * 0.01), t + dec);
+    env(g, t, peak, dec); m.connect(mg); mg.connect(c.frequency); c.connect(g); g.connect(OUT);
+    c.start(t); m.start(t); c.stop(t + dec + 0.05); m.stop(t + dec + 0.05);
+  }
+  function partials(t, list, dec, peak, curve) {
+    list.forEach(function (p) {
+      var o = ctx.createOscillator(), g = ctx.createGain(), d = dec * p[2];
+      o.type = "sine"; o.frequency.setValueAtTime(p[0], t); env(g, t, peak * p[1], d);
+      if (curve) { var w = shaper(curve); o.connect(w); w.connect(g); } else o.connect(g);
+      g.connect(OUT); o.start(t); o.stop(t + d + 0.05);
+    });
+  }
+
   /* Kits sintéticos: cada función recibe (tiempo, factor de afinación, factor de decay) */
   var KITS = {
     base: {
@@ -1243,6 +1309,42 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     clave: function (t, pf, df) { osc("sine", 2500 * pf, 2480 * pf, t, 0.08 * df, 0.8); },
     conga: function (t, pf, df) { osc("sine", 320 * pf, 210 * pf, t, 0.22 * df, 0.8); },
     bell:  function (t, pf, df) { cowbell(t, pf * 0.95, df, 0.3); }
+  };
+
+
+  /* Kits potentes (capas + saturación): propuestas sintetizadas, no son sonidos de equipos originales */
+  KITS.kebm = {
+    kick:  function (t, pf, df) { oscS("sine", 210 * pf, 46 * pf, t, 0.38 * df, 1.0, satCurve(3)); oscS("triangle", 95 * pf, 48 * pf, t, 0.16 * df, 0.5, satCurve(2)); noiseS(t, 0.012, 0.45, "highpass", 2200, 0.7, satCurve(2)); osc("sine", 58 * pf, 0, t, 0.5 * df, 0.55); },
+    snare: function (t, pf, df) { noiseG(t, 0.17 * df, 0.7, "bandpass", 1900 * pf, 0.6, satCurve(4)); noiseG(t, 0.17 * df, 0.35, "highpass", 6500, 0.7, satCurve(2)); oscS("triangle", 210 * pf, 140 * pf, t, 0.1 * df, 0.6, satCurve(3)); },
+    hat:   function (t, pf, df) { metal(t, 0.04 * df, 0.22, pf * 1.2); noiseS(t, 0.035 * df, 0.2, "highpass", 9000 * pf, 0.7); },
+    ohat:  function (t, pf, df) { metal(t, 0.22 * df, 0.2, pf * 1.2); noiseS(t, 0.2 * df, 0.16, "highpass", 8500 * pf, 0.7); },
+    clap:  function (t, pf, df) { clapBurst(t, pf, df * 1.3); noiseG(t, 0.16 * df, 0.4, "bandpass", 1500 * pf, 0.8, satCurve(3)); },
+    clave: function (t, pf, df) { partials(t, [[900 * pf, 1, 0.5], [1210 * pf, 0.8, 0.4], [2370 * pf, 0.5, 0.25], [3480 * pf, 0.3, 0.2]], 0.16 * df, 0.55, satCurve(2)); },
+    conga: function (t, pf, df) { oscS("sine", 175 * pf, 90 * pf, t, 0.3 * df, 0.9, satCurve(3)); noiseS(t, 0.03, 0.25, "bandpass", 900 * pf, 1.1, satCurve(2)); },
+    bell:  function (t, pf, df) { partials(t, [[520 * pf, 1, 1], [1190 * pf, 0.7, 0.8], [1760 * pf, 0.5, 0.6], [2490 * pf, 0.4, 0.45], [3340 * pf, 0.25, 0.3]], 0.55 * df, 0.45, satCurve(2)); }
+  };
+  KITS.kidm = {
+    kick:  function (t, pf, df) { oscS("sine", 150 * pf, 42 * pf, t, 0.2 * df, 0.95, satCurve(1.5)); oscS("square", 1800 * pf, 900 * pf, t, 0.006, 0.35, satCurve(2)); noiseS(t, 0.01, 0.2, "bandpass", 4000, 1.5); osc("sine", 48 * pf, 0, t, 0.32 * df, 0.5); },
+    snare: function (t, pf, df) { noiseS(t, 0.09 * df, 0.55, "bandpass", 3400 * pf, 1.0, crushCurve(24)); osc("triangle", 320 * pf, 220 * pf, t, 0.07 * df, 0.4); noiseS(t + 0.014, 0.05 * df, 0.35, "bandpass", 3400 * pf, 1.0, crushCurve(24)); },
+    hat:   function (t, pf, df) { noiseS(t, 0.025 * df, 0.3, "highpass", 9500 * pf, 0.8, crushCurve(10)); },
+    ohat:  function (t, pf, df) {
+      [0, 0.012, 0.026, 0.045].forEach(function (o, i) { noiseS(t + o, 0.03, [0.26, 0.22, 0.18, 0.14][i], "highpass", 8000 * pf, 0.8, crushCurve(12)); });
+      noiseS(t + 0.06, 0.12 * df, 0.1, "highpass", 8500 * pf, 0.8, crushCurve(12));
+    },
+    clap:  function (t, pf, df) { [0, 0.007, 0.019, 0.031].forEach(function (o) { noiseS(t + o, 0.012, 0.45, "bandpass", 2000 * pf, 1.3, crushCurve(16)); }); noiseS(t + 0.04, 0.08 * df, 0.3, "bandpass", 1900 * pf, 1.0, crushCurve(16)); },
+    clave: function (t, pf, df) { fm(t, 2800 * pf, 1.5, 3.5, 0.06 * df, 0.6); },
+    conga: function (t, pf, df) { oscS("sine", 620 * pf, 240 * pf, t, 0.09 * df, 0.8, crushCurve(32)); fm(t, 480 * pf, 1.4, 2, 0.1 * df, 0.3); },
+    bell:  function (t, pf, df) { fm(t, 1760 * pf, 3.5, 4, 0.38 * df, 0.45); fm(t, 2640 * pf, 2.76, 2, 0.2 * df, 0.2); }
+  };
+  KITS.kdnb = {
+    kick:  function (t, pf, df) { oscS("sine", 230 * pf, 52 * pf, t, 0.13 * df, 1.0, satCurve(2.5)); osc("sine", 52 * pf, 0, t, 0.38 * df, 0.8); noiseS(t, 0.008, 0.4, "highpass", 3000, 0.7, satCurve(2)); },
+    snare: function (t, pf, df) { noiseS(t, 0.2 * df, 0.6, "bandpass", 2300 * pf, 0.7, satCurve(4)); noiseS(t, 0.045, 0.5, "highpass", 7000, 0.7, satCurve(3)); oscS("triangle", 240 * pf, 165 * pf, t, 0.11 * df, 0.7, satCurve(3)); oscS("sine", 420 * pf, 300 * pf, t, 0.05, 0.3); },
+    hat:   function (t, pf, df) { noiseS(t, 0.028 * df, 0.3, "highpass", 9000 * pf, 0.7); metal(t, 0.02 * df, 0.08, pf * 1.3); },
+    ohat:  function (t, pf, df) { noiseS(t, 0.13 * df, 0.28, "highpass", 8000 * pf, 0.7); },
+    clap:  function (t, pf, df) { noiseS(t, 0.07 * df, 0.5, "bandpass", 2600 * pf, 1.0, satCurve(3)); oscS("triangle", 330 * pf, 240 * pf, t, 0.05, 0.3, satCurve(2)); },
+    clave: function (t, pf, df) { oscS("square", 1650 * pf, 1500 * pf, t, 0.03 * df, 0.45, satCurve(3)); noiseS(t, 0.02, 0.3, "bandpass", 3000 * pf, 1.5); },
+    conga: function (t, pf, df) { oscS("sine", 210 * pf, 115 * pf, t, 0.24 * df, 0.9, satCurve(2)); noiseS(t, 0.03, 0.2, "bandpass", 1200 * pf, 1.1); },
+    bell:  function (t, pf, df) { partials(t, [[1400 * pf, 1, 1], [2150 * pf, 0.6, 0.7], [3020 * pf, 0.4, 0.5]], 0.12 * df, 0.5, satCurve(3)); }
   };
 
   /* Reproduce una pista: muestra cargada o sonido del kit elegido */
@@ -1864,7 +1966,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.16.0";
+  var FW = "0.17.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2024,7 +2126,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function renderKitAll() {
     var cur = ui.kitAll.value;
     ui.kitAll.innerHTML = "";
-    [["base", "Base (sintético)"], ["k808", "808"], ["k909", "909"], ["k707", "707"], ["k606", "606"], ["linn", "LinnDrum"], ["cr78", "CR-78"], ["seco", "Seco"]].forEach(function (k) {
+    [["base", "Base (sintético)"], ["k808", "808"], ["k909", "909"], ["k707", "707"], ["k606", "606"], ["linn", "LinnDrum"], ["cr78", "CR-78"], ["seco", "Seco"], ["kebm", "EBM potente"], ["kidm", "IDM glitch"], ["kdnb", "Drill & bass"]].forEach(function (k) {
       var o = document.createElement("option"); o.value = k[0]; o.textContent = tr(k[1]); ui.kitAll.appendChild(o);
     });
     var seen = {};
@@ -2196,7 +2298,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.16.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.17.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -3156,7 +3258,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       d.p.forEach(function (p) { if (p - 1 < n) b[p - 1] = 1; });
       d.a.forEach(function (p) { if (p - 1 < n && b[p - 1]) b[p - 1] = 2; });
     }
-    bass.steps = n; bass.base = b; bass.deg = b.map(function () { return 0; }); bass.pat = id; $("bSteps").value = String(n);
+    bass.steps = n; bass.base = b; bass.deg = b.map(function () { return 0; }); bass.pat = id;
+    if (BPATS[id] && BPATS[id].g) Object.keys(BPATS[id].g).forEach(function (k) { if (+k - 1 < n) bass.deg[+k - 1] = BPATS[id].g[k]; }); $("bSteps").value = String(n);
     resyncBass(); renderBassGrid();
   }
   function bassData() {
@@ -3194,12 +3297,15 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     { id: "des", n: "Descendente suave", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.8, wave: "tri", cut: 0.4, res: 0.1, env: 0.3, dec: 0.5, vol: 0.6 },
     { id: "ale", n: "Aleatorio brillante", mode: "rand", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.65, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
     { id: "tre", n: "Tresillos", mode: "up", chord: "tri", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.2, env: 0.5, dec: 0.3, vol: 0.6 },
+    { id: "tens", n: "Tritono tenso", mode: "alt", chord: "dim", steps: 16, oct: 2, base: 3, rhy: "gal", gate: 0.3, wave: "sqr", cut: 0.5, res: 0.45, env: 0.6, dec: 0.25, vol: 0.5 },
     { id: "pow", n: "Quintas rodantes", mode: "up", chord: "pow", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.45, res: 0.25, env: 0.5, dec: 0.25, vol: 0.55 }
   ];
   var arp = { on: false, mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.25, env: 0.5, dec: 0.3, vol: 0.6, ch: 2, nextK: 0, g: null, pre: "" };
   function arpNotes(cyc) {
     var pg = progOf(bass.prog), r = pg.d[chordIdxAt(cyc)], root = 12 * (arp.base + 1) + bass.root;
-    var degs = { tri: [0, 2, 4], sev: [0, 2, 4, 6], pow: [0, 4], sus: [0, 3, 4], add9: [0, 2, 4, 8] }[arp.chord] || [0, 2, 4], out = [];
+    var chrom = { dim: [0, 3, 6], dim7: [0, 3, 6, 9], trit: [0, 6] }[arp.chord], out = [];
+    if (chrom) { var rt = root + degSemi(pg, r); for (var o2 = 0; o2 < arp.oct; o2++) chrom.forEach(function (s) { out.push(rt + s + 12 * o2); }); return out; }
+    var degs = { tri: [0, 2, 4], sev: [0, 2, 4, 6], pow: [0, 4], sus: [0, 3, 4], add9: [0, 2, 4, 8] }[arp.chord] || [0, 2, 4];
     for (var o = 0; o < arp.oct; o++) degs.forEach(function (d) { out.push(root + degSemi(pg, r + d) + 12 * o); });
     return out;
   }
@@ -3263,7 +3369,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     if (!o || typeof o !== "object") return;
     function nz(v, lo, hi, d) { v = +v; return v >= lo && v <= hi ? v : d; }
     function pk(v, list, d) { return list.indexOf(v) >= 0 ? v : d; }
-    arp.on = !!o.on; arp.mode = pk(o.mode, ["up", "down", "ud", "alt", "rand"], "up"); arp.chord = pk(o.chord, ["tri", "sev", "pow", "sus", "add9"], "tri");
+    arp.on = !!o.on; arp.mode = pk(o.mode, ["up", "down", "ud", "alt", "rand"], "up"); arp.chord = pk(o.chord, ["tri", "sev", "pow", "sus", "add9", "dim", "dim7", "trit"], "tri");
     arp.steps = [8, 12, 16, 24, 32].indexOf(+o.steps) >= 0 ? +o.steps : 16; arp.oct = nz(o.oct, 1, 3, 2) | 0; arp.base = nz(o.base, 2, 5, 3) | 0;
     arp.rhy = ARHY[o.rhy] ? o.rhy : "all"; arp.gate = nz(o.gate, 0.1, 1, 0.5); arp.wave = pk(o.wave, ["saw", "sqr", "tri"], "saw");
     arp.cut = nz(o.cut, 0, 1, 0.5); arp.res = nz(o.res, 0, 1, 0.25); arp.env = nz(o.env, 0, 1, 0.5); arp.dec = nz(o.dec, 0.05, 1, 0.3);
