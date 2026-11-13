@@ -223,10 +223,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.3.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.4.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.3.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.4.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -398,10 +398,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
       <div class="block" data-id="teoria">
         <div class="label">Teoría</div>
-        <label class="sel-field" for="bCircle"><span>Círculo</span><select id="bCircle"><option value="chrom">Cromático</option><option value="fifths">De quintas</option><option value="tonnetz">Tonnetz (espejo)</option></select></label>
+        <label class="sel-field" for="bCircle"><span>Círculo</span><select id="bCircle"><option value="chrom">Cromático</option><option value="fifths">De quintas</option><option value="tonnetz">Tonnetz (espejo)</option><option value="liss">Lissajous (afinación)</option></select></label>
+        <label class="sel-field" for="tMode"><span>Temperamento</span><select id="tMode"><option value="eq">Igual (12 por octava)</option><option value="just">Justo (5 límites)</option></select></label>
+        <p class="note">El temperamento afina el sonido interno del bajo y del arpegio: igual (12 notas iguales por octava) o justo (razones puras respecto a la tónica del bajo). La salida MIDI no cambia: las notas se envían iguales.</p>
         <canvas class="theory" id="bTheory" aria-label="Círculo de las 12 notas con la escala, el acorde actual y la progresión."></canvas>
         <div class="chords" id="bChords"></div>
         <p class="note">Los puntos llenos son las notas de la escala; el anillo marca la tónica; el triángulo es el acorde que suena; las flechas siguen la progresión.</p>
+        <p class="note" id="bLissNote" hidden>Lissajous: dos tonos con razón entera trazan una figura cerrada y quieta. Si la afinación se aparta de esa razón, la figura gira; cuanto más rápido gira, más desafinado está el intervalo (la velocidad está ampliada para verla). En igual, las terceras y quintas giran un poco; en justo quedan quietas dentro de la tonalidad, y los acordes de otros grados sí giran. Las cifras son los centésimos de desviación respecto a la razón pura.</p>
         <p class="note" id="bTonNote" hidden>Tonnetz: cada punto es una nota; subir a la derecha es una quinta, hacia arriba a la derecha una tercera mayor y hacia arriba a la izquierda una tercera menor. Cada triángulo es un acorde (apuntando arriba, mayor; abajo, menor). El espejo (R) es el triángulo vecino que comparte una arista: el acorde relativo. Esa reflexión cae sobre un eje de tritono. P es el paralelo y L el acorde líder.</p>
       </div>
 
@@ -809,6 +812,18 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
+  /* Afinación */
+  ["Lissajous (afinación)", "Lissajous (tuning)", "Lissajous (afinação)", "利萨如(调音)", "Лиссажу (строй)"],
+  ["Temperamento", "Temperament", "Temperamento", "律制", "Строй"],
+  ["Igual (12 por octava)", "Equal (12 per octave)", "Igual (12 por oitava)", "平均律(每八度12个)", "Равномерный (12 на октаву)"],
+  ["Justo (5 límites)", "Just (5-limit)", "Justo (5 limites)", "纯律(5限)", "Чистый (5-лимитный)"],
+  ["Igual", "Equal", "Igual", "平均律", "Равномерный"],
+  ["Justo", "Just", "Justo", "纯律", "Чистый"],
+  ["Raíz–3ª", "Root–3rd", "Raiz–3ª", "根音–三度", "Основа–терция"],
+  ["Raíz–5ª", "Root–5th", "Raiz–5ª", "根音–五度", "Основа–квинта"],
+  ["3ª–5ª", "3rd–5th", "3ª–5ª", "三度–五度", "Терция–квинта"],
+  ["El temperamento afina el sonido interno del bajo y del arpegio: igual (12 notas iguales por octava) o justo (razones puras respecto a la tónica del bajo). La salida MIDI no cambia: las notas se envían iguales.", "Temperament tunes the internal sound of the bass and arpeggiator: equal (12 equal notes per octave) or just (pure ratios relative to the bass root). MIDI output does not change: notes are sent as equal.", "O temperamento afina o som interno do baixo e do arpejador: igual (12 notas iguais por oitava) ou justo (razões puras em relação à tônica do baixo). A saída MIDI não muda: as notas são enviadas iguais.", "律制调整贝斯和琶音器的内部声音:平均律(每八度12个等分音)或纯律(相对贝斯主音的纯比例)。MIDI 输出不变,音符按平均律发送。", "Строй настраивает внутренний звук баса и арпеджиатора: равномерный (12 равных нот на октаву) или чистый (чистые соотношения от тоники баса). MIDI-выход не меняется: ноты отправляются равномерными."],
+  ["Lissajous: dos tonos con razón entera trazan una figura cerrada y quieta. Si la afinación se aparta de esa razón, la figura gira; cuanto más rápido gira, más desafinado está el intervalo (la velocidad está ampliada para verla). En igual, las terceras y quintas giran un poco; en justo quedan quietas dentro de la tonalidad, y los acordes de otros grados sí giran. Las cifras son los centésimos de desviación respecto a la razón pura.", "Lissajous: two tones in an integer ratio draw a closed, still figure. If the tuning departs from that ratio the figure rotates; the faster it turns, the more out of tune the interval is (speed is magnified so you can see it). In equal temperament, thirds and fifths turn slightly; in just they stay still within the key, while chords on other degrees do turn. The numbers are the deviation in cents from the pure ratio.", "Lissajous: dois tons em razão inteira traçam uma figura fechada e parada. Se a afinação se afasta dessa razão, a figura gira; quanto mais rápido gira, mais desafinado o intervalo (a velocidade é ampliada para ser vista). Em igual, terças e quintas giram um pouco; em justo ficam paradas dentro da tonalidade, e os acordes de outros graus giram. Os números são os centésimos de desvio da razão pura.", "利萨如:整数比的两个音画出封闭且静止的图形。若调音偏离该比例,图形会旋转;转得越快,音程越不准(速度已放大以便观察)。平均律中三度和五度会略微旋转;纯律在调内保持静止,其他级数的和弦则会旋转。数字为相对纯比例的音分偏差。", "Лиссажу: два тона с целым соотношением рисуют замкнутую неподвижную фигуру. Если строй отклоняется от него, фигура вращается; чем быстрее, тем фальшивее интервал (скорость увеличена для наглядности). В равномерном строе терции и квинты слегка вращаются; в чистом внутри тональности стоят на месте, а аккорды других ступеней вращаются. Числа — отклонение в центах от чистого соотношения."],
   /* Tonnetz */
   ["Tonnetz (espejo)", "Tonnetz (mirror)", "Tonnetz (espelho)", "Tonnetz(镜像)", "Тоннетц (зеркало)"],
   ["Espejo (relativo)", "Mirror (relative)", "Espelho (relativo)", "镜像(关系调)", "Зеркало (параллельный)"],
@@ -1070,7 +1085,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     pedal: { n: "Pedal grave", p: [1, 9], a: [] },
     pedal2: { n: "Pedal con corcheas", p: [1, 5, 9, 13], a: [1] }
   };
-  var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], deg: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "" };
+  var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], deg: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "", tun: "eq" };
   (function () { for (var i = 0; i < 16; i++) bass.base.push(0); [1, 4, 7, 9, 12, 15].forEach(function (p) { bass.base[p - 1] = 1; }); bass.base[0] = 2; bass.base[8] = 2; bass.pat = "sinc"; bass.deg = []; for (var j2 = 0; j2 < 16; j2++) bass.deg.push(0); })();
   function progOf(id) { var r = PROGS[0]; PROGS.forEach(function (x) { if (x.id === id) r = x; }); return r; }
   function chordIdxAt(cyc) { return Math.floor(cyc / bass.cpc) % progOf(bass.prog).d.length; }
@@ -1081,6 +1096,9 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     return 12 * (bass.oct + 1) + bass.root + degSemi(pg, r + (bass.deg[step] || 0)) + (st === 2 ? (bass.acc === "fifth" ? 7 : 12) : 0);
   }
   function mtof(n) { return 440 * Math.pow(2, (n - 69) / 12); }
+  /* Temperamento justo de 5 límites respecto a la tónica del bajo: desviación en centésimos de cada semitono sobre la afinación igual */
+  var JUST_C = [0, 11.7313, 3.91, 15.6413, -13.6863, -1.955, -9.7763, 1.955, 13.6863, -15.6413, -3.91, -11.7313];
+  function tunedFreq(n) { var f = mtof(n); if (bass.tun === "just") f *= Math.pow(2, JUST_C[mod(Math.round(n) - bass.root, 12)] / 1200); return f; }
   state.mode = "loop"; state.cur = 0; state.queued = null;
   state.song = [{ pat: 0, reps: 1 }];
   state.patterns = [];
@@ -1247,7 +1265,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   /* Reproduce una pista: muestra cargada o sonido del kit elegido */
   function playBass(when, note, dur, acc) {
     if (!ctx || !bass.g) return;
-    var at = Math.max(when, ctx.currentTime), f = mtof(note);
+    var at = Math.max(when, ctx.currentTime), f = tunedFreq(note);
     var o = ctx.createOscillator(); o.type = bass.wave === "sqr" ? "square" : "sawtooth";
     var flt = ctx.createBiquadFilter(); flt.type = "lowpass"; flt.Q.value = 0.5 + bass.res * 14;
     var base = 80 * Math.pow(2, bass.cut * 5.5), peak = Math.min(12000, base * Math.pow(2, bass.env * 4 * (acc ? 1.3 : 1))), d = 0.05 + bass.dec * 0.6;
@@ -1255,7 +1273,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var amp = ctx.createGain();
     amp.gain.setValueAtTime(0.0001, at); amp.gain.linearRampToValueAtTime(acc ? 1 : 0.8, at + 0.004);
     amp.gain.setValueAtTime(acc ? 1 : 0.8, at + Math.max(0.006, dur)); amp.gain.exponentialRampToValueAtTime(0.0001, at + dur + 0.06);
-    if (bass.glide > 0 && bass.last != null) { o.frequency.setValueAtTime(mtof(bass.last), at); o.frequency.exponentialRampToValueAtTime(f, at + 0.01 + bass.glide * 0.12); }
+    if (bass.glide > 0 && bass.last != null) { o.frequency.setValueAtTime(tunedFreq(bass.last), at); o.frequency.exponentialRampToValueAtTime(f, at + 0.01 + bass.glide * 0.12); }
     else o.frequency.setValueAtTime(f, at);
     bass.last = note;
     o.connect(flt); flt.connect(amp); amp.connect(bass.g);
@@ -1863,7 +1881,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "DE 0.3.0";
+  var FW = "DE 0.4.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2195,7 +2213,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW DE 0.3.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW DE 0.4.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -2934,6 +2952,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var pg = progOf(bass.prog), sc = SCALES[pg.sc], inScale = {};
     sc.forEach(function (v) { inScale[(bass.root + v) % 12] = true; });
     if ($("bCircle").value === "tonnetz") { drawTonnetz(x, S, d, col, inScale, chordIdx); return; }
+    if ($("bCircle").value === "liss") { drawLiss(x, S, d, col, chordIdx); return; }
     var fifths = $("bCircle").value === "fifths";
     function pos(pc) { var q = fifths ? (pc * 7) % 12 : pc, a = -Math.PI / 2 + q * Math.PI / 6; return [cx + R * Math.cos(a), cx + R * Math.sin(a)]; }
     x.lineWidth = d; x.strokeStyle = col.line; x.beginPath(); x.arc(cx, cx, R, 0, Math.PI * 2); x.stroke();
@@ -3056,7 +3075,34 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       x.fillStyle = MIR; x.fillText(tr("Espejo (relativo)") + ": " + mname + " · " + tr("eje del tritono") + " " + axisTxt, cx, S * 0.955);
     } else { x.fillStyle = theme.muted; x.fillText(tr("Acorde disminuido: sin espejo"), cx, S * 0.955); }
   }
+  /* ---------- Lissajous: razón de cada intervalo del acorde; la figura gira según su desviación de la razón pura ---------- */
+  var LRAT = { 2: [9, 8], 3: [6, 5], 4: [5, 4], 5: [4, 3], 6: [45, 32], 7: [3, 2], 8: [8, 5] };
+  function lissFig(x, ox, oy, h, n1, n2, d, col, t, big) {
+    var semis = n2 - n1, rt = LRAT[semis] || [1, 1], a = rt[0], b = rt[1];
+    var r = tunedFreq(n2) / tunedFreq(n1), eps = r / (a / b) - 1; if (Math.abs(eps) < 1e-7) eps = 0; var cents = 1200 * Math.log(1 + eps) / Math.LN2;
+    var ph = 0.6 + 2 * Math.PI * 120 * eps * t, N = Math.min(2600, 80 * Math.max(a, b) + 240), i;
+    x.strokeStyle = col.line; x.lineWidth = d; x.strokeRect(ox - h, oy - h, 2 * h, 2 * h);
+    x.strokeStyle = Math.abs(cents) < 0.05 ? col.accent : "#ffffff"; x.lineWidth = (big ? 2 : 1.5) * d; x.beginPath();
+    for (i = 0; i <= N; i++) { var th = i / N * 2 * Math.PI, px = ox + Math.sin(b * th) * h * 0.94, py = oy + Math.sin(a * th + ph) * h * 0.94; if (i) x.lineTo(px, py); else x.moveTo(px, py); }
+    x.stroke();
+    return { txt: a + ":" + b, cents: (cents >= 0 ? "+" : "") + cents.toFixed(1) + "¢" };
+  }
+  function drawLiss(x, S, d, col, chordIdx) {
+    var ci = chordIdx >= 0 ? chordIdx : 0, info = chordInfo(ci), t = performance.now() / 1000;
+    var n1 = 48 + info.pcs[0], n2 = n1 + mod(info.pcs[1] - info.pcs[0], 12), n3 = n1 + mod(info.pcs[2] - info.pcs[0], 12);
+    x.textBaseline = "middle"; x.textAlign = "left"; x.fillStyle = theme.fg; x.font = "600 " + (18 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(info.name, 0.04 * S, 0.05 * S);
+    x.textAlign = "right"; x.fillStyle = theme.muted; x.font = (12 * d) + "px 'IBM Plex Mono', monospace";
+    x.fillText(tr("Temperamento") + ": " + (bass.tun === "just" ? tr("Justo") : tr("Igual")), 0.96 * S, 0.05 * S);
+    x.textAlign = "center";
+    var main = lissFig(x, S * 0.5, S * 0.36, S * 0.22, n1, n3, d, col, t, true);
+    x.fillStyle = theme.fg; x.font = "600 " + (12 * d) + "px 'IBM Plex Mono', monospace"; x.fillText(tr("Raíz–5ª") + " " + main.txt + " · " + main.cents, S * 0.5, S * 0.625);
+    var s1 = lissFig(x, S * 0.27, S * 0.79, S * 0.11, n1, n2, d, col, t, false), s2 = lissFig(x, S * 0.73, S * 0.79, S * 0.11, n2, n3, d, col, t, false);
+    x.font = (11 * d) + "px 'IBM Plex Mono', monospace"; x.fillStyle = theme.muted;
+    x.fillText(tr("Raíz–3ª") + " " + s1.txt, S * 0.27, S * 0.925); x.fillText(s1.cents, S * 0.27, S * 0.965);
+    x.fillText(tr("3ª–5ª") + " " + s2.txt, S * 0.73, S * 0.925); x.fillText(s2.cents, S * 0.73, S * 0.965);
+  }
   function theoryTick(now) {
+    if ($("bCircle").value === "liss") bassDirty = true;
     var ci = -1;
     if (state.playing && bass.on && ctx) ci = chordIdxAt(Math.floor(curPhase(now)));
     var key = ci + "|" + bass.prog + "|" + bass.root + "|" + $("bCircle").value;
@@ -3133,11 +3179,11 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
   function bassData() {
     return { on: bass.on, root: bass.root, oct: bass.oct, prog: bass.prog, cpc: bass.cpc, steps: bass.steps, base: bass.base.slice(), deg: bass.deg.slice(), acc: bass.acc, wave: bass.wave,
-      cut: bass.cut, res: bass.res, env: bass.env, dec: bass.dec, glide: bass.glide, vol: bass.vol, ch: bass.ch, pat: bass.pat };
+      cut: bass.cut, res: bass.res, env: bass.env, dec: bass.dec, glide: bass.glide, vol: bass.vol, ch: bass.ch, pat: bass.pat, tun: bass.tun };
   }
   function bassSyncUI() {
     $("bOn").checked = bass.on; $("bRoot").value = String(bass.root); $("bOct").value = String(bass.oct); $("bProg").value = bass.prog; $("bCpc").value = String(bass.cpc);
-    $("bSteps").value = String(bass.steps); $("bAcc").value = bass.acc; $("bWave").value = bass.wave; $("bPat").value = bass.pat || "";
+    $("tMode").value = bass.tun; $("bSteps").value = String(bass.steps); $("bAcc").value = bass.acc; $("bWave").value = bass.wave; $("bPat").value = bass.pat || "";
     $("bCut").value = Math.round(bass.cut * 100); $("bRes").value = Math.round(bass.res * 100); $("bEnv").value = Math.round(bass.env * 100);
     $("bDec").value = Math.round(bass.dec * 100); $("bGlide").value = Math.round(bass.glide * 100); $("bVol").value = Math.round(bass.vol * 100); $("bCh").value = String(bass.ch);
     if (bass.g) bass.g.gain.value = bass.vol * 0.7;
@@ -3153,7 +3199,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     for (var i = 0; i < bass.steps; i++) { bass.base.push(Array.isArray(o.base) ? nz(o.base[i], 0, 2, 0) | 0 : 0); bass.deg.push(Array.isArray(o.deg) ? nz(o.deg[i], 0, 7, 0) | 0 : 0); }
     bass.acc = o.acc === "fifth" ? "fifth" : "oct"; bass.wave = ["saw", "sqr", "sub"].indexOf(o.wave) >= 0 ? o.wave : "saw";
     bass.cut = nz(o.cut, 0, 1, 0.45); bass.res = nz(o.res, 0, 1, 0.3); bass.env = nz(o.env, 0, 1, 0.6); bass.dec = nz(o.dec, 0.05, 1, 0.35);
-    bass.glide = nz(o.glide, 0, 1, 0); bass.vol = nz(o.vol, 0, 1, 0.8); bass.ch = nz(o.ch, 0, 15, 1) | 0; bass.pat = o.pat || "";
+    bass.glide = nz(o.glide, 0, 1, 0); bass.vol = nz(o.vol, 0, 1, 0.8); bass.ch = nz(o.ch, 0, 15, 1) | 0; bass.pat = o.pat || ""; bass.tun = o.tun === "just" ? "just" : "eq";
     bassSyncUI(); resyncBass();
   }
 
@@ -3187,7 +3233,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   }
   function playArp(when, note, dur, acc) {
     if (!ctx || !arp.g) return;
-    var at = Math.max(when, ctx.currentTime), f = mtof(note);
+    var at = Math.max(when, ctx.currentTime), f = tunedFreq(note);
     var o = ctx.createOscillator(); o.type = arp.wave === "sqr" ? "square" : (arp.wave === "tri" ? "triangle" : "sawtooth");
     var flt = ctx.createBiquadFilter(); flt.type = "lowpass"; flt.Q.value = 0.5 + arp.res * 12;
     var base = 200 * Math.pow(2, arp.cut * 5), peak = Math.min(14000, base * Math.pow(2, arp.env * 3.5 * (acc ? 1.25 : 1))), d = 0.04 + arp.dec * 0.5;
@@ -3303,6 +3349,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     $("bGlide").addEventListener("input", function () { bass.glide = +$("bGlide").value / 100; });
     $("bVol").addEventListener("input", function () { bass.vol = +$("bVol").value / 100; if (bass.g) bass.g.gain.value = bass.vol * 0.7; });
     $("bCh").addEventListener("change", function () { allNotesOff(); bass.ch = +$("bCh").value; });
+    $("tMode").addEventListener("change", function () { bass.tun = $("tMode").value; bassDirty = true; });
     bassSyncUI();
   })();
   function setView(v) {
@@ -3324,7 +3371,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     else { bass.base[step] = 1; bass.deg[step] = deg; }
     bass.pat = ""; $("bPat").value = ""; renderBassGrid(); bassDirty = true;
   });
-  $("bCircle").addEventListener("change", function () { bassDirty = true; $("bTonNote").hidden = $("bCircle").value !== "tonnetz"; });
+  $("bCircle").addEventListener("change", function () { bassDirty = true; $("bTonNote").hidden = $("bCircle").value !== "tonnetz"; $("bLissNote").hidden = $("bCircle").value !== "liss"; });
   function relabelBass() {
     Array.prototype.forEach.call($("bRoot").options, function (o) { o.textContent = tr(NOTE_ES[+o.value]); });
     Array.prototype.forEach.call($("bProg").querySelectorAll("optgroup"), function (g, i) { var seen = []; PROGS.forEach(function (pg) { if (seen.indexOf(pg.g) < 0) seen.push(pg.g); }); g.label = tr(seen[i]); });
