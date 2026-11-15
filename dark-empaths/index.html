@@ -215,6 +215,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   .main.layL .block { margin-bottom: 0; }
   .wrap.wide { max-width: 1080px; }
 }
+.lfo { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 6px; }
 </style>
 
 <div class="wrap">
@@ -223,7 +224,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.5.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.6.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
   <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.5.0</div>
@@ -295,12 +296,38 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <label class="field" for="pulses"><span>Pulsos</span><input id="pulses" type="range" min="0" max="16" value="5"><output id="pulsesO">5</output></label>
         <label class="field" for="rot"><span>Rotación</span><input id="rot" type="range" min="0" max="15" value="0"><output id="rotO">0</output></label>
         <label class="field" for="note"><span>Nota MIDI</span><input id="note" type="range" min="0" max="127" value="36"><output id="noteO">36</output></label>
+        <label class="sel-field" for="tch"><span>Canal MIDI de la pista</span><select id="tch"></select></label>
         <div class="row wrap-row">
           <button id="rand" type="button">Aleatorio</button>
           <button id="clear" type="button">Limpiar</button>
           <button id="testNote" type="button">Probar nota MIDI</button>
         </div>
         <p class="note">Mover Pulsos reparte los golpes de forma euclidiana sobre los pasos. Tocar un punto del anillo lo activa o lo apaga a mano.</p>
+      </div>
+
+      <div class="block" data-id="gen">
+        <div class="label">Generativo</div>
+        <div class="subhead">Pista seleccionada</div>
+        <label class="field" for="gProb"><span>Probabilidad</span><input id="gProb" type="range" min="0" max="100" value="100"><output id="gProbO">100</output></label>
+        <label class="field" for="gAmt"><span>Intensidad de mutación</span><input id="gAmt" type="range" min="1" max="8" value="2"><output id="gAmtO">2</output></label>
+        <label class="check" for="gAnchor"><input id="gAnchor" type="checkbox" checked> Proteger el primer paso</label>
+        <div class="row wrap-row"><button id="gMut" type="button">Mutar pista</button><button id="gMutAll" type="button">Mutar todas</button></div>
+        <label class="check" for="gEvo"><input id="gEvo" type="checkbox"> Evolucionar mientras suena (el patrón dibujado es el ADN y no se pierde)</label>
+        <label class="field" for="gEvoN"><span>Cada (vueltas)</span><input id="gEvoN" type="range" min="1" max="16" value="2"><output id="gEvoNO">2</output></label>
+        <label class="sel-field" for="gEvoScope"><span>Aplicar a</span><select id="gEvoScope"><option value="all">Todas las pistas</option><option value="sel">Pista seleccionada</option></select></label>
+        <div class="row wrap-row"><button id="gAdopt" type="button">Adoptar la variación actual</button><button id="gPoly" type="button">Polimetría: longitudes distintas</button></div>
+        <div class="subhead">Bajo y armonía</div>
+        <div class="row wrap-row"><button id="gWalk" type="button">Caminata aleatoria del bajo</button></div>
+        <label class="sel-field" for="gTnLen"><span>Acordes</span><select id="gTnLen"><option value="4">4</option><option value="6">6</option><option value="8">8</option></select></label>
+        <div class="row wrap-row"><button id="gTonnetz" type="button">Progresión por Tonnetz</button></div>
+        <p class="status" id="genStatus"></p>
+        <p class="note">La probabilidad hace que cada golpe de la pista suene o no al azar. Mutar mueve golpes a pasos vecinos sin cambiar cuántos son. Evolucionar aplica esa mutación cada cierto número de vueltas sobre una copia: el patrón dibujado queda intacto y la variación se descarta al volver a tocar. La caminata recorre los grados del bajo con pasos pequeños. La progresión por Tonnetz encadena acordes de la escala que comparten dos notas y cierra volviendo al primero. La exportación a MIDI y WAV usa el patrón dibujado, sin probabilidad ni evolución.</p>
+      </div>
+
+      <div class="block" data-id="mod">
+        <div class="label">Modulación (CC por MIDI)</div>
+        <div id="lfoBox"></div>
+        <p class="note">Cada LFO envía un controlador (CC) al canal indicado, sincronizado con la vuelta. No cambia el sonido interno. Qué controladores responden depende del aparato: confírmalo en su manual.</p>
       </div>
 
       <div class="block" data-id="sonido">
@@ -442,6 +469,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <label class="sel-field" for="midiSync"><span>Sincronía</span>
           <select id="midiSync"><option value="int">Interna (maestro)</option><option value="ext">Externa (sigue el reloj)</option></select></label>
         <label class="sel-field" for="midiIn"><span>Entrada</span><select id="midiIn"><option value="">Sin puertos</option></select></label>
+        <div class="row wrap-row"><button id="fmProfile" type="button">Perfil FM-1</button></div>
+        <p class="note">Perfil FM-1 (propuesta): busca la salida «FM-1», asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Configura esos mismos canales de entrada en el FM-1.</p>
         <p class="note">Notas por defecto: mapa de batería General MIDI (bombo 36, caja 38, clap 39, hi-hat 42 y 46, campana 56, conga 63, clave 75), canal 10. Para Ableton Live: en Windows crea un puerto con loopMIDI; en macOS activa el bus IAC. Luego, en Preferencias → Link, Tempo &amp; MIDI, activa Track en ese puerto (y Sync si usas el reloj).</p>
       </div>
     </div>
@@ -945,6 +974,75 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       if (LANGS.indexOf(nl) >= 0) LANG = nl;
     }
   } catch (e) { /* sin almacenamiento */ }
+  /* generativo: generativo, modulación, MIDI por pista */
+  [
+  ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
+  ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
+  ["Probabilidad", "Probability", "Probabilidade", "概率", "Вероятность"],
+  ["Intensidad de mutación", "Mutation strength", "Intensidade da mutação", "变异强度", "Сила мутации"],
+  ["Proteger el primer paso", "Protect the first step", "Proteger o primeiro passo", "保护第一步", "Защитить первый шаг"],
+  ["Mutar pista", "Mutate track", "Mutar pista", "变异当前轨道", "Мутировать дорожку"],
+  ["Mutar todas", "Mutate all", "Mutar todas", "全部变异", "Мутировать все"],
+  ["Adoptar la variación actual", "Keep current variation", "Adotar a variação atual", "采用当前变化", "Принять текущую вариацию"],
+  ["Evolucionar mientras suena (el patrón dibujado es el ADN y no se pierde)", "Evolve while playing (the drawn pattern is the DNA and is never lost)", "Evoluir enquanto toca (o padrão desenhado é o DNA e não se perde)", "播放时演化(所绘节奏型即 DNA,不会丢失)", "Эволюция во время игры (нарисованный паттерн — это ДНК, он не теряется)"],
+  ["Cada (vueltas)", "Every (cycles)", "A cada (voltas)", "每隔(圈数)", "Каждые (круги)"],
+  ["Aplicar a", "Apply to", "Aplicar a", "应用于", "Применить к"],
+  ["Todas las pistas", "All tracks", "Todas as pistas", "所有轨道", "Все дорожки"],
+  ["Polimetría: longitudes distintas", "Polymeter: different lengths", "Polimetria: comprimentos diferentes", "复合节拍:各轨长度不同", "Полиметрия: разная длина"],
+  ["Bajo y armonía", "Bass and harmony", "Baixo e harmonia", "贝斯与和声", "Бас и гармония"],
+  ["Caminata aleatoria del bajo", "Bass random walk", "Caminhada aleatória do baixo", "贝斯随机游走", "Случайное блуждание баса"],
+  ["Acordes", "Chords", "Acordes", "和弦数", "Аккорды"],
+  ["Progresión por Tonnetz", "Tonnetz progression", "Progressão por Tonnetz", "Tonnetz 和弦进行", "Прогрессия по Tonnetz"],
+  ["Tonnetz", "Tonnetz", "Tonnetz", "Tonnetz", "Тоннетц"],
+  ["La probabilidad hace que cada golpe de la pista suene o no al azar. Mutar mueve golpes a pasos vecinos sin cambiar cuántos son. Evolucionar aplica esa mutación cada cierto número de vueltas sobre una copia: el patrón dibujado queda intacto y la variación se descarta al volver a tocar. La caminata recorre los grados del bajo con pasos pequeños. La progresión por Tonnetz encadena acordes de la escala que comparten dos notas y cierra volviendo al primero. La exportación a MIDI y WAV usa el patrón dibujado, sin probabilidad ni evolución.",
+   "Probability makes each hit of the track sound or not at random. Mutate moves hits to neighbouring steps without changing how many there are. Evolve applies that mutation every set number of cycles on a copy: the drawn pattern stays intact and the variation is discarded when you play again. The walk moves through the bass degrees in small steps. The Tonnetz progression chains chords of the scale that share two notes and closes by returning to the first. MIDI and WAV export use the drawn pattern, without probability or evolution.",
+   "A probabilidade faz cada golpe da pista soar ou não ao acaso. Mutar move golpes para passos vizinhos sem mudar quantos são. Evoluir aplica essa mutação a cada certo número de voltas sobre uma cópia: o padrão desenhado fica intacto e a variação é descartada ao tocar de novo. A caminhada percorre os graus do baixo com passos pequenos. A progressão por Tonnetz encadeia acordes da escala que compartilham duas notas e fecha voltando ao primeiro. A exportação MIDI e WAV usa o padrão desenhado, sem probabilidade nem evolução.",
+   "概率决定轨道的每一击随机发声与否。变异把击点移到相邻步,击点总数不变。演化每隔若干圈在副本上应用变异:所绘节奏型保持不变,再次播放时丢弃变化。游走以小步在贝斯音级间移动。Tonnetz 进行把音阶内共享两个音的和弦串联起来,并回到第一个和弦收尾。MIDI 与 WAV 导出使用所绘节奏型,不含概率和演化。",
+   "Вероятность делает так, что каждый удар дорожки звучит или нет случайно. Мутация переносит удары на соседние шаги, не меняя их число. Эволюция применяет мутацию каждые несколько кругов к копии: нарисованный паттерн остаётся нетронутым, а вариация сбрасывается при новом запуске. Блуждание перемещается по ступеням баса малыми шагами. Прогрессия по Tonnetz соединяет аккорды лада с двумя общими нотами и замыкается возвратом к первому. Экспорт в MIDI и WAV использует нарисованный паттерн без вероятности и эволюции."],
+  ["Modulación (CC por MIDI)", "Modulation (MIDI CC)", "Modulação (CC por MIDI)", "调制(MIDI CC)", "Модуляция (MIDI CC)"],
+  ["Canal", "Channel", "Canal", "通道", "Канал"],
+  ["Controlador (CC)", "Controller (CC)", "Controlador (CC)", "控制器(CC)", "Контроллер (CC)"],
+  ["Forma", "Shape", "Forma", "波形", "Форма"],
+  ["Periodo", "Period", "Período", "周期", "Период"],
+  ["Mínimo", "Minimum", "Mínimo", "最小值", "Минимум"],
+  ["Máximo", "Maximum", "Máximo", "最大值", "Максимум"],
+  ["Seno", "Sine", "Seno", "正弦", "Синус"],
+  ["Triángulo", "Triangle", "Triângulo", "三角", "Треугольник"],
+  ["Sierra", "Saw", "Serra", "锯齿", "Пила"],
+  ["Sierra inversa", "Reverse saw", "Serra inversa", "反向锯齿", "Обратная пила"],
+  ["Cuadrada", "Square", "Quadrada", "方波", "Меандр"],
+  ["Aleatoria escalonada", "Stepped random", "Aleatória escalonada", "阶梯随机", "Ступенчатый случайный"],
+  ["¼ de vuelta", "¼ cycle", "¼ de volta", "¼ 圈", "¼ круга"],
+  ["½ vuelta", "½ cycle", "½ volta", "½ 圈", "½ круга"],
+  ["1 vuelta", "1 cycle", "1 volta", "1 圈", "1 круг"],
+  ["2 vueltas", "2 cycles", "2 voltas", "2 圈", "2 круга"],
+  ["4 vueltas", "4 cycles", "4 voltas", "4 圈", "4 круга"],
+  ["8 vueltas", "8 cycles", "8 voltas", "8 圈", "8 кругов"],
+  ["16 vueltas", "16 cycles", "16 voltas", "16 圈", "16 кругов"],
+  ["Cada LFO envía un controlador (CC) al canal indicado, sincronizado con la vuelta. No cambia el sonido interno. Qué controladores responden depende del aparato: confírmalo en su manual.",
+   "Each LFO sends a controller (CC) to the chosen channel, locked to the cycle. It does not change the internal sound. Which controllers respond depends on the device: check its manual.",
+   "Cada LFO envia um controlador (CC) ao canal indicado, sincronizado com a volta. Não muda o som interno. Quais controladores respondem depende do aparelho: confirme no manual.",
+   "每个 LFO 向指定通道发送一个控制器(CC),并与圈同步。不会改变内部声音。设备响应哪些控制器取决于设备本身,请查阅其说明书。",
+   "Каждый LFO отправляет контроллер (CC) на выбранный канал, синхронно с кругом. Внутренний звук не меняется. Какие контроллеры отзываются, зависит от устройства: проверьте его руководство."],
+  ["Canal MIDI de la pista", "Track MIDI channel", "Canal MIDI da pista", "轨道 MIDI 通道", "MIDI-канал дорожки"],
+  ["Heredar (canal general)", "Inherit (general channel)", "Herdar (canal geral)", "继承(通用通道)", "Наследовать (общий канал)"],
+  ["Perfil FM-1", "FM-1 profile", "Perfil FM-1", "FM-1 配置", "Профиль FM-1"],
+  ["Perfil FM-1 (propuesta): busca la salida «FM-1», asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Configura esos mismos canales de entrada en el FM-1.",
+   "FM-1 profile (proposal): looks for the «FM-1» output, assigns channels 1 to 8 to the eight tracks, 9 to the bass and 10 to the arpeggio, and turns the clock on. Set the same input channels on the FM-1.",
+   "Perfil FM-1 (proposta): procura a saída «FM-1», atribui os canais 1 a 8 às oito pistas, o 9 ao baixo e o 10 ao arpejo, e ativa o clock. Configure esses mesmos canais de entrada no FM-1.",
+   "FM-1 配置(建议):查找“FM-1”输出端口,把通道 1 至 8 分配给八条轨道,9 给贝斯,10 给琶音,并开启时钟。请在 FM-1 上设置相同的输入通道。",
+   "Профиль FM-1 (предложение): ищет выход «FM-1», назначает каналы 1–8 восьми дорожкам, 9 — басу и 10 — арпеджио и включает такт. Задайте те же входные каналы на FM-1."],
+  ["Pista mutada: {0} pulsos conservados.", "Track mutated: {0} pulses kept.", "Pista mutada: {0} pulsos mantidos.", "轨道已变异:保留 {0} 个击点。", "Дорожка мутирована: сохранено ударов — {0}."],
+  ["Todas las pistas mutadas.", "All tracks mutated.", "Todas as pistas mutadas.", "所有轨道已变异。", "Все дорожки мутированы."],
+  ["Variación adoptada en {0} pista(s).", "Variation kept on {0} track(s).", "Variação adotada em {0} pista(s).", "已在 {0} 条轨道采用变化。", "Вариация принята на дорожках: {0}."],
+  ["No hay variación que adoptar: activa Evolucionar y deja sonar unas vueltas.", "No variation to keep: turn on Evolve and let it play a few cycles.", "Não há variação para adotar: ative Evoluir e deixe tocar algumas voltas.", "没有可采用的变化:请开启演化并播放几圈。", "Нет вариации для принятия: включите эволюцию и дайте поиграть несколько кругов."],
+  ["Longitudes distintas aplicadas.", "Different lengths applied.", "Comprimentos diferentes aplicados.", "已应用不同长度。", "Разная длина применена."],
+  ["Caminata generada sobre {0} pasos.", "Walk generated over {0} steps.", "Caminhada gerada em {0} passos.", "已在 {0} 步上生成游走。", "Блуждание создано на {0} шагах."],
+  ["Progresión Tonnetz: {0}", "Tonnetz progression: {0}", "Progressão Tonnetz: {0}", "Tonnetz 和弦进行:{0}", "Прогрессия Tonnetz: {0}"],
+  ["Perfil FM-1 aplicado y salida «{0}» elegida.", "FM-1 profile applied and output «{0}» chosen.", "Perfil FM-1 aplicado e saída «{0}» escolhida.", "已应用 FM-1 配置并选择输出“{0}”。", "Профиль FM-1 применён, выбран выход «{0}»."],
+  ["Perfil FM-1 aplicado. No encontré una salida llamada FM-1: conecta el MIDI y elígela en Salida.", "FM-1 profile applied. I found no output called FM-1: connect MIDI and pick it in Output.", "Perfil FM-1 aplicado. Não encontrei uma saída chamada FM-1: conecte o MIDI e escolha-a em Saída.", "已应用 FM-1 配置。未找到名为 FM-1 的输出:请连接 MIDI 并在“输出”中选择。", "Профиль FM-1 применён. Выход FM-1 не найден: подключите MIDI и выберите его в «Выход»."]
+  ].forEach(R);
+
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
     for (var i = 1; i < arguments.length; i++) s = s.split("{" + (i - 1) + "}").join(String(arguments[i]));
@@ -1127,7 +1225,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   var sch = { cycle: 0, pos: null };
 
   function mod(a, n) { return ((a % n) + n) % n; }
-  function isActive(t, i) { return !!t.base[mod(i - t.rot, t.steps)]; }
+  function isActive(t, i) { var b = (t.mut && t.mutBase === t.base) ? t.mut : t.base; return !!b[mod(i - t.rot, t.steps)]; }
   function count(t) { return t.base.reduce(function (a, b) { return a + b; }, 0); }
 
   /* ---------- Audio ---------- */
@@ -1440,13 +1538,16 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function showMon() { var m = $("midiMon"); if (m) m.textContent = tr("Enviado: {0} · Recibido: {1}", mon.out, mon.inn); }
   function noteOut(t, when) {
     if (!midi.out) return;
-    sendAt([0x90 | midi.ch, t.note, midi.vel], when);
-    sendAt([0x80 | midi.ch, t.note, 0], when + 0.09);
+    var ch = t.ch == null ? midi.ch : t.ch;
+    sendAt([0x90 | ch, t.note, midi.vel], when);
+    sendAt([0x80 | ch, t.note, 0], when + 0.09);
     mon.out++; showMon();
   }
   function allNotesOff() {
     if (!midi.out) return;
-    try { midi.out.send([0xB0 | midi.ch, 123, 0]); midi.out.send([0xB0 | bass.ch, 123, 0]); midi.out.send([0xB0 | arp.ch, 123, 0]); } catch (e) { /* ignorar */ }
+    var used = [midi.ch, bass.ch, arp.ch];
+    state.tracks.forEach(function (t) { if (t.ch != null && used.indexOf(t.ch) < 0) used.push(t.ch); });
+    try { used.forEach(function (c) { midi.out.send([0xB0 | c, 123, 0]); }); } catch (e) { /* ignorar */ }
   }
 
   /* ---------- Patrones y arreglo ---------- */
@@ -1481,7 +1582,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var changed = idx !== state.cur;
     if (changed) { loadPattern(idx); syncAll(); }
     state.tracks.forEach(function (t) { t.nextK = c * t.steps; });
-    bass.nextK = c * bass.steps; arp.nextK = c * arp.steps; showBassInfo();
+    bass.nextK = c * bass.steps; arp.nextK = c * arp.steps; showBassInfo(); genEvolve(c);
     updateSongStatus();
   }
 
@@ -1499,10 +1600,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     var t = state.tracks[i];
     t.nextK = Math.ceil(curPhase(ctx.currentTime + 0.01) * t.steps);
   }
-  function resyncClock() { if (ctx && state.playing && state.sync === "int") clockK = Math.ceil(phaseAt(ctx.currentTime + 0.01) * 24 * state.beats); }
+  function resyncClock() { if (ctx && state.playing && state.sync === "int") clockK = lfoK = Math.ceil(phaseAt(ctx.currentTime + 0.01) * 24 * state.beats); }
 
   function fire(t, ti, when, step) {
-    if (!t.mute) {
+    if (!t.mute && (t.prob == null || t.prob >= 100 || Math.random() * 100 < t.prob)) {
       if (midi.local && ctx) playTrack(t, when);
       noteOut(t, when);
     }
@@ -1546,6 +1647,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       var cpc = 24 * state.beats;
       while (timeAt(clockK / cpc) < now + LOOK) { sendAt([0xF8], timeAt(clockK / cpc)); clockK++; }
     }
+    lfoFeed(now);
   }
 
   function setPlayUI() {
@@ -1564,7 +1666,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     initAudio();
     if (ctx.state === "suspended") ctx.resume();
     anchor.t0 = ctx.currentTime + 0.06; anchor.p0 = 0;
-    events = []; clockK = 0; state.queued = null;
+    events = []; clockK = 0; lfoK = 0; lfoReset(); state.queued = null;
+    state.tracks.forEach(function (t) { t.mut = null; });
     enterCycle(0);
     state.playing = true; updateSongStatus();
     if (midi.out && midi.clockOut) sendAt([0xFA], anchor.t0);
@@ -1783,6 +1886,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     ui.pulses.max = t.steps; ui.pulses.value = count(t); ui.pulsesO.textContent = count(t);
     ui.rot.max = t.steps - 1; ui.rot.value = t.rot; ui.rotO.textContent = t.rot;
     ui.note.value = t.note; ui.noteO.textContent = t.note;
+    genSyncEditor(t);
     ui.sndTitle.textContent = tr("Sonido · {0}", tr(t.name));
     ui.kit.querySelector('option[value="sample"]').disabled = !t.buf;
     ui.kit.value = t.kit;
@@ -2386,6 +2490,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     if (best < 0 || bd > G.gap * 0.5) return;
     var t = state.tracks[best], a = Math.atan2(dy, dx) + Math.PI / 2; if (a < 0) a += Math.PI * 2;
     var step = Math.round(a / (Math.PI * 2) * t.steps) % t.steps, bi = mod(step - t.rot, t.steps);
+    t.mut = null;
     t.base[bi] = t.base[bi] ? 0 : 1;
     state.sel = best; syncAll();
   });
@@ -2399,12 +2504,12 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function capturePreset(name) {
     state.patterns[state.cur] = snap();
     return {
-      v: 1, app: "Clave Circular " + FW, name: name, names: state.patNames || null, bass: bassData(), arp: arpData(),
+      v: 1, app: "Clave Circular " + FW, name: name, names: state.patNames || null, bass: bassData(), arp: arpData(), gen: genData(),
       bpm: state.bpm, beats: state.beats, mode: state.mode, cur: state.cur,
       song: state.song.map(function (b) { return { pat: b.pat, reps: b.reps }; }),
       patterns: state.patterns.map(cloneSnap),
       tracks: state.tracks.map(function (t) {
-        return { id: t.id, kit: t.kit, vol: t.vol, panv: t.panv, pitch: t.pitch, dec: t.dec, rev: t.rev, note: t.note, mute: t.mute, sample: t.sampleKey || null };
+        return { id: t.id, kit: t.kit, vol: t.vol, panv: t.panv, pitch: t.pitch, dec: t.dec, rev: t.rev, note: t.note, mute: t.mute, sample: t.sampleKey || null, ch: t.ch == null ? null : t.ch, prob: t.prob == null ? 100 : t.prob };
       })
     };
   }
@@ -2422,12 +2527,13 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     state.mode = p.mode === "song" ? "song" : "loop"; ui.mode.value = state.mode;
     state.song = (p.song || []).map(function (b) { return { pat: Math.max(0, Math.min(7, +b.pat || 0)), reps: Math.max(1, Math.min(64, +b.reps || 1)) }; });
     state.patterns = p.patterns.map(cloneSnap);
+    setGen(p.gen);
     if (p.bass) setBass(p.bass);
     if (p.arp) setArp(p.arp);
     state.patNames = Array.isArray(p.names) && p.names.length === 8 ? p.names.slice() : null;
     state.cur = Math.max(0, Math.min(7, +p.cur || 0)); state.queued = null; sch.pos = null;
     var pat = state.patterns[state.cur];
-    state.tracks.forEach(function (t, k) { t.steps = pat[k].steps; t.base = pat[k].base.slice(); t.rot = pat[k].rot || 0; });
+    state.tracks.forEach(function (t, k) { t.steps = pat[k].steps; t.base = pat[k].base.slice(); t.rot = pat[k].rot || 0; t.mut = null; });
     var jobs = [], missing = [];
     p.tracks.forEach(function (pt) {
       var t = null;
@@ -2436,6 +2542,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       t.kit = KITS[pt.kit] || pt.kit === "sample" ? pt.kit : "base";
       t.vol = +pt.vol >= 0 ? +pt.vol : 1; t.panv = +pt.panv || 0; t.pitch = +pt.pitch || 0; t.dec = +pt.dec > 0 ? +pt.dec : 1;
       t.rev = !!pt.rev; t.note = Math.max(0, Math.min(127, +pt.note || t.note)); t.mute = !!pt.mute;
+      t.ch = (typeof pt.ch === "number" && pt.ch >= 0 && pt.ch <= 15) ? (pt.ch | 0) : null;
+      t.prob = (typeof pt.prob === "number" && pt.prob >= 0 && pt.prob <= 100) ? pt.prob : 100;
       t.sampleKey = null; t.buf = null; t.bufRev = null; t.sampleName = "";
       applyMix(t);
       if (pt.sample) {
@@ -2515,8 +2623,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         for (var k = 0; k < d.steps; k++) {
           if (!d.base[mod(k - d.rot, d.steps)]) continue;
           var tick = Math.round((c + k / d.steps) * state.beats * PPQ);
-          ev.push({ t: tick, o: 1, b: [0x90 | midi.ch, t.note & 127, midi.vel] });
-          ev.push({ t: tick + dur, o: 0, b: [0x80 | midi.ch, t.note & 127, 0] });
+          ev.push({ t: tick, o: 1, b: [0x90 | (t.ch == null ? midi.ch : t.ch), t.note & 127, midi.vel] });
+          ev.push({ t: tick + dur, o: 0, b: [0x80 | (t.ch == null ? midi.ch : t.ch), t.note & 127, 0] });
         }
       });
     });
@@ -2612,7 +2720,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       plan.forEach(function (pi, c) {
         state.tracks.forEach(function (t, ti) {
           if (t.mute) return;
-          var d = state.patterns[pi][ti], tt = Object.assign({}, t, { steps: d.steps, base: d.base, rot: d.rot });
+          var d = state.patterns[pi][ti], tt = Object.assign({}, t, { steps: d.steps, base: d.base, rot: d.rot, mut: null });
           for (var k = 0; k < d.steps; k++) {
             if (!isActive(tt, k)) continue;
             playTrack(tt, (c + k / d.steps) * cycleDur());
@@ -3545,6 +3653,264 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     sesBlock = true; try { localStorage.removeItem(SKEY); } catch (e) { /* nada */ }
     location.reload();
   });
+
+  /* ---------- Generativo, modulación y MIDI por pista (generativo) ---------- */
+  function gSetCtl(id, v) {
+    var el = $(id); if (!el) return;
+    if (el.type === "checkbox") el.checked = !!v; else el.value = String(v);
+    el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
+  function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
+  for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
+  var lfoK = 0;
+  var LFO_SHAPES = [["sin", "Seno"], ["tri", "Triángulo"], ["saw", "Sierra"], ["isaw", "Sierra inversa"], ["sqr", "Cuadrada"], ["rnd", "Aleatoria escalonada"]];
+  var LFO_PERS = [[0.25, "¼ de vuelta"], [0.5, "½ vuelta"], [1, "1 vuelta"], [2, "2 vueltas"], [4, "4 vueltas"], [8, "8 vueltas"], [16, "16 vueltas"]];
+  function genStatus(msg) { var e = $("genStatus"); if (e) e.textContent = msg || ""; }
+  function genData() {
+    return {
+      evo: { on: gen.evo.on, n: gen.evo.n, amt: gen.evo.amt, scope: gen.evo.scope, anchor: gen.evo.anchor },
+      lfo: gen.lfo.map(function (l) { return { on: l.on, ch: l.ch, cc: l.cc, sh: l.sh, per: l.per, min: l.min, max: l.max }; }),
+      tn: gen.tn ? { sc: gen.tn.sc, name: gen.tn.name, d: gen.tn.d.slice() } : null
+    };
+  }
+  function regTn(tn) {
+    var ok = tn && SCALES[tn.sc] && typeof tn.name === "string" && Array.isArray(tn.d) && tn.d.length >= 2 && tn.d.length <= 8 &&
+      tn.d.every(function (x) { return x === (x | 0) && x >= 0 && x <= 6; });
+    if (!ok) return false;
+    var ent = null;
+    PROGS.forEach(function (x) { if (x.id === "tn") ent = x; });
+    if (!ent) { ent = { id: "tn" }; PROGS.push(ent); }
+    ent.g = "Tonnetz"; ent.sc = tn.sc; ent.name = tn.name; ent.d = tn.d.slice();
+    var sel = $("bProg"), op = null;
+    Array.prototype.forEach.call(sel.options, function (o) { if (o.value === "tn") op = o; });
+    if (!op) { var og = document.createElement("optgroup"); og.label = tr("Tonnetz"); op = document.createElement("option"); op.value = "tn"; og.appendChild(op); sel.appendChild(og); }
+    op.textContent = tn.name;
+    return true;
+  }
+  function clampN(v, lo, hi, d) { v = +v; return v >= lo && v <= hi ? v : d; }
+  function setGen(g) {
+    var e = (g && g.evo) || {};
+    gen.evo = { on: !!e.on, n: clampN(e.n, 1, 16, 2) | 0, amt: clampN(e.amt, 1, 8, 2) | 0, scope: e.scope === "sel" ? "sel" : "all", anchor: e.anchor !== false };
+    gen.lfo = [];
+    for (var i = 0; i < 3; i++) {
+      var s = (g && Array.isArray(g.lfo) && g.lfo[i]) || {}, l = defLfo();
+      l.on = !!s.on; l.ch = clampN(s.ch, 0, 15, 0) | 0; l.cc = clampN(s.cc, 0, 127, 74) | 0;
+      l.sh = LFO_SHAPES.some(function (x) { return x[0] === s.sh; }) ? s.sh : "sin";
+      l.per = LFO_PERS.some(function (x) { return x[0] === +s.per; }) ? +s.per : 1;
+      l.min = clampN(s.min, 0, 127, 0) | 0; l.max = clampN(s.max, 0, 127, 127) | 0;
+      gen.lfo.push(l);
+    }
+    gen.tn = null;
+    if (g && g.tn && regTn(g.tn)) gen.tn = { sc: g.tn.sc, name: g.tn.name, d: g.tn.d.slice() };
+    if (!gen.evo.on) state.tracks.forEach(function (t) { t.mut = null; });
+    genSyncUI();
+  }
+  function genSyncUI() {
+    if (!$("gAmt")) return;
+    $("gAmt").value = String(gen.evo.amt); $("gAmtO").textContent = String(gen.evo.amt);
+    $("gAnchor").checked = gen.evo.anchor; $("gEvo").checked = gen.evo.on;
+    $("gEvoN").value = String(gen.evo.n); $("gEvoNO").textContent = String(gen.evo.n); $("gEvoScope").value = gen.evo.scope;
+    gen.lfo.forEach(function (l, i) {
+      $("lfoOn" + i).checked = l.on; $("lfoCh" + i).value = String(l.ch);
+      $("lfoCc" + i).value = String(l.cc); $("lfoCcO" + i).textContent = String(l.cc);
+      $("lfoSh" + i).value = l.sh; $("lfoPer" + i).value = String(l.per);
+      $("lfoMin" + i).value = String(l.min); $("lfoMinO" + i).textContent = String(l.min);
+      $("lfoMax" + i).value = String(l.max); $("lfoMaxO" + i).textContent = String(l.max);
+    });
+  }
+  function genSyncEditor(t) {
+    if (!$("tch")) return;
+    $("tch").value = t.ch == null ? "" : String(t.ch);
+    var p = t.prob == null ? 100 : t.prob;
+    $("gProb").value = String(p); $("gProbO").textContent = String(p);
+  }
+
+  /* Mutación: mueve golpes a pasos vecinos libres sin cambiar cuántos hay */
+  function mutateArr(base, n, prot) {
+    var L = base.length, a = base.slice(), ones = [], i;
+    for (i = 0; i < L; i++) if (a[i] && i !== prot) ones.push(i);
+    for (var m = 0; m < n && ones.length; m++) {
+      var k = Math.floor(Math.random() * ones.length), from = ones[k], offs = [-2, -1, 1, 2];
+      offs.sort(function () { return Math.random() - 0.5; });
+      for (var j = 0; j < offs.length; j++) {
+        var to = mod(from + offs[j], L);
+        if (!a[to] && to !== prot) { a[from] = 0; a[to] = 1; ones[k] = to; break; }
+      }
+    }
+    return a;
+  }
+  function protIdx(t) { return gen.evo.anchor ? mod(-t.rot, t.steps) : -1; }
+  function genEvolve(c) {
+    var e = gen.evo;
+    if (!e.on || c < 1 || c % e.n !== 0) return;
+    state.tracks.forEach(function (t, i) {
+      if (e.scope === "sel" && i !== state.sel) return;
+      t.mut = mutateArr(t.base, e.amt, protIdx(t)); t.mutBase = t.base;
+    });
+  }
+  var POLY = [13, 11, 9, 14, 15, 10, 12, 16];
+  function genPoly() {
+    state.tracks.forEach(function (t, i) {
+      var n = POLY[i % POLY.length], c = count(t), k = c > 0 ? Math.max(1, Math.min(n, Math.round(c * n / t.steps))) : 0;
+      t.steps = n; t.base = euclid(n, k); t.rot = 0; t.mut = null; resyncTrack(i);
+    });
+    syncAll(); genStatus(tr("Longitudes distintas aplicadas."));
+  }
+
+  /* Bajo: caminata aleatoria sobre los grados */
+  function genWalk() {
+    var L = bass.steps, W = [[-2, 0.06], [-1, 0.24], [0, 0.4], [1, 0.24], [2, 0.06]], d = 0, first = true, i;
+    if (!bass.base.some(function (v) { return v; })) { bass.base = euclid(L, Math.max(3, Math.round(L / 3))); bass.base[0] = 2; }
+    var out = [];
+    for (i = 0; i < L; i++) {
+      if (bass.base[i]) {
+        if (first) { d = 0; first = false; }
+        else {
+          var r = Math.random(), acc = 0, st = 0;
+          for (var w = 0; w < W.length; w++) { acc += W[w][1]; if (r <= acc) { st = W[w][0]; break; } }
+          d = Math.max(0, Math.min(7, d + st));
+        }
+      }
+      out.push(d);
+    }
+    bass.deg = out; bass.pat = ""; $("bPat").value = "";
+    renderBassGrid(); bassDirty = true; showBassInfo();
+    genStatus(tr("Caminata generada sobre {0} pasos.", L));
+  }
+
+  /* Armonía: acordes de la escala que comparten dos notas (vecinos en el Tonnetz) */
+  var NUMS = ["I", "II", "III", "IV", "V", "VI", "VII"];
+  function genTonnetz() {
+    var len = +$("gTnLen").value || 4, pg = progOf(bass.prog), S = SCALES[pg.sc];
+    function tri(r) { return [S[r % 7], S[(r + 2) % 7], S[(r + 4) % 7]]; }
+    function shared(a, b) { var n = 0; a.forEach(function (x) { if (b.indexOf(x) >= 0) n++; }); return n; }
+    function adj(r) { var o = []; for (var x = 0; x < 7; x++) if (x !== r && shared(tri(r), tri(x)) === 2) o.push(x); return o; }
+    function pick(l) { return l[Math.floor(Math.random() * l.length)]; }
+    var d = [0], i, prev = -1;
+    for (i = 1; i < len; i++) {
+      var cur = d[i - 1], c = adj(cur);
+      if (i === len - 1) { var cl = c.filter(function (x) { return shared(tri(x), tri(0)) === 2; }); if (cl.length) c = cl; }
+      var nv = c.filter(function (x) { return x !== prev; });
+      if (nv.length) c = nv;
+      if (!c.length) c = [0, 1, 2, 3, 4, 5, 6].filter(function (x) { return x !== cur; });
+      prev = cur; d.push(pick(c));
+    }
+    var toks = d.map(function (r) {
+      var t3 = tri(r), i3 = ((t3[1] - t3[0]) % 12 + 12) % 12, i5 = ((t3[2] - t3[0]) % 12 + 12) % 12;
+      return i5 === 6 ? NUMS[r].toLowerCase() + "°" : (i3 === 3 ? NUMS[r].toLowerCase() : NUMS[r] + (i5 === 8 ? "+" : ""));
+    });
+    gen.tn = { sc: pg.sc, name: toks.join(" – "), d: d };
+    regTn(gen.tn);
+    bass.prog = "tn"; $("bProg").value = "tn"; bassDirty = true; showBassInfo();
+    genStatus(tr("Progresión Tonnetz: {0}", gen.tn.name));
+  }
+
+  /* LFO: controladores MIDI sincronizados con la vuelta */
+  function lfoReset() { gen.lfo.forEach(function (l) { l.last = -1; }); }
+  function lfoShape(sh, cyc, per) {
+    var x = cyc / per, f = x - Math.floor(x);
+    if (sh === "tri") return f < 0.5 ? f * 2 : 2 - f * 2;
+    if (sh === "saw") return f;
+    if (sh === "isaw") return 1 - f;
+    if (sh === "sqr") return f < 0.5 ? 1 : 0;
+    if (sh === "rnd") { var h = Math.sin((Math.floor(x) + 1) * 12.9898) * 43758.5453; return h - Math.floor(h); }
+    return 0.5 - 0.5 * Math.cos(2 * Math.PI * f);
+  }
+  function lfoFeed(now) {
+    var cpc = 24 * state.beats;
+    while (timeAt(lfoK / cpc) < now + LOOK) {
+      var tm = timeAt(lfoK / cpc), cyc = lfoK / cpc;
+      gen.lfo.forEach(function (l) {
+        if (!l.on) return;
+        var v = Math.round(l.min + (l.max - l.min) * lfoShape(l.sh, cyc, l.per));
+        v = Math.max(0, Math.min(127, v));
+        if (v !== l.last) { l.last = v; sendAt([0xB0 | l.ch, l.cc & 127, v], tm); }
+      });
+      lfoK++;
+    }
+  }
+
+  /* Interfaz */
+  (function genBuildUI() {
+    var tch = $("tch"), o = document.createElement("option"); o.value = ""; o.textContent = "Heredar (canal general)"; tch.appendChild(o);
+    for (var c = 0; c < 16; c++) { var oc = document.createElement("option"); oc.value = String(c); oc.textContent = String(c + 1); tch.appendChild(oc); }
+    tch.addEventListener("change", function () { allNotesOff(); var t = state.tracks[state.sel]; t.ch = tch.value === "" ? null : +tch.value; });
+    var box = $("lfoBox");
+    function mk(tag, props) { var e = document.createElement(tag); Object.keys(props || {}).forEach(function (k) { e[k] = props[k]; }); return e; }
+    function sel(id, label, opts) {
+      var lab = mk("label", { className: "sel-field", htmlFor: id }), sp = mk("span"), s = mk("select", { id: id });
+      sp.textContent = label; opts.forEach(function (p) { var op = mk("option", { value: String(p[0]) }); op.textContent = p[1]; s.appendChild(op); });
+      lab.appendChild(sp); lab.appendChild(s); return lab;
+    }
+    function rng(id, oid, label) {
+      var lab = mk("label", { className: "field", htmlFor: id }), sp = mk("span"), r = mk("input", { id: id, type: "range", min: "0", max: "127", value: "0" }), out = mk("output", { id: oid });
+      sp.textContent = label; lab.appendChild(sp); lab.appendChild(r); lab.appendChild(out); return lab;
+    }
+    var chs = []; for (var k = 0; k < 16; k++) chs.push([k, String(k + 1)]);
+    for (var i = 0; i < 3; i++) (function (i) {
+      var row = mk("div", { className: "lfo" }), ck = mk("label", { className: "check", htmlFor: "lfoOn" + i }), cb = mk("input", { id: "lfoOn" + i, type: "checkbox" });
+      ck.appendChild(cb); ck.appendChild(document.createTextNode(" LFO " + (i + 1)));
+      row.appendChild(ck);
+      row.appendChild(sel("lfoCh" + i, "Canal", chs));
+      row.appendChild(rng("lfoCc" + i, "lfoCcO" + i, "Controlador (CC)"));
+      row.appendChild(sel("lfoSh" + i, "Forma", LFO_SHAPES));
+      row.appendChild(sel("lfoPer" + i, "Periodo", LFO_PERS));
+      row.appendChild(rng("lfoMin" + i, "lfoMinO" + i, "Mínimo"));
+      row.appendChild(rng("lfoMax" + i, "lfoMaxO" + i, "Máximo"));
+      box.appendChild(row);
+      function read() {
+        var l = gen.lfo[i];
+        l.on = $("lfoOn" + i).checked; l.ch = +$("lfoCh" + i).value; l.cc = +$("lfoCc" + i).value; l.sh = $("lfoSh" + i).value; l.per = +$("lfoPer" + i).value;
+        l.min = +$("lfoMin" + i).value; l.max = +$("lfoMax" + i).value; l.last = -1;
+        $("lfoCcO" + i).textContent = String(l.cc); $("lfoMinO" + i).textContent = String(l.min); $("lfoMaxO" + i).textContent = String(l.max);
+      }
+      row.addEventListener("input", read); row.addEventListener("change", read);
+    })(i);
+
+    $("gProb").addEventListener("input", function () { var t = state.tracks[state.sel]; t.prob = +$("gProb").value; $("gProbO").textContent = String(t.prob); });
+    $("gAmt").addEventListener("input", function () { gen.evo.amt = +$("gAmt").value; $("gAmtO").textContent = String(gen.evo.amt); });
+    $("gAnchor").addEventListener("change", function () { gen.evo.anchor = $("gAnchor").checked; });
+    $("gEvo").addEventListener("change", function () { gen.evo.on = $("gEvo").checked; if (!gen.evo.on) state.tracks.forEach(function (t) { t.mut = null; }); });
+    $("gEvoN").addEventListener("input", function () { gen.evo.n = +$("gEvoN").value; $("gEvoNO").textContent = String(gen.evo.n); });
+    $("gEvoScope").addEventListener("change", function () { gen.evo.scope = $("gEvoScope").value; });
+    $("gMut").addEventListener("click", function () {
+      var t = state.tracks[state.sel]; t.base = mutateArr(t.base, gen.evo.amt, protIdx(t)); t.mut = null;
+      syncEditor(); renderTracks(); genStatus(tr("Pista mutada: {0} pulsos conservados.", count(t)));
+    });
+    $("gMutAll").addEventListener("click", function () {
+      state.tracks.forEach(function (t) { t.base = mutateArr(t.base, gen.evo.amt, protIdx(t)); t.mut = null; });
+      syncEditor(); renderTracks(); genStatus(tr("Todas las pistas mutadas."));
+    });
+    $("gAdopt").addEventListener("click", function () {
+      var n = 0;
+      state.tracks.forEach(function (t) { if (t.mut && t.mutBase === t.base) { t.base = t.mut.slice(); t.mut = null; n++; } });
+      syncEditor(); renderTracks();
+      genStatus(n ? tr("Variación adoptada en {0} pista(s).", n) : tr("No hay variación que adoptar: activa Evolucionar y deja sonar unas vueltas."));
+    });
+    $("gPoly").addEventListener("click", genPoly);
+    $("gWalk").addEventListener("click", genWalk);
+    $("gTonnetz").addEventListener("click", genTonnetz);
+
+    $("fmProfile").addEventListener("click", function () {
+      var found = null;
+      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /fm.?-?1|m-?vave/i.test(p.name || "")) found = p; });
+      state.tracks.forEach(function (t, i) { t.ch = i; });
+      gSetCtl("bCh", 8); gSetCtl("aCh", 9);
+      midi.clockOut = true; ui.midiClock.checked = true;
+      if (found) { midi.out = found; ui.midiOut.value = found.id; resyncClock(); }
+      syncEditor();
+      setStatus(found ? tr("Perfil FM-1 aplicado y salida «{0}» elegida.", found.name) : tr("Perfil FM-1 aplicado. No encontré una salida llamada FM-1: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
+    });
+  })();
+  if (typeof RESETS !== "undefined") {
+  RESETS.gen = function () {
+    state.tracks.forEach(function (t) { t.prob = 100; t.mut = null; });
+    var g = genData(); g.evo = null; g.lfo = gen.lfo.map(function (l) { return { on: l.on, ch: l.ch, cc: l.cc, sh: l.sh, per: l.per, min: l.min, max: l.max }; });
+    setGen(g); syncEditor(); genStatus("");
+  };
+  RESETS.mod = function () { var g = genData(); g.lfo = null; setGen(g); };
+  }
 
   /* ---------- Inicio ---------- */
   i18nStatic(); $("langSel").value = LANG; showMon();
