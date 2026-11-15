@@ -62,8 +62,11 @@ a.volver { color: var(--accent); }
 <li><a href="#e11">Deshacer, rehacer y reiniciar</a></li>
 <li><a href="#e12">Modo Vanilla y modo Darth</a></li>
 <li><a href="#e13">Guardar y exportar</a></li>
-<li><a href="#e14">MIDI (opcional)</a></li>
-<li><a href="#e15">Resumen de atajos</a></li>
+<li><a href="#e14">Variación automática</a></li>
+<li><a href="#e15">Bajo y armonía automáticos</a></li>
+<li><a href="#e16">Modulación con LFO</a></li>
+<li><a href="#e17">MIDI (opcional)</a></li>
+<li><a href="#e18">Resumen de atajos</a></li>
 </ol></nav>
 
 <section class="etapa" id="e1"><span class="num">Etapa 1</span><h2>Conocer la pantalla</h2>
@@ -125,9 +128,10 @@ a.volver { color: var(--accent); }
 <li><b>Pasos.</b> En cuántos momentos se divide el círculo (entre 2 y 32).</li>
 <li><b>Pulsos.</b> Cuántos golpes hay. La aplicación los reparte parejo sobre los pasos.</li>
 <li><b>Rotación.</b> Gira el ritmo sin cambiarlo.</li>
+<li><b>Canal MIDI de la pista.</b> Por qué canal MIDI sale esta pista. “Heredar” usa el canal general del módulo MIDI (etapa 17).</li>
 <li><b>Aleatorio.</b> Reparte golpes al azar.</li>
 <li><b>Limpiar.</b> Quita todos los golpes de la pista.</li>
-<li><b>Probar nota MIDI.</b> Solo se usa con un equipo MIDI conectado (etapa 14).</li>
+<li><b>Probar nota MIDI.</b> Solo se usa con un equipo MIDI conectado (etapa 17).</li>
 </ol>
 <div class="prueba"><b>Prueba esto:</b> selecciona la pista Clave, pon Pasos en 16 y mueve Pulsos de 3 a 7. Luego mueve Rotación.</div>
 </section>
@@ -256,18 +260,65 @@ a.volver { color: var(--accent); }
 </ol>
 </section>
 
-<section class="etapa" id="e14"><span class="num">Etapa 14</span><h2>MIDI (opcional)</h2>
+<section class="etapa" id="e14"><span class="num">Etapa 14</span><h2>Variación automática</h2>
+<p>El módulo Generativo cambia el ritmo de forma automática. Lo que está dibujado en el círculo no se pierde, salvo que se pida con “Adoptar la variación actual”.</p>
+<figure><img src="img/19-generativo.png" alt="Módulo Generativo con números"><figcaption>Módulo Generativo: variación de la pista seleccionada.</figcaption></figure>
+<ol class="leg">
+<li><b>Probabilidad.</b> Qué tan seguido suena cada golpe de la pista seleccionada. 100 es siempre; 50 es la mitad de las veces, al azar.</li>
+<li><b>Intensidad de mutación.</b> Cuántos golpes se mueven en cada mutación (de 1 a 8).</li>
+<li><b>Proteger el primer paso.</b> Si está marcado, el golpe del primer paso no se mueve.</li>
+<li><b>Mutar pista.</b> Mueve golpes de la pista seleccionada a pasos vecinos. La cantidad de golpes no cambia. Se puede deshacer.</li>
+<li><b>Mutar todas.</b> Lo mismo en todas las pistas.</li>
+<li><b>Evolucionar mientras suena.</b> Mientras toca, el ritmo varía solo cada cierto número de vueltas. El ritmo dibujado queda intacto: al detener y volver a tocar, parte otra vez de él.</li>
+<li><b>Cada (vueltas).</b> Cada cuántas vueltas varía el ritmo.</li>
+<li><b>Aplicar a.</b> Todas las pistas o solo la seleccionada.</li>
+<li><b>Adoptar la variación actual.</b> Convierte la variación que se ve en el círculo en el ritmo dibujado.</li>
+<li><b>Polimetría: longitudes distintas.</b> Da a cada pista un número de pasos distinto, y los ritmos se van desfasando entre sí. Se puede deshacer.</li>
+</ol>
+<p>La exportación a MIDI y a audio usa el ritmo dibujado, sin probabilidad ni evolución.</p>
+<div class="prueba"><b>Prueba esto:</b> dibuja un ritmo, marca “Evolucionar mientras suena”, pon “Cada (vueltas)” en 1 y pulsa Tocar. Mira cómo se mueven los puntos en el círculo.</div>
+</section>
+
+<section class="etapa" id="e15"><span class="num">Etapa 15</span><h2>Bajo y armonía automáticos</h2>
+<p>La parte baja del módulo Generativo trabaja sobre el bajo. Para oírlo, el bajo tiene que estar activado (etapa 9).</p>
+<figure><img src="img/20-generativo-bajo.png" alt="Parte Bajo y armonía del módulo Generativo con números"><figcaption>Bajo y armonía. Debajo de los botones aparece la progresión generada.</figcaption></figure>
+<ol class="leg">
+<li><b>Caminata aleatoria del bajo.</b> Genera las notas del bajo moviéndose por la escala con pasos cortos, empezando en la tónica. Si el bajo no tiene golpes, crea primero un ritmo base.</li>
+<li><b>Acordes.</b> Cuántos acordes tendrá la progresión: 4, 6 u 8.</li>
+<li><b>Progresión por Tonnetz.</b> Arma una progresión en la que cada acorde comparte dos notas con el anterior, y termina volviendo al primero. Queda elegida en el menú Progresión del módulo Bajo, en el grupo “Tonnetz”.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> activa el bajo, pulsa “Caminata aleatoria del bajo”, luego “Progresión por Tonnetz” y pulsa Tocar. Repite cualquiera de los dos botones para obtener otra versión.</div>
+</section>
+
+<section class="etapa" id="e16"><span class="num">Etapa 16</span><h2>Modulación con LFO</h2>
+<p>Un LFO es un valor que sube y baja solo, con un ritmo fijo. Aquí cada LFO envía un controlador (CC) por MIDI al equipo conectado, sincronizado con la vuelta. No cambia el sonido interno de la aplicación, y necesita el MIDI conectado (etapa 17). Hay tres LFO; el manual muestra el primero.</p>
+<figure><img src="img/21-modulacion.png" alt="Módulo Modulación con números"><figcaption>Módulo Modulación, LFO 1.</figcaption></figure>
+<ol class="leg">
+<li><b>LFO 1.</b> Activa o apaga este LFO.</li>
+<li><b>Canal.</b> Por qué canal MIDI se envía.</li>
+<li><b>Controlador (CC).</b> El número del controlador que se envía (de 0 a 127). Qué parámetro mueve depende del equipo: se confirma en su manual.</li>
+<li><b>Forma.</b> Seno, Triángulo, Sierra, Sierra inversa, Cuadrada o Aleatoria escalonada.</li>
+<li><b>Periodo.</b> Cuánto tarda en recorrer la forma: de ¼ de vuelta a 16 vueltas.</li>
+<li><b>Mínimo.</b> El valor más bajo que envía.</li>
+<li><b>Máximo.</b> El valor más alto que envía.</li>
+</ol>
+<div class="prueba"><b>Prueba esto:</b> con el MIDI conectado, activa el LFO 1, elige el número de controlador que acepta tu equipo y pulsa Tocar. Cambia la Forma y el Periodo mientras suena.</div>
+</section>
+
+<section class="etapa" id="e17"><span class="num">Etapa 17</span><h2>MIDI (opcional)</h2>
 <p>Solo sirve para conectar la aplicación a un programa o equipo MIDI. Para tocar sola no hace falta.</p>
 <figure><img src="img/18-midi.png" alt="Módulo MIDI con números"><figcaption>Módulo MIDI.</figcaption></figure>
 <ol class="leg">
 <li><b>Conectar MIDI.</b> Pide permiso al navegador y busca los puertos.</li>
 <li><b>Salida.</b> A qué puerto se envían las notas.</li>
-<li><b>Canal.</b> El canal MIDI.</li>
+<li><b>Canal.</b> El canal MIDI general. Lo usan las pistas que tienen “Heredar” en su canal.</li>
 <li><b>Enviar reloj, Start y Stop.</b> Para que el otro equipo siga el mismo tempo.</li>
+<li><b>Perfil FM-1.</b> Busca la salida llamada FM-1, asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Son canales propuestos: en el FM-1 hay que configurar esos mismos canales de entrada. Si no encuentra la salida, la elige uno mismo en Salida.</li>
 </ol>
+<p>Cada pista puede tener su propio canal: está en el módulo Editar, “Canal MIDI de la pista” (etapa 5).</p>
 </section>
 
-<section class="etapa" id="e15"><span class="num">Etapa 15</span><h2>Resumen de atajos</h2>
+<section class="etapa" id="e18"><span class="num">Etapa 18</span><h2>Resumen de atajos</h2>
 <table>
 <tr><th>Acción</th><th>Cómo</th></tr>
 <tr><td>Activar o apagar un punto</td><td>Tocar el punto en el círculo</td></tr>
@@ -276,6 +327,8 @@ a.volver { color: var(--accent); }
 <tr><td>Rehacer</td><td>Botón “Rehacer” o <kbd>Ctrl</kbd> + <kbd>Y</kbd></td></tr>
 <tr><td>Reiniciar un módulo</td><td>Botón ↺ en su cabecera</td></tr>
 <tr><td>Cambiar colores</td><td>Botón “Modo Darth” / “Modo Vanilla”</td></tr>
+<tr><td>Cambiar un ritmo un poco</td><td>Generativo → “Mutar pista”</td></tr>
+<tr><td>Que el ritmo varíe solo mientras suena</td><td>Generativo → “Evolucionar mientras suena”</td></tr>
 <tr><td>Empezar todo de cero</td><td>Presets → “Empezar sesión de cero”</td></tr>
 </table>
 </section>
