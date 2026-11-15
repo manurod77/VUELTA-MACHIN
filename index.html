@@ -224,7 +224,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.18.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.18.1</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
   <div class="strip" id="strip" role="status" aria-live="off">FW 0.17.0</div>
@@ -471,6 +471,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <label class="sel-field" for="midiIn"><span>Entrada</span><select id="midiIn"><option value="">Sin puertos</option></select></label>
         <div class="row wrap-row"><button id="fmProfile" type="button">Perfil FM-1</button></div>
         <p class="note">Perfil FM-1 (propuesta): busca la salida «FM-1», asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Configura esos mismos canales de entrada en el FM-1.</p>
+        <div class="row wrap-row"><button id="esxProfile" type="button">Perfil Electribe ESX-1</button></div>
+        <p class="note">Perfil Electribe ESX-1 (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», pone todas las pistas en el canal general 1 y asigna a cada una la nota de batería de fábrica del ESX-1 (pistas 1 a 8: C2, D2, E2, F2, G2, A2, C3, D3, es decir 36, 38, 40, 41, 43, 45, 48, 50). En el ESX-1 el reloj debe estar en «Ext».</p>
+        <div class="row wrap-row"><button id="esProfile" type="button">Perfil Electribe Sampler</button></div>
+        <p class="note">Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el reloj MIDI global debe estar en «External». No cambia las notas de las pistas.</p>
         <p class="note">Notas por defecto: mapa de batería General MIDI (bombo 36, caja 38, clap 39, hi-hat 42 y 46, campana 56, conga 63, clave 75), canal 10. Para Ableton Live: en Windows crea un puerto con loopMIDI; en macOS activa el bus IAC. Luego, en Preferencias → Link, Tempo &amp; MIDI, activa Track en ese puerto (y Sync si usas el reloj).</p>
       </div>
     </div>
@@ -1004,6 +1008,26 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Progresión Tonnetz: {0}", "Tonnetz progression: {0}", "Progressão Tonnetz: {0}", "Tonnetz 和弦进行:{0}", "Прогрессия Tonnetz: {0}"],
   ["Perfil FM-1 aplicado y salida «{0}» elegida.", "FM-1 profile applied and output «{0}» chosen.", "Perfil FM-1 aplicado e saída «{0}» escolhida.", "已应用 FM-1 配置并选择输出“{0}”。", "Профиль FM-1 применён, выбран выход «{0}»."],
   ["Perfil FM-1 aplicado. No encontré una salida llamada FM-1: conecta el MIDI y elígela en Salida.", "FM-1 profile applied. I found no output called FM-1: connect MIDI and pick it in Output.", "Perfil FM-1 aplicado. Não encontrei uma saída chamada FM-1: conecte o MIDI e escolha-a em Saída.", "已应用 FM-1 配置。未找到名为 FM-1 的输出:请连接 MIDI 并在“输出”中选择。", "Профиль FM-1 применён. Выход FM-1 не найден: подключите MIDI и выберите его в «Выход»."]
+  ].forEach(R);
+
+  /* perfil Electribe ESX-1 */
+  [
+  ["Perfil Electribe ESX-1", "Electribe ESX-1 profile", "Perfil Electribe ESX-1", "Electribe ESX-1 配置", "Профиль Electribe ESX-1"],
+  ["Perfil Electribe ESX-1 (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», pone todas las pistas en el canal general 1 y asigna a cada una la nota de batería de fábrica del ESX-1 (pistas 1 a 8: C2, D2, E2, F2, G2, A2, C3, D3, es decir 36, 38, 40, 41, 43, 45, 48, 50). En el ESX-1 el reloj debe estar en «Ext».",
+   "Electribe ESX-1 profile (proposal): looks for an output named «Electribe», «ESX» or «Korg», puts every track on global channel 1 and gives each the ESX-1 factory drum note (tracks 1 to 8: C2, D2, E2, F2, G2, A2, C3, D3, that is 36, 38, 40, 41, 43, 45, 48, 50). On the ESX-1 the clock must be set to «Ext».",
+   "Perfil Electribe ESX-1 (proposta): procura uma saída chamada «Electribe», «ESX» ou «Korg», coloca todas as pistas no canal geral 1 e atribui a cada uma a nota de bateria de fábrica do ESX-1 (pistas 1 a 8: C2, D2, E2, F2, G2, A2, C3, D3, ou seja 36, 38, 40, 41, 43, 45, 48, 50). No ESX-1 o clock deve estar em «Ext».",
+   "Electribe ESX-1 配置(建议):查找名为“Electribe”“ESX”或“Korg”的输出端口,把所有轨道设为全局通道 1,并为每条轨道指定 ESX-1 出厂鼓音符(轨道 1 至 8:C2、D2、E2、F2、G2、A2、C3、D3,即 36、38、40、41、43、45、48、50)。ESX-1 的时钟必须设为“Ext”。",
+   "Профиль Electribe ESX-1 (предложение): ищет выход «Electribe», «ESX» или «Korg», ставит все дорожки на общий канал 1 и назначает каждой заводскую ноту ударных ESX-1 (дорожки 1–8: C2, D2, E2, F2, G2, A2, C3, D3, то есть 36, 38, 40, 41, 43, 45, 48, 50). В ESX-1 такт должен быть «Ext»."],
+  ["Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", "Electribe ESX-1 profile applied and output «{0}» chosen.", "Perfil Electribe ESX-1 aplicado e saída «{0}» escolhida.", "已应用 Electribe ESX-1 配置并选择输出“{0}”。", "Профиль Electribe ESX-1 применён, выбран выход «{0}»."],
+  ["Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Electribe ESX-1 profile applied. I found no output with that name: connect MIDI and pick it in Output.", "Perfil Electribe ESX-1 aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Electribe ESX-1 配置。未找到该名称的输出:请连接 MIDI 并在“输出”中选择。", "Профиль Electribe ESX-1 применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."],
+  ["Perfil Electribe Sampler", "Electribe Sampler profile", "Perfil Electribe Sampler", "Electribe Sampler 配置", "Профиль Electribe Sampler"],
+  ["Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el reloj MIDI global debe estar en «External». No cambia las notas de las pistas.",
+   "Electribe Sampler profile (proposal): looks for an output named «Electribe», «ESX» or «Korg», assigns channels 1 to 8 to the eight tracks (per Korg, part n receives on channel n) and turns the clock on. On the unit, the global MIDI clock must be set to «External». It does not change the track notes.",
+   "Perfil Electribe Sampler (proposta): procura uma saída chamada «Electribe», «ESX» ou «Korg», atribui os canais 1 a 8 às oito pistas (segundo a Korg, a parte n recebe pelo canal n) e ativa o clock. No equipamento, o clock MIDI global deve estar em «External». Não altera as notas das pistas.",
+   "Electribe Sampler 配置(建议):查找名为“Electribe”“ESX”或“Korg”的输出端口,把通道 1 至 8 分配给八条轨道(据 Korg,第 n 个声部通过通道 n 接收)并开启时钟。设备上的全局 MIDI 时钟必须设为“External”。不会更改轨道音符。",
+   "Профиль Electribe Sampler (предложение): ищет выход «Electribe», «ESX» или «Korg», назначает каналы 1–8 восьми дорожкам (по данным Korg, партия n принимает по каналу n) и включает такт. В устройстве общий MIDI-такт должен быть «External». Ноты дорожек не меняются."],
+  ["Perfil Electribe Sampler aplicado y salida «{0}» elegida.", "Electribe Sampler profile applied and output «{0}» chosen.", "Perfil Electribe Sampler aplicado e saída «{0}» escolhida.", "已应用 Electribe Sampler 配置并选择输出“{0}”。", "Профиль Electribe Sampler применён, выбран выход «{0}»."],
+  ["Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Electribe Sampler profile applied. I found no output with that name: connect MIDI and pick it in Output.", "Perfil Electribe Sampler aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Electribe Sampler 配置。未找到该名称的输出:请连接 MIDI 并在“输出”中选择。", "Профиль Electribe Sampler применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."]
   ].forEach(R);
 
   function tr(k) {
@@ -3875,6 +3899,30 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     $("gWalk").addEventListener("click", genWalk);
     $("gTonnetz").addEventListener("click", genTonnetz);
 
+    $("esProfile").addEventListener("click", function () {
+      var found = null;
+      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /electribe|esx|korg/i.test(p.name || "")) found = p; });
+      allNotesOff();
+      state.tracks.forEach(function (t, i) { t.ch = i; });
+      midi.clockOut = true; ui.midiClock.checked = true;
+      if (found) { midi.out = found; ui.midiOut.value = found.id; }
+      resyncClock();
+      syncEditor(); renderTracks();
+      setStatus(found ? tr("Perfil Electribe Sampler aplicado y salida «{0}» elegida.", found.name) : tr("Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
+    });
+    $("esxProfile").addEventListener("click", function () {
+      var ESX = [36, 38, 40, 41, 43, 45, 48, 50];
+      var found = null;
+      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /electribe|esx|korg/i.test(p.name || "")) found = p; });
+      allNotesOff();
+      var chEl = $("midiCh"); if (chEl) { chEl.value = "0"; chEl.dispatchEvent(new Event("input", { bubbles: true })); chEl.dispatchEvent(new Event("change", { bubbles: true })); }
+      state.tracks.forEach(function (t, i) { t.ch = null; t.note = ESX[i % ESX.length]; });
+      midi.clockOut = true; ui.midiClock.checked = true;
+      if (found) { midi.out = found; ui.midiOut.value = found.id; }
+      resyncClock();
+      syncEditor(); renderTracks();
+      setStatus(found ? tr("Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", found.name) : tr("Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
+    });
     $("fmProfile").addEventListener("click", function () {
       var found = null;
       if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /fm.?-?1|m-?vave/i.test(p.name || "")) found = p; });
