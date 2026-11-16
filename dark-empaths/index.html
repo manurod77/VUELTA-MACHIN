@@ -224,7 +224,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.6.1</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.6.2</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
   <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.5.0</div>
@@ -474,7 +474,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <div class="row wrap-row"><button id="esxProfile" type="button">Perfil Electribe ESX-1</button></div>
         <p class="note">Perfil Electribe ESX-1 (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», pone todas las pistas en el canal general 1 y asigna a cada una la nota de batería de fábrica del ESX-1 (pistas 1 a 8: C2, D2, E2, F2, G2, A2, C3, D3, es decir 36, 38, 40, 41, 43, 45, 48, 50). En el ESX-1 el reloj debe estar en «Ext».</p>
         <div class="row wrap-row"><button id="esProfile" type="button">Perfil Electribe Sampler</button></div>
-        <p class="note">Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el reloj MIDI global debe estar en «External». No cambia las notas de las pistas.</p>
+        <p class="note">Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el modo de reloj debe ser EXT.MIDI (cable MIDI) o EXT.USB (cable USB). No cambia las notas de las pistas.</p>
         <p class="note">Notas por defecto: mapa de batería General MIDI (bombo 36, caja 38, clap 39, hi-hat 42 y 46, campana 56, conga 63, clave 75), canal 10. Para Ableton Live: en Windows crea un puerto con loopMIDI; en macOS activa el bus IAC. Luego, en Preferencias → Link, Tempo &amp; MIDI, activa Track en ese puerto (y Sync si usas el reloj).</p>
       </div>
     </div>
@@ -1058,11 +1058,11 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   ["Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", "Electribe ESX-1 profile applied and output «{0}» chosen.", "Perfil Electribe ESX-1 aplicado e saída «{0}» escolhida.", "已应用 Electribe ESX-1 配置并选择输出“{0}”。", "Профиль Electribe ESX-1 применён, выбран выход «{0}»."],
   ["Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Electribe ESX-1 profile applied. I found no output with that name: connect MIDI and pick it in Output.", "Perfil Electribe ESX-1 aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Electribe ESX-1 配置。未找到该名称的输出:请连接 MIDI 并在“输出”中选择。", "Профиль Electribe ESX-1 применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."],
   ["Perfil Electribe Sampler", "Electribe Sampler profile", "Perfil Electribe Sampler", "Electribe Sampler 配置", "Профиль Electribe Sampler"],
-  ["Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el reloj MIDI global debe estar en «External». No cambia las notas de las pistas.",
-   "Electribe Sampler profile (proposal): looks for an output named «Electribe», «ESX» or «Korg», assigns channels 1 to 8 to the eight tracks (per Korg, part n receives on channel n) and turns the clock on. On the unit, the global MIDI clock must be set to «External». It does not change the track notes.",
-   "Perfil Electribe Sampler (proposta): procura uma saída chamada «Electribe», «ESX» ou «Korg», atribui os canais 1 a 8 às oito pistas (segundo a Korg, a parte n recebe pelo canal n) e ativa o clock. No equipamento, o clock MIDI global deve estar em «External». Não altera as notas das pistas.",
-   "Electribe Sampler 配置(建议):查找名为“Electribe”“ESX”或“Korg”的输出端口,把通道 1 至 8 分配给八条轨道(据 Korg,第 n 个声部通过通道 n 接收)并开启时钟。设备上的全局 MIDI 时钟必须设为“External”。不会更改轨道音符。",
-   "Профиль Electribe Sampler (предложение): ищет выход «Electribe», «ESX» или «Korg», назначает каналы 1–8 восьми дорожкам (по данным Korg, партия n принимает по каналу n) и включает такт. В устройстве общий MIDI-такт должен быть «External». Ноты дорожек не меняются."],
+  ["Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el modo de reloj debe ser EXT.MIDI (cable MIDI) o EXT.USB (cable USB). No cambia las notas de las pistas.",
+   "Electribe Sampler profile (proposal): looks for an output named «Electribe», «ESX» or «Korg», assigns channels 1 to 8 to the eight tracks (per Korg, part n receives on channel n) and turns the clock on. On the unit, the clock mode must be EXT.MIDI (MIDI cable) or EXT.USB (USB cable). It does not change the track notes.",
+   "Perfil Electribe Sampler (proposta): procura uma saída chamada «Electribe», «ESX» ou «Korg», atribui os canais 1 a 8 às oito pistas (segundo a Korg, a parte n recebe pelo canal n) e ativa o clock. No equipamento, o modo de clock deve ser EXT.MIDI (cabo MIDI) ou EXT.USB (cabo USB). Não altera as notas das pistas.",
+   "Electribe Sampler 配置(建议):查找名为“Electribe”“ESX”或“Korg”的输出端口,把通道 1 至 8 分配给八条轨道(据 Korg,第 n 个声部通过通道 n 接收)并开启时钟。设备上的时钟模式必须为 EXT.MIDI(MIDI 线)或 EXT.USB(USB 线)。不会更改轨道音符。",
+   "Профиль Electribe Sampler (предложение): ищет выход «Electribe», «ESX» или «Korg», назначает каналы 1–8 восьми дорожкам (по данным Korg, партия n принимает по каналу n) и включает такт. В устройстве режим такта должен быть EXT.MIDI (кабель MIDI) или EXT.USB (кабель USB). Ноты дорожек не меняются."],
   ["Perfil Electribe Sampler aplicado y salida «{0}» elegida.", "Electribe Sampler profile applied and output «{0}» chosen.", "Perfil Electribe Sampler aplicado e saída «{0}» escolhida.", "已应用 Electribe Sampler 配置并选择输出“{0}”。", "Профиль Electribe Sampler применён, выбран выход «{0}»."],
   ["Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Electribe Sampler profile applied. I found no output with that name: connect MIDI and pick it in Output.", "Perfil Electribe Sampler aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Electribe Sampler 配置。未找到该名称的输出:请连接 MIDI 并在“输出”中选择。", "Профиль Electribe Sampler применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."]
   ].forEach(R);
@@ -3679,6 +3679,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   });
 
   /* ---------- Generativo, modulación y MIDI por pista (generativo) ---------- */
+  var EL2_CC = { 7: "Level", 10: "Pan", 71: "Resonance", 72: "EG Release", 73: "EG Attack", 74: "Cutoff", 80: "Osc Pitch", 81: "Osc Glide", 82: "Osc Edit", 83: "Filter EG Int", 85: "Mod Depth", 86: "Mod Speed", 87: "Insert FX Edit", 102: "TouchPad X", 103: "TouchPad Y", 104: "IFX On", 105: "MFX Send", 106: "TouchPad On/Off" };
+  function ccLabel(n) { return EL2_CC[n] ? n + " · " + EL2_CC[n] : String(n); }
   function gSetCtl(id, v) {
     var el = $(id); if (!el) return;
     if (el.type === "checkbox") el.checked = !!v; else el.value = String(v);
@@ -3737,7 +3739,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     $("gEvoN").value = String(gen.evo.n); $("gEvoNO").textContent = String(gen.evo.n); $("gEvoScope").value = gen.evo.scope;
     gen.lfo.forEach(function (l, i) {
       $("lfoOn" + i).checked = l.on; $("lfoCh" + i).value = String(l.ch);
-      $("lfoCc" + i).value = String(l.cc); $("lfoCcO" + i).textContent = String(l.cc);
+      $("lfoCc" + i).value = String(l.cc); $("lfoCcO" + i).textContent = ccLabel(l.cc);
       $("lfoSh" + i).value = l.sh; $("lfoPer" + i).value = String(l.per);
       $("lfoMin" + i).value = String(l.min); $("lfoMinO" + i).textContent = String(l.min);
       $("lfoMax" + i).value = String(l.max); $("lfoMaxO" + i).textContent = String(l.max);
@@ -3887,7 +3889,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         var l = gen.lfo[i];
         l.on = $("lfoOn" + i).checked; l.ch = +$("lfoCh" + i).value; l.cc = +$("lfoCc" + i).value; l.sh = $("lfoSh" + i).value; l.per = +$("lfoPer" + i).value;
         l.min = +$("lfoMin" + i).value; l.max = +$("lfoMax" + i).value; l.last = -1;
-        $("lfoCcO" + i).textContent = String(l.cc); $("lfoMinO" + i).textContent = String(l.min); $("lfoMaxO" + i).textContent = String(l.max);
+        $("lfoCcO" + i).textContent = ccLabel(l.cc); $("lfoMinO" + i).textContent = String(l.min); $("lfoMaxO" + i).textContent = String(l.max);
       }
       row.addEventListener("input", read); row.addEventListener("change", read);
     })(i);

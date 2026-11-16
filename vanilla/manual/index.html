@@ -296,7 +296,7 @@ a.volver { color: var(--accent); }
 <ol class="leg">
 <li><b>LFO 1.</b> Activa o apaga este LFO.</li>
 <li><b>Canal.</b> Por qué canal MIDI se envía.</li>
-<li><b>Controlador (CC).</b> El número del controlador que se envía (de 0 a 127). Qué parámetro mueve depende del equipo: se confirma en su manual.</li>
+<li><b>Controlador (CC).</b> El número del controlador que se envía (de 0 a 127). Qué parámetro mueve depende del equipo: se confirma en su manual. Si el número coincide con un controlador del Electribe 2 (por ejemplo 74, Cutoff), junto al valor aparece su nombre.</li>
 <li><b>Forma.</b> Seno, Triángulo, Sierra, Sierra inversa, Cuadrada o Aleatoria escalonada.</li>
 <li><b>Periodo.</b> Cuánto tarda en recorrer la forma: de ¼ de vuelta a 16 vueltas.</li>
 <li><b>Mínimo.</b> El valor más bajo que envía.</li>
@@ -315,7 +315,7 @@ a.volver { color: var(--accent); }
 <li><b>Enviar reloj, Start y Stop.</b> Para que el otro equipo siga el mismo tempo.</li>
 <li><b>Perfil FM-1.</b> Busca la salida llamada FM-1, asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Son canales propuestos: en el FM-1 hay que configurar esos mismos canales de entrada. Si no encuentra la salida, la elige uno mismo en Salida.</li>
 <li><b>Perfil Electribe ESX-1.</b> Busca una salida llamada Electribe, ESX o Korg, pone todas las pistas en el canal general 1 y asigna a cada pista la nota de batería de fábrica del ESX-1 (pistas 1 a 8: 36, 38, 40, 41, 43, 45, 48 y 50). En el ESX-1 el reloj debe estar en «Ext».</li>
-<li><b>Perfil Electribe Sampler.</b> Busca la misma salida, asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. No cambia las notas. En el equipo, el reloj MIDI global debe estar en «External».</li>
+<li><b>Perfil Electribe Sampler.</b> Busca la misma salida, asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. No cambia las notas. En el equipo, el modo de reloj debe ser EXT.MIDI (cable MIDI) o EXT.USB (cable USB).</li>
 </ol>
 <p>Cada pista puede tener su propio canal: está en el módulo Editar, “Canal MIDI de la pista” (etapa 5).</p>
 </section>
