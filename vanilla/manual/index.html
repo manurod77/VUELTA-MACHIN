@@ -251,6 +251,14 @@ a.volver { color: var(--accent); }
 <li><b>Cargar.</b> Carga el preset elegido en “Guardados”.</li>
 <li><b>Guardar captura (PNG).</b> Genera una imagen de la pantalla.</li>
 </ol>
+<p><b>Biblioteca de patterns.</b> Un preset guarda todo; la biblioteca guarda <i>un solo patrón</i> (las ocho pistas del patrón que estás editando) para reutilizarlo en cualquier letra A–H, en este preset o en otro. Está en el módulo “Biblioteca de patterns”:</p>
+<ol class="leg">
+<li><b>Nombre</b> y <b>Guardar el patrón actual.</b> Si el nombre ya existe, se reemplaza.</li>
+<li><b>Biblioteca.</b> Lista de patterns guardados en este navegador.</li>
+<li><b>Cargar en.</b> “Patrón actual” o una letra A–H. Con “Aplicar también tempo y compases” se cambian además esos dos valores.</li>
+<li><b>Cargar</b> y <b>Borrar.</b></li>
+<li><b>Exportar biblioteca</b> e <b>Importar…</b> Pasan la biblioteca a un archivo (.json) para llevarla a otro equipo o compartirla con otra persona.</li>
+</ol>
 <p>Para obtener el sonido o las notas fuera de la aplicación:</p>
 <figure><img src="img/17-exportar.png" alt="Módulo Exportar con números"><figcaption>Módulo Exportar.</figcaption></figure>
 <ol class="leg">
@@ -316,6 +324,7 @@ a.volver { color: var(--accent); }
 <li><b>Perfil FM-1.</b> Busca la salida llamada FM-1, asigna los canales 1 a 8 a las ocho pistas, el 9 al bajo y el 10 al arpegio, y activa el reloj. Son canales propuestos: en el FM-1 hay que configurar esos mismos canales de entrada. Si no encuentra la salida, la elige uno mismo en Salida.</li>
 <li><b>Perfil Electribe ESX-1.</b> Busca una salida llamada Electribe, ESX o Korg, pone todas las pistas en el canal general 1 y asigna a cada pista la nota de batería de fábrica del ESX-1 (pistas 1 a 8: 36, 38, 40, 41, 43, 45, 48 y 50). En el ESX-1 el reloj debe estar en «Ext».</li>
 <li><b>Perfil Electribe Sampler.</b> Busca la misma salida, asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n), pone la nota de cada pista en 60 (C4, la nota por defecto del equipo) y activa el reloj. En el equipo, el modo de reloj debe ser Ext.MIDI (cable MIDI), Ext.USB (cable USB) o Auto.</li>
+<li><b>Perfil Korg R3.</b> Busca una salida llamada R3 o Korg, pone pistas, bajo y arpegio en el canal 1 y activa el reloj. En la R3, Clock en “Ext MIDI” (o “Auto”), según su manual, y su canal MIDI en 1. <i>Propuesta:</i> el manual consultado no da el canal por defecto; compruébalo en el equipo.</li>
 </ol>
 <p>Cada pista puede tener su propio canal: está en el módulo Editar, “Canal MIDI de la pista” (etapa 5).</p>
 </section>

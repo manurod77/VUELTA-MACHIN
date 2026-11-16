@@ -224,10 +224,10 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.20.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.21.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.20.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.21.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -379,6 +379,22 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <p class="status" id="pStatus">Un preset guarda patrones A–H, arreglo, tempo y el sonido de cada pista. Las muestras se vuelven a enlazar por nombre desde el pack cargado.</p>
       </div>
 
+      <div class="block" data-id="biblioteca">
+        <div class="label">Biblioteca de patterns</div>
+        <label class="sel-field" for="libName"><span>Nombre</span><input id="libName" type="text" maxlength="60" placeholder="Mi pattern"></label>
+        <div class="row wrap-row"><button id="libSave" type="button">Guardar el patrón actual</button></div>
+        <label class="sel-field" for="libList"><span>Biblioteca</span><select id="libList"></select></label>
+        <label class="sel-field" for="libSlot"><span>Cargar en</span><select id="libSlot"></select></label>
+        <label class="check" for="libTempo"><input id="libTempo" type="checkbox"> Aplicar también tempo y compases</label>
+        <div class="row wrap-row"><button id="libLoad" type="button">Cargar</button><button id="libDel" type="button">Borrar</button></div>
+        <div class="row wrap-row">
+          <button id="libExport" type="button">Exportar biblioteca</button>
+          <button id="libImportBtn" type="button">Importar…</button>
+          <input id="libImport" type="file" accept=".json,application/json">
+        </div>
+        <p class="status" id="libStatus">Guarda aquí patrones sueltos (las ocho pistas del patrón que estás editando) y cárgalos en cualquier letra A–H, de este o de otro preset. Se guardan en este navegador; exporta el archivo para llevarlos a otro equipo o compartirlos.</p>
+      </div>
+
       <div class="block" data-id="bajo">
         <div class="label">Bajo</div>
         <label class="check" for="bOn"><input id="bOn" type="checkbox"> Activar bajo</label>
@@ -475,6 +491,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         <p class="note">Perfil Electribe ESX-1 (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», pone todas las pistas en el canal general 1 y asigna a cada una la nota de batería de fábrica del ESX-1 (pistas 1 a 8: C2, D2, E2, F2, G2, A2, C3, D3, es decir 36, 38, 40, 41, 43, 45, 48, 50). En el ESX-1 el reloj debe estar en «Ext».</p>
         <div class="row wrap-row"><button id="esProfile" type="button">Perfil Electribe Sampler</button></div>
         <p class="note">Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el modo de reloj debe ser Ext.MIDI (cable MIDI), Ext.USB (cable USB) o Auto. Pone la nota de cada pista en 60 (C4), la nota por defecto del equipo.</p>
+        <div class="row wrap-row"><button id="r3Profile" type="button">Perfil Korg R3</button></div>
+        <p class="note">Perfil Korg R3 (propuesta): busca una salida llamada «R3» o «Korg», pone todas las pistas, el bajo y el arpegio en el canal 1 y activa el reloj. En la R3, pon Clock en «Ext MIDI» (o «Auto»), como indica su manual, y ajusta su canal MIDI a 1. El manual consultado no da el canal por defecto: compruébalo en el equipo.</p>
         <p class="note">Notas por defecto: mapa de batería General MIDI (bombo 36, caja 38, clap 39, hi-hat 42 y 46, campana 56, conga 63, clave 75), canal 10. Para Ableton Live: en Windows crea un puerto con loopMIDI; en macOS activa el bus IAC. Luego, en Preferencias → Link, Tempo &amp; MIDI, activa Track en ese puerto (y Sync si usas el reloj).</p>
       </div>
     </div>
@@ -482,7 +500,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.20.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.21.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -1033,6 +1051,35 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   [["Ritmos del Perú", "Peruvian rhythms", "Ritmos do Peru", "秘鲁节奏", "Ритмы Перу"]].forEach(R);
 
   [["Peruano", "Peruvian", "Peruano", "秘鲁", "Перуанский"]].forEach(R);
+
+  [
+    ["Perfil Korg R3", "Korg R3 profile", "Perfil Korg R3", "Korg R3 配置", "Профиль Korg R3"],
+    ["Perfil Korg R3 (propuesta): busca una salida llamada «R3» o «Korg», pone todas las pistas, el bajo y el arpegio en el canal 1 y activa el reloj. En la R3, pon Clock en «Ext MIDI» (o «Auto»), como indica su manual, y ajusta su canal MIDI a 1. El manual consultado no da el canal por defecto: compruébalo en el equipo.", "Korg R3 profile (proposal): looks for an output named “R3” or “Korg”, puts all tracks, the bass and the arpeggio on channel 1 and turns the clock on. On the R3, set Clock to “Ext MIDI” (or “Auto”), as its manual says, and set its MIDI channel to 1. The manual I read does not give the default channel: check it on the unit.", "Perfil Korg R3 (proposta): procura uma saída chamada «R3» ou «Korg», coloca todas as pistas, o baixo e o arpejo no canal 1 e liga o relógio. Na R3, ponha Clock em «Ext MIDI» (ou «Auto»), como diz o manual, e ajuste o canal MIDI para 1. O manual consultado não dá o canal padrão: confira no aparelho.", "Korg R3 配置（建议）：查找名为“R3”或“Korg”的输出，把所有音轨、贝斯和琶音放在通道 1，并开启时钟。在 R3 上按其手册把 Clock 设为“Ext MIDI”（或“Auto”），并把 MIDI 通道设为 1。所查手册未给出默认通道：请在设备上确认。", "Профиль Korg R3 (предложение): ищет выход «R3» или «Korg», ставит все дорожки, бас и арпеджио на канал 1 и включает тактовую синхронизацию. На R3 установите Clock в «Ext MIDI» (или «Auto»), как в её руководстве, и MIDI-канал 1. В изученном руководстве канал по умолчанию не указан: проверьте на устройстве."],
+    ["Perfil Korg R3 aplicado y salida «{0}» elegida.", "Korg R3 profile applied and output “{0}” chosen.", "Perfil Korg R3 aplicado e saída «{0}» escolhida.", "已应用 Korg R3 配置并选择输出“{0}”。", "Профиль Korg R3 применён, выбран выход «{0}»."],
+    ["Perfil Korg R3 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Korg R3 profile applied. I found no output with that name: connect MIDI and choose it in Output.", "Perfil Korg R3 aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Korg R3 配置。未找到该名称的输出：请连接 MIDI 并在“输出”中选择。", "Профиль Korg R3 применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."],
+    ["Biblioteca de patterns", "Pattern library", "Biblioteca de patterns", "节奏型库", "Библиотека паттернов"],
+    ["Guardar el patrón actual", "Save the current pattern", "Salvar o padrão atual", "保存当前节奏型", "Сохранить текущий паттерн"],
+    ["Biblioteca", "Library", "Biblioteca", "库", "Библиотека"],
+    ["Cargar en", "Load into", "Carregar em", "载入到", "Загрузить в"],
+    ["Patrón actual", "Current pattern", "Padrão atual", "当前节奏型", "Текущий паттерн"],
+    ["Aplicar también tempo y compases", "Also apply tempo and beats", "Aplicar também andamento e compassos", "同时应用速度和拍数", "Также применить темп и размер"],
+    ["Exportar biblioteca", "Export library", "Exportar biblioteca", "导出库", "Экспорт библиотеки"],
+    ["Importar…", "Import…", "Importar…", "导入…", "Импорт…"],
+    ["Mi pattern", "My pattern", "Meu pattern", "我的节奏型", "Мой паттерн"],
+    ["Guarda aquí patrones sueltos (las ocho pistas del patrón que estás editando) y cárgalos en cualquier letra A–H, de este o de otro preset. Se guardan en este navegador; exporta el archivo para llevarlos a otro equipo o compartirlos.", "Store single patterns here (the eight tracks of the pattern you are editing) and load them into any letter A–H, in this or another preset. They are kept in this browser; export the file to move them to another computer or share them.", "Guarde aqui padrões soltos (as oito pistas do padrão que você está editando) e carregue-os em qualquer letra A–H, deste ou de outro preset. Ficam neste navegador; exporte o arquivo para levá-los a outro computador ou compartilhá-los.", "在此保存单个节奏型（你正在编辑的节奏型的八条音轨），并可载入到任意字母 A–H，无论在此预设还是其他预设。它们保存在此浏览器中；导出文件即可带到其他电脑或分享。", "Храните здесь отдельные паттерны (восемь дорожек редактируемого паттерна) и загружайте в любую букву A–H, в этом или другом пресете. Они хранятся в этом браузере; экспортируйте файл, чтобы перенести на другой компьютер или поделиться."],
+    ["(vacía)", "(empty)", "(vazia)", "（空）", "(пусто)"],
+    ["Pattern {0}", "Pattern {0}", "Pattern {0}", "节奏型 {0}", "Паттерн {0}"],
+    ["Pattern «{0}» guardado en la biblioteca.", "Pattern “{0}” saved to the library.", "Pattern «{0}» salvo na biblioteca.", "节奏型“{0}”已保存到库。", "Паттерн «{0}» сохранён в библиотеке."],
+    ["Guardado solo hasta cerrar la página: el navegador no permite guardar aquí.", "Kept only until the page is closed: the browser does not allow saving here.", "Salvo apenas até fechar a página: o navegador não permite salvar aqui.", "仅在关闭页面前有效：浏览器不允许在此保存。", "Сохранено только до закрытия страницы: браузер не разрешает сохранение."],
+    ["No hay un pattern elegido.", "No pattern is selected.", "Nenhum pattern escolhido.", "未选择节奏型。", "Паттерн не выбран."],
+    ["Pattern «{0}» cargado en {1}.", "Pattern “{0}” loaded into {1}.", "Pattern «{0}» carregado em {1}.", "节奏型“{0}”已载入 {1}。", "Паттерн «{0}» загружен в {1}."],
+    ["Pattern «{0}» borrado.", "Pattern “{0}” deleted.", "Pattern «{0}» apagado.", "节奏型“{0}”已删除。", "Паттерн «{0}» удалён."],
+    ["La biblioteca está vacía.", "The library is empty.", "A biblioteca está vazia.", "库是空的。", "Библиотека пуста."],
+    ["Biblioteca exportada ({0} patterns).", "Library exported ({0} patterns).", "Biblioteca exportada ({0} patterns).", "已导出库（{0} 个节奏型）。", "Библиотека экспортирована ({0} паттернов)."],
+    ["No se pudo guardar el archivo.", "The file could not be saved.", "Não foi possível salvar o arquivo.", "无法保存文件。", "Не удалось сохранить файл."],
+    ["El archivo no contiene patterns válidos.", "The file has no valid patterns.", "O arquivo não contém patterns válidos.", "文件不含有效节奏型。", "В файле нет допустимых паттернов."],
+    ["Importados {0} patterns.", "Imported {0} patterns.", "Importados {0} patterns.", "已导入 {0} 个节奏型。", "Импортировано паттернов: {0}."]
+  ].forEach(R);
 
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
@@ -2128,7 +2175,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.20.0";
+  var FW = "0.21.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2460,7 +2507,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.20.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.21.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -3935,39 +3982,36 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     $("gWalk").addEventListener("click", genWalk);
     $("gTonnetz").addEventListener("click", genTonnetz);
 
-    $("esProfile").addEventListener("click", function () {
-      var found = null;
-      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /electribe|esx|korg/i.test(p.name || "")) found = p; });
+    /* Tabla de perfiles de equipo. Cada fila: puerto (regex), canal general, canal por pista (fn o null=hereda),
+       nota por pista (fn o null=no tocar), canales de bajo y arpegio, y los textos.
+       VERIFICADO: ESX-1 (notas de batería, reloj Ext) y Sampler (parte n = canal n) según los manuales de Korg.
+       PROPUESTO: canales de FM-1; canal 1 de la R3 (la parte del manual consultada no da el canal por defecto). */
+    var ESX_NOTES = [36, 38, 40, 41, 43, 45, 48, 50];
+    var PROFILES = {
+      fm: { re: /fm.?-?1|m-?vave/i, gen: null, tch: function (i) { return i; }, note: null, bCh: 8, aCh: 9,
+        ok: "Perfil FM-1 aplicado y salida «{0}» elegida.", no: "Perfil FM-1 aplicado. No encontré una salida llamada FM-1: conecta el MIDI y elígela en Salida." },
+      esx: { re: /electribe|esx|korg/i, gen: 0, tch: function () { return null; }, note: function (i) { return ESX_NOTES[i % ESX_NOTES.length]; }, bCh: null, aCh: null,
+        ok: "Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", no: "Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." },
+      es: { re: /electribe|esx|korg/i, gen: null, tch: function (i) { return i; }, note: function () { return 60; }, bCh: null, aCh: null,
+        ok: "Perfil Electribe Sampler aplicado y salida «{0}» elegida.", no: "Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." },
+      r3: { re: /r3|korg/i, gen: 0, tch: function () { return null; }, note: null, bCh: 0, aCh: 0,
+        ok: "Perfil Korg R3 aplicado y salida «{0}» elegida.", no: "Perfil Korg R3 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." }
+    };
+    function applyProfile(id) {
+      var P = PROFILES[id], found = null;
+      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && P.re.test(p.name || "")) found = p; });
       allNotesOff();
-      state.tracks.forEach(function (t, i) { t.ch = i; t.note = 60; });
+      if (P.gen != null) { var chEl = $("midiCh"); if (chEl) { chEl.value = String(P.gen); chEl.dispatchEvent(new Event("input", { bubbles: true })); chEl.dispatchEvent(new Event("change", { bubbles: true })); } }
+      state.tracks.forEach(function (t, i) { t.ch = P.tch(i); if (P.note) t.note = P.note(i); });
+      if (P.bCh != null) gSetCtl("bCh", P.bCh);
+      if (P.aCh != null) gSetCtl("aCh", P.aCh);
       midi.clockOut = true; ui.midiClock.checked = true;
       if (found) { midi.out = found; ui.midiOut.value = found.id; }
-      resyncClock();
-      syncEditor(); renderTracks();
-      setStatus(found ? tr("Perfil Electribe Sampler aplicado y salida «{0}» elegida.", found.name) : tr("Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
-    });
-    $("esxProfile").addEventListener("click", function () {
-      var ESX = [36, 38, 40, 41, 43, 45, 48, 50];
-      var found = null;
-      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /electribe|esx|korg/i.test(p.name || "")) found = p; });
-      allNotesOff();
-      var chEl = $("midiCh"); if (chEl) { chEl.value = "0"; chEl.dispatchEvent(new Event("input", { bubbles: true })); chEl.dispatchEvent(new Event("change", { bubbles: true })); }
-      state.tracks.forEach(function (t, i) { t.ch = null; t.note = ESX[i % ESX.length]; });
-      midi.clockOut = true; ui.midiClock.checked = true;
-      if (found) { midi.out = found; ui.midiOut.value = found.id; }
-      resyncClock();
-      syncEditor(); renderTracks();
-      setStatus(found ? tr("Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", found.name) : tr("Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
-    });
-    $("fmProfile").addEventListener("click", function () {
-      var found = null;
-      if (midi.access) midi.access.outputs.forEach(function (p) { if (!found && /fm.?-?1|m-?vave/i.test(p.name || "")) found = p; });
-      state.tracks.forEach(function (t, i) { t.ch = i; });
-      gSetCtl("bCh", 8); gSetCtl("aCh", 9);
-      midi.clockOut = true; ui.midiClock.checked = true;
-      if (found) { midi.out = found; ui.midiOut.value = found.id; resyncClock(); }
-      syncEditor();
-      setStatus(found ? tr("Perfil FM-1 aplicado y salida «{0}» elegida.", found.name) : tr("Perfil FM-1 aplicado. No encontré una salida llamada FM-1: conecta el MIDI y elígela en Salida."), found ? "ok" : "");
+      resyncClock(); syncEditor(); renderTracks();
+      setStatus(found ? tr(P.ok, found.name) : tr(P.no), found ? "ok" : "");
+    }
+    [["fmProfile", "fm"], ["esxProfile", "esx"], ["esProfile", "es"], ["r3Profile", "r3"]].forEach(function (x) {
+      var el = $(x[0]); if (el) el.addEventListener("click", function () { applyProfile(x[1]); });
     });
   })();
   if (typeof RESETS !== "undefined") {
@@ -3978,6 +4022,97 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   };
   RESETS.mod = function () { var g = genData(); g.lfo = null; setGen(g); };
   }
+
+  /* ---------- Biblioteca de patterns ---------- */
+  var LKEY = PKEY + ".lib", memLib = [];
+  function readLib() { try { var r = localStorage.getItem(LKEY); var a = r ? JSON.parse(r) : memLib; return Array.isArray(a) ? a : []; } catch (e) { return memLib; } }
+  function writeLib(a) { memLib = a; try { localStorage.setItem(LKEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
+  function libStatus(msg, kind) { var el = $("libStatus"); if (el) { el.textContent = msg; el.className = "status" + (kind ? " " + kind : ""); } }
+  function libValid(e) {
+    return !!e && e.kind === "pattern" && typeof e.name === "string" && Array.isArray(e.tracks) && e.tracks.length > 0 && e.tracks.every(function (d) {
+      return d && typeof d.id === "string" && d.steps >= 2 && d.steps <= 32 && Array.isArray(d.base) && d.base.length === d.steps;
+    });
+  }
+  function libCapture(name) {
+    var s = snap();
+    return { v: 1, kind: "pattern", name: name, bpm: state.bpm, beats: state.beats,
+      tracks: state.tracks.map(function (t, i) { return { id: t.id, steps: s[i].steps, base: s[i].base.slice(), rot: s[i].rot || 0 }; }) };
+  }
+  function libFill() {
+    var sel = $("libList"); if (!sel) return;
+    var a = readLib(), keep = sel.value;
+    sel.innerHTML = "";
+    if (!a.length) { var o = document.createElement("option"); o.value = ""; o.textContent = tr("(vacía)"); sel.appendChild(o); return; }
+    a.forEach(function (e, i) { var o = document.createElement("option"); o.value = String(i); o.textContent = e.name; sel.appendChild(o); });
+    if (keep && +keep < a.length) sel.value = keep;
+  }
+  function libApply(e, slot, withTempo) {
+    var live = slot === state.cur;
+    state.patterns[state.cur] = snap();
+    state.tracks.forEach(function (t, k) {
+      var d = null;
+      e.tracks.forEach(function (x) { if (x.id === t.id) d = x; });
+      var n = d ? { steps: d.steps | 0, base: d.base.slice(), rot: +d.rot || 0 } : { steps: t.steps, base: t.base.map(function () { return 0; }), rot: 0 };
+      state.patterns[slot][k] = n;
+      if (live) { t.steps = n.steps; t.base = n.base.slice(); t.rot = n.rot; t.mut = null; resyncTrack(k); }
+    });
+    if (withTempo) { state.bpm = Math.max(50, Math.min(200, +e.bpm || state.bpm)); state.beats = Math.max(2, Math.min(8, +e.beats || state.beats)); }
+    if (live) { reanchor(); resyncClock(); }
+    syncAll();
+  }
+  (function () {
+    var slot = $("libSlot"); if (!slot) return;
+    var o = document.createElement("option"); o.value = "cur"; o.textContent = tr("Patrón actual"); slot.appendChild(o);
+    "ABCDEFGH".split("").forEach(function (L, i) { var p = document.createElement("option"); p.value = String(i); p.textContent = L; slot.appendChild(p); });
+    libFill();
+    $("libSave").addEventListener("click", function () {
+      var name = ($("libName").value || "").trim() || tr("Pattern {0}", readLib().length + 1);
+      var a = readLib(), e = libCapture(name), done = false;
+      a = a.map(function (x) { if (!done && x.name === name) { done = true; return e; } return x; });
+      if (!done) a.push(e);
+      var ok = writeLib(a); libFill(); $("libList").value = String(a.indexOf(e) >= 0 ? a.indexOf(e) : a.length - 1);
+      libStatus(ok ? tr("Pattern «{0}» guardado en la biblioteca.", name) : tr("Guardado solo hasta cerrar la página: el navegador no permite guardar aquí."), ok ? "ok" : "err");
+    });
+    $("libLoad").addEventListener("click", function () {
+      var a = readLib(), e = a[+$("libList").value];
+      if (!libValid(e)) { libStatus(tr("No hay un pattern elegido."), "err"); return; }
+      var s = $("libSlot").value, to = s === "cur" ? state.cur : +s;
+      libApply(e, to, $("libTempo").checked);
+      libStatus(tr("Pattern «{0}» cargado en {1}.", e.name, "ABCDEFGH".charAt(to)), "ok");
+    });
+    $("libDel").addEventListener("click", function () {
+      var a = readLib(), i = +$("libList").value;
+      if (!a[i]) { libStatus(tr("No hay un pattern elegido."), "err"); return; }
+      var nm = a[i].name; a.splice(i, 1); writeLib(a); libFill();
+      libStatus(tr("Pattern «{0}» borrado.", nm), "ok");
+    });
+    $("libExport").addEventListener("click", function () {
+      var a = readLib();
+      if (!a.length) { libStatus(tr("La biblioteca está vacía."), "err"); return; }
+      saveTextFile("ClaveCircular_biblioteca.json", JSON.stringify({ v: 1, kind: "patternlib", items: a }, null, 1)).then(function (ok) {
+        libStatus(ok ? tr("Biblioteca exportada ({0} patterns).", a.length) : tr("No se pudo guardar el archivo."), ok ? "ok" : "err");
+      });
+    });
+    $("libImportBtn").addEventListener("click", function () { $("libImport").click(); });
+    $("libImport").addEventListener("change", function () {
+      var f = this.files && this.files[0], inp = this; if (!f) return;
+      var rd = new FileReader();
+      rd.onload = function () {
+        var d; try { d = JSON.parse(String(rd.result)); } catch (er) { d = null; }
+        var items = d && d.kind === "patternlib" && Array.isArray(d.items) ? d.items : (d && d.kind === "pattern" ? [d] : []);
+        items = items.filter(libValid);
+        if (!items.length) { libStatus(tr("El archivo no contiene patterns válidos."), "err"); }
+        else {
+          var a = readLib();
+          items.forEach(function (e) { var done = false; a = a.map(function (x) { if (!done && x.name === e.name) { done = true; return e; } return x; }); if (!done) a.push(e); });
+          writeLib(a); libFill();
+          libStatus(tr("Importados {0} patterns.", items.length), "ok");
+        }
+        inp.value = "";
+      };
+      rd.readAsText(f);
+    });
+  })();
 
   /* ---------- Inicio ---------- */
   i18nStatic(); $("langSel").value = LANG; showMon();
