@@ -262,10 +262,10 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Vanilla</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.3.3</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.4.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.3.3</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.4.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="vanilla">Vanilla</option><option value="dark">Darth</option><option value="base">Base</option></select></label>
@@ -522,7 +522,7 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.3.3</span><span>T_T</span>
+    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.4.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -1028,7 +1028,7 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
       if (LANGS.indexOf(nl) >= 0) LANG = nl;
     }
   } catch (e) { /* sin almacenamiento */ }
-  /* VA 0.3.3: generativo, modulación, MIDI por pista */
+  /* VA 0.4.0: generativo, modulación, MIDI por pista */
   [
   ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
   ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
@@ -1116,6 +1116,8 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
   ["Perfil Electribe Sampler aplicado y salida «{0}» elegida.", "Electribe Sampler profile applied and output «{0}» chosen.", "Perfil Electribe Sampler aplicado e saída «{0}» escolhida.", "已应用 Electribe Sampler 配置并选择输出“{0}”。", "Профиль Electribe Sampler применён, выбран выход «{0}»."],
   ["Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida.", "Electribe Sampler profile applied. I found no output with that name: connect MIDI and pick it in Output.", "Perfil Electribe Sampler aplicado. Não encontrei uma saída com esse nome: conecte o MIDI e escolha-a em Saída.", "已应用 Electribe Sampler 配置。未找到该名称的输出:请连接 MIDI 并在“输出”中选择。", "Профиль Electribe Sampler применён. Выход с таким именем не найден: подключите MIDI и выберите его в «Выход»."]
   ].forEach(R);
+
+  [["Ritmos del Perú", "Peruvian rhythms", "Ritmos do Peru", "秘鲁节奏", "Ритмы Перу"]].forEach(R);
 
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
@@ -1806,6 +1808,22 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
     skinSel: $("skinSel"), layoutSel: $("layoutSel"), layoutReset: $("layoutReset")
   };
 
+  /* Ritmos del Perú.
+     VERIFICADO (fuentes): compás y tempo.
+       Festejo: 6/8 (Thomann, «Cajón: traditional and modern grooves»; Amaro 2010, p. 39); una pieza a 130 bpm (Elías y Wolff 2019, p. 22).
+       Alcatraz: mismo ritmo que el festejo (Amaro 2010, p. 39).
+       Landó: 6/4 o 12/8; 88–100 bpm en landó-danza (Elías y Wolff 2019, pp. 4 y 11); acento (floreo) antes de los tiempos 2, 4 y 6 (Thomann).
+       Marinera: 3/4 (Thomann). Vals: 3/4 y polka: 4/4 (Wikipedia, «Música criolla»).
+     PROPUESTO: la posición de cada golpe y el reparto entre pistas. Las fuentes consultadas traen la notación solo en imagen; ajusta lo que no coincida con tu oído.
+     NO COMPROBADO: zamacueca, jarana, panalivio, oíta nomá y agrícola no se incluyen porque no se encontró compás ni patrón en fuentes. */
+  var PE = "Ritmos del Perú";
+  SCENES.festejo = S(PE, "Festejo", 120, { bombo: P(12, [1, 7, 10]), caja: P(12, [4, 6, 12]), campana: E(12, 7), conga: P(12, [3, 5, 9, 11]), hatC: P(12, [1, 4, 7, 10]) }, 4);
+  SCENES.alcatraz = S(PE, "Alcatraz", 120, { bombo: P(12, [1, 7, 10]), caja: P(12, [4, 6, 12]), campana: E(12, 7), conga: P(12, [3, 5, 9, 11]), hatC: P(12, [1, 4, 7, 10]) }, 4);
+  SCENES.lando = S(PE, "Landó", 92, { bombo: P(12, [1, 5, 9]), caja: P(12, [3, 7, 11]), campana: P(12, [1, 3, 5, 7, 9, 11]), conga: P(12, [2, 6, 10]) }, 6);
+  SCENES.marinera = S(PE, "Marinera", 112, { bombo: P(12, [1, 9]), caja: P(12, [5, 11]), conga: P(12, [7]), hatC: P(12, [1, 3, 5, 7, 9, 11]) }, 3);
+  SCENES.valscriollo = S(PE, "Vals criollo", 108, { bombo: P(12, [1]), caja: P(12, [5, 9]), conga: P(12, [7, 11]), hatC: P(12, [1, 5, 9]) }, 3);
+  SCENES.polkacriolla = S(PE, "Polka criolla", 120, { bombo: P(16, [1, 9]), caja: P(16, [5, 13]), conga: P(16, [3, 7, 11, 15]), hatC: P(16, EIGHTH) }, 4);
+
   /* Escenas agrupadas por género */
   function fillScenes() {
     var cur = ui.scene.value, groups = {}, order = [];
@@ -2161,7 +2179,7 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "VA 0.3.3";
+  var FW = "VA 0.4.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2493,7 +2511,7 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW VA 0.3.3 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW VA 0.4.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -3772,7 +3790,7 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
     audio: function () { setCtl("audSplit", false); setCtl("audOut", ""); },
     midi: function () { setCtl("midiCh", DEF_MIDI.ch); setCtl("midiVel", DEF_MIDI.vel); setCtl("midiClock", DEF_MIDI.clock); setCtl("midiLocal", DEF_MIDI.local); }
   };
-  /* ---------- Generativo, modulación y MIDI por pista (VA 0.3.3) ---------- */
+  /* ---------- Generativo, modulación y MIDI por pista (VA 0.4.0) ---------- */
   var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
   function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
   for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
