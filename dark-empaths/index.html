@@ -224,7 +224,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.7.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.8.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
   <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.5.0</div>
@@ -258,7 +258,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
         </div>
         <label class="check" for="sceneFull"><input id="sceneFull" type="checkbox" checked> Cargar también variaciones, fills e intro en A–H y el arreglo</label>
         <label class="sel-field" for="kitAll"><span>Kit global</span>
-          <select id="kitAll"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option></select></label>
+          <select id="kitAll"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option><option value="kper">Peruano</option></select></label>
         <label class="field" for="bpm"><span>Tempo</span><input id="bpm" type="range" min="50" max="200" value="100"><output id="bpmO">100</output></label>
         <label class="field" for="beats"><span>Tiempos/vuelta</span><input id="beats" type="range" min="2" max="8" value="4"><output id="beatsO">4</output></label>
         <label class="field" for="vol"><span>Volumen</span><input id="vol" type="range" min="0" max="100" value="80"><output id="volO">80</output></label>
@@ -333,7 +333,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       <div class="block" data-id="sonido">
         <div class="label" id="sndTitle">Sonido de la pista</div>
         <label class="sel-field" for="kit"><span>Fuente</span>
-          <select id="kit"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option><option value="sample">Muestra cargada</option></select></label>
+          <select id="kit"><option value="base">Base (sintético)</option><option value="k808">808</option><option value="k909">909</option><option value="k707">707</option><option value="k606">606</option><option value="linn">LinnDrum</option><option value="cr78">CR-78</option><option value="seco">Seco</option><option value="kebm">EBM potente</option><option value="kidm">IDM glitch</option><option value="kdnb">Drill &amp; bass</option><option value="kper">Peruano</option><option value="sample">Muestra cargada</option></select></label>
         <label class="sel-field" for="smp"><span>Muestra</span><select id="smp"></select></label>
         <div class="row wrap-row">
           <button id="loadBtn" type="button">Cargar muestra…</button>
@@ -1069,6 +1069,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 
   [["Ritmos del Perú", "Peruvian rhythms", "Ritmos do Peru", "秘鲁节奏", "Ритмы Перу"]].forEach(R);
 
+  [["Peruano", "Peruvian", "Peruano", "秘鲁", "Перуанский"]].forEach(R);
+
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
     for (var i = 1; i < arguments.length; i++) s = s.split("{" + (i - 1) + "}").join(String(arguments[i]));
@@ -1486,6 +1488,20 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     clave: function (t, pf, df) { oscS("square", 1650 * pf, 1500 * pf, t, 0.03 * df, 0.45, satCurve(3)); noiseS(t, 0.02, 0.3, "bandpass", 3000 * pf, 1.5); },
     conga: function (t, pf, df) { oscS("sine", 210 * pf, 115 * pf, t, 0.24 * df, 0.9, satCurve(2)); noiseS(t, 0.03, 0.2, "bandpass", 1200 * pf, 1.1); },
     bell:  function (t, pf, df) { partials(t, [[1400 * pf, 1, 1], [2150 * pf, 0.6, 0.7], [3020 * pf, 0.4, 0.5]], 0.12 * df, 0.5, satCurve(3)); }
+  };
+
+  /* Kit Peruano (propuesta sintetizada, no son muestras ni sonidos de instrumentos reales):
+     bombo = cajón (tono grave), caja = cajón (golpe agudo), hi-hat cerrado = checo (sonaja), hi-hat abierto = quijada (traqueteo),
+     clap = palmas, clave = cajita, conga = conga, campana = cencerro. */
+  KITS.kper = {
+    kick:  function (t, pf, df) { oscS("sine", 118 * pf, 70 * pf, t, 0.26 * df, 1.0, satCurve(1.6)); osc("triangle", 64 * pf, 0, t, 0.2 * df, 0.35); noiseS(t, 0.02, 0.3, "lowpass", 900, 0.8); },
+    snare: function (t, pf, df) { noiseS(t, 0.11 * df, 0.6, "bandpass", 2600 * pf, 0.9); noiseS(t, 0.07 * df, 0.35, "highpass", 5200, 0.7); osc("sine", 230 * pf, 170 * pf, t, 0.07 * df, 0.35); },
+    hat:   function (t, pf, df) { noise(t, 0.045 * df, 0.26, "bandpass", 6500 * pf, 1.2); },
+    ohat:  function (t, pf, df) { for (var i = 0; i < 8; i++) noiseS(t + i * 0.022 * df, 0.02, 0.34 * (1 - i * 0.09), "bandpass", 3200 * pf, 2.2); osc("sine", 900 * pf, 0, t, 0.03, 0.2); },
+    clap:  function (t, pf, df) { clapBurst(t, pf * 0.85, df * 1.1); },
+    clave: function (t, pf, df) { partials(t, [[1180 * pf, 1, 0.5], [1830 * pf, 0.6, 0.35], [2750 * pf, 0.3, 0.2]], 0.12 * df, 0.55, satCurve(1.5)); noiseS(t, 0.012, 0.25, "bandpass", 3500 * pf, 1.5); },
+    conga: function (t, pf, df) { osc("sine", 270 * pf, 175 * pf, t, 0.24 * df, 0.85); noise(t, 0.03 * df, 0.14, "bandpass", 1700 * pf, 1.2); },
+    bell:  function (t, pf, df) { cowbell(t, pf * 0.9, df, 0.34); }
   };
 
   /* Reproduce una pista: muestra cargada o sonido del kit elegido */
@@ -2289,7 +2305,7 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   function renderKitAll() {
     var cur = ui.kitAll.value;
     ui.kitAll.innerHTML = "";
-    [["base", "Base (sintético)"], ["k808", "808"], ["k909", "909"], ["k707", "707"], ["k606", "606"], ["linn", "LinnDrum"], ["cr78", "CR-78"], ["seco", "Seco"], ["kebm", "EBM potente"], ["kidm", "IDM glitch"], ["kdnb", "Drill & bass"]].forEach(function (k) {
+    [["base", "Base (sintético)"], ["k808", "808"], ["k909", "909"], ["k707", "707"], ["k606", "606"], ["linn", "LinnDrum"], ["cr78", "CR-78"], ["seco", "Seco"], ["kebm", "EBM potente"], ["kidm", "IDM glitch"], ["kdnb", "Drill & bass"], ["kper", "Peruano"]].forEach(function (k) {
       var o = document.createElement("option"); o.value = k[0]; o.textContent = tr(k[1]); ui.kitAll.appendChild(o);
     });
     var seen = {};
