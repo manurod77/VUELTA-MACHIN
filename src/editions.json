@@ -1,5 +1,5 @@
 {
-  "core":    { "out": "index.html",              "version": "0.21.0" },
-  "de":      { "out": "dark-empaths/index.html", "version": "0.9.0",  "patch": "editions/de.patch" },
-  "vanilla": { "out": "vanilla/index.html",      "version": "0.6.0",  "patch": "editions/vanilla.patch" }
+  "core":    { "out": "index.html",              "version": "0.22.0" },
+  "de":      { "out": "dark-empaths/index.html", "version": "0.10.0",  "patch": "editions/de.patch" },
+  "vanilla": { "out": "vanilla/index.html",      "version": "0.7.0",  "patch": "editions/vanilla.patch" }
 }

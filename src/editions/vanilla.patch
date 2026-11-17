@@ -1,5 +1,5 @@
---- core.tpl	2026-11-17 18:00:57.840438007 -0500
-+++ vanilla.tpl	2026-11-17 18:00:57.846476721 -0500
+--- core.tpl	2026-11-17 18:08:44.061776918 -0500
++++ vanilla.tpl	2026-11-17 18:08:44.070379854 -0500
 @@ -1,4 +1,4 @@
 -<title>Dark Empaths Clave Circular</title>
 +<title>Vanilla · Clave Circular</title>
@@ -31,7 +31,7 @@
  html[data-skin="eclipse"], html[data-skin="ruinas"] {
    --bg: #05060a; --panel: rgba(12, 14, 24, 0.84); --panel-2: rgba(24, 28, 46, 0.92); --line: #2a2f48;
    --fg: #e8ebf4; --muted: #8e96b2; --accent: #ff2f9e; --accent-ink: #14020c;
-@@ -215,27 +233,49 @@
+@@ -215,6 +233,25 @@
    .main.layL .block { margin-bottom: 0; }
    .wrap.wide { max-width: 1080px; }
  }
@@ -55,6 +55,10 @@
 +.bh button.rs { font-size: 15px; }
 +.modesw { display: inline-flex; align-items: center; gap: 8px; }
  .lfo { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 6px; }
+ 
+ /* ---- Barra fija y ajustes plegados ---- */
+@@ -227,24 +264,27 @@
+ details.adv[open] > summary { padding-bottom: 10px; }
  </style>
  
 +<div class="undo-fab" role="group" aria-label="Deshacer y rehacer"><button id="undoBtn" type="button" disabled>↶ Deshacer</button><button id="redoBtn" type="button" disabled>↷ Rehacer</button></div>
@@ -85,7 +89,7 @@
    </div>
  
    <div class="main" id="main">
-@@ -500,7 +540,7 @@
+@@ -509,7 +549,7 @@
  
    <footer class="foot">
      <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
@@ -94,7 +98,7 @@
    </footer>
  </div>
  
-@@ -863,6 +903,16 @@
+@@ -872,6 +912,16 @@
    ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
    ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
    ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
@@ -111,7 +115,7 @@
    /* Kits y tensión */
    ["EBM potente", "Powerful EBM", "EBM potente", "强力 EBM", "Мощный EBM"],
    ["IDM glitch", "Glitch IDM", "IDM glitch", "故障 IDM", "Глитч-IDM"],
-@@ -936,6 +986,43 @@
+@@ -945,6 +995,43 @@
    ["Tresillos", "Triplets", "Tercinas", "Tresillos", "Tresillos"],
    ["Quintas rodantes", "Rolling fifths", "Quintas rolantes", "Quintas rodantes", "Quintas rodantes"],
    /* Escenas: categorías y nombres */
@@ -155,7 +159,7 @@
    ["Latinos y afro", "Latin and Afro", "Latinos e afro", "拉丁与非洲", "Латино и афро"],
    ["Trance y progresivo", "Trance and progressive", "Trance e progressivo", "Trance 与 Progressive", "Транс и прогрессив"],
    ["Drum & bass y jungle", "Drum & bass and jungle", "Drum & bass e jungle", "Drum & bass 与 Jungle", "Драм-н-бейс и джангл"],
-@@ -952,14 +1039,14 @@
+@@ -961,14 +1048,14 @@
  
    var LANG = "es";
    try {
@@ -172,7 +176,7 @@
    [
    ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
    ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
-@@ -1136,6 +1223,7 @@
+@@ -1147,6 +1234,7 @@
    function P(n, list) { return { steps: n, base: fromPos(n, list), rot: 0 }; }
    function E(n, k, rot) { return { steps: n, base: euclid(n, k), rot: rot || 0 }; }
    function allSteps(n) { var a = []; for (var i = 1; i <= n; i++) a.push(i); return a; }
@@ -180,7 +184,7 @@
    function S(cat, name, bpm, t, beats) { return { cat: cat, name: name, bpm: bpm, beats: beats || 4, t: t }; }
  
    var K4 = [1, 5, 9, 13], OFF = [3, 7, 11, 15], BP = [5, 13];
-@@ -1143,83 +1231,47 @@
+@@ -1154,83 +1242,47 @@
  
    /* PROPUESTO: patrones de referencia escritos para esta herramienta; ajusta lo que no coincida con tu oído. */
    var SCENES = {
@@ -303,7 +307,7 @@
    var state = {
      bpm: 100, beats: 4, vol: 0.8, playing: false, sel: 0, sync: "int",
      tracks: TRACKS.map(function (t) {
-@@ -1250,7 +1302,14 @@
+@@ -1261,7 +1313,14 @@
      { id: "t3", g: "Tensión", sc: "phr", name: "i – ♭II – v° – i", d: [0, 1, 4, 0] },
      { id: "t4", g: "Tensión", sc: "loc", name: "i° – ♭III – ♭V – i°", d: [0, 2, 4, 0] },
      { id: "t5", g: "Tensión", sc: "hmin", name: "i – ii° – V – i", d: [0, 1, 4, 0] },
@@ -319,7 +323,7 @@
    ];
    var BPATS = {
      sem: { n: "Semitono nervioso", p: [1, 3, 4, 7, 9, 11, 12, 15], a: [1, 9, 12], g: { 3: 1, 4: 1, 11: 1, 12: 1 } },
-@@ -1260,7 +1319,15 @@
+@@ -1271,7 +1330,15 @@
      contra: { n: "Contratiempos", p: [3, 7, 11, 15], a: [] },
      sinc: { n: "Sincopado", p: [1, 4, 7, 9, 12, 15], a: [1, 9] },
      tresillo: { n: "Tresillo", p: [1, 4, 7, 11, 14], a: [1] },
@@ -336,7 +340,7 @@
    };
    var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], deg: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "", tun: "eq" };
    (function () { for (var i = 0; i < 16; i++) bass.base.push(0); [1, 4, 7, 9, 12, 15].forEach(function (p) { bass.base[p - 1] = 1; }); bass.base[0] = 2; bass.base[8] = 2; bass.pat = "sinc"; bass.deg = []; for (var j2 = 0; j2 < 16; j2++) bass.deg.push(0); })();
-@@ -1844,9 +1911,7 @@
+@@ -1855,9 +1922,7 @@
  
    /* ---------- Variaciones, fills e intros por género (PROPUESTO: reglas por familia, ajusta de oído) ---------- */
    var PNAMES = ["Principal", "Variación", "Breakdown", "Subida", "Intro", "Fill corto", "Fill largo", "Final"];
@@ -347,7 +351,7 @@
    function famOf(key) { return FAM[key] || "club"; }
    function gridOf(sc) {
      var e = {};
-@@ -1928,6 +1993,8 @@
+@@ -1939,6 +2004,8 @@
    function loadScene(key) {
      var sc = SCENES[key], full = $("sceneFull") ? $("sceneFull").checked : false;
      state.bpm = sc.bpm; state.beats = sc.beats;
@@ -356,7 +360,7 @@
      if (full) {
        var set = buildSet(sc, key);
        state.patterns = set.map(cloneSnap); state.cur = 0; state.queued = null; sch.pos = null;
-@@ -1994,7 +2061,7 @@
+@@ -2005,7 +2072,7 @@
    function syncAll() { renderTracks(); syncEditor(); syncTransport(); renderChips(); }
  
    ui.play.addEventListener("click", function () { state.playing ? stop() : start(); });
@@ -365,7 +369,7 @@
    ui.bpm.addEventListener("input", function () { state.bpm = +ui.bpm.value; ui.bpmO.textContent = state.bpm; reanchor(); });
    ui.beats.addEventListener("input", function () { reanchor(); state.beats = +ui.beats.value; ui.beatsO.textContent = state.beats; reanchor(); resyncClock(); });
    ui.vol.addEventListener("input", function () { state.vol = +ui.vol.value / 100; ui.volO.textContent = ui.vol.value; if (master) master.gain.value = state.vol; });
-@@ -2175,7 +2242,7 @@
+@@ -2186,7 +2253,7 @@
  
    /* ---------- Sonido por pista ---------- */
    /* ---------- Biblioteca de muestras y packs ---------- */
@@ -374,7 +378,7 @@
    var lib = [], libByKey = {};
    var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
    var idb = null;
-@@ -2183,7 +2250,7 @@
+@@ -2194,7 +2261,7 @@
    function idbOpen() {
      return new Promise(function (res) {
        try {
@@ -383,7 +387,7 @@
          r.onupgradeneeded = function () { r.result.createObjectStore("samples", { keyPath: "key" }); };
          r.onsuccess = function () { idb = r.result; res(idb); };
          r.onerror = function () { res(null); };
-@@ -2507,7 +2574,7 @@
+@@ -2518,7 +2585,7 @@
  
    function draw() {
      requestAnimationFrame(draw);
@@ -392,7 +396,7 @@
        (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
      if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
      if (!W) return;
-@@ -2584,7 +2651,7 @@
+@@ -2595,7 +2662,7 @@
    });
  
    /* ---------- Presets ---------- */
@@ -401,7 +405,7 @@
    function readPresets() { try { var r = localStorage.getItem(PKEY); return r ? JSON.parse(r) : memPresets; } catch (e) { return memPresets; } }
    function writePresets(o) { memPresets = o; try { localStorage.setItem(PKEY, JSON.stringify(o)); return true; } catch (e) { return false; } }
    function setPStatus(msg, kind) { ui.pStatus.textContent = msg; ui.pStatus.className = "status" + (kind ? " " + kind : ""); }
-@@ -2643,6 +2710,7 @@
+@@ -2654,6 +2721,7 @@
      syncAll(); renderSong(); updateSongStatus();
      Promise.all(jobs).then(function () {
        syncAll();
@@ -409,7 +413,7 @@
        setPStatus((p.name === "sesión" ? tr("Sesión anterior recuperada.") : tr("Preset «{0}» cargado.", p.name || tr("sin nombre"))) + (missing.length ? tr(" Faltan muestras (carga su pack): {0}", missing.join(", ")) : ""), missing.length ? "err" : "ok");
      }).catch(function () { setPStatus(tr("Preset cargado, pero alguna muestra no se pudo decodificar."), "err"); });
    }
-@@ -2742,7 +2810,7 @@
+@@ -2753,7 +2821,7 @@
      var tr = [], mpq = Math.round(60000000 / state.bpm);
      tr.push(0x00, 0xFF, 0x51, 0x03, (mpq >> 16) & 255, (mpq >> 8) & 255, mpq & 255);
      tr.push(0x00, 0xFF, 0x58, 0x04, state.beats & 255, 2, 24, 8);
@@ -418,7 +422,7 @@
      tr.push(0x00, 0xFF, 0x03, name.length);
      for (var i = 0; i < name.length; i++) tr.push(name.charCodeAt(i) & 127);
      var last = 0;
-@@ -2873,14 +2941,16 @@
+@@ -2884,14 +2952,16 @@
    });
  
    /* ---------- Paneles, diseño y skin ---------- */
@@ -437,7 +441,7 @@
      eclipse: ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"],
      ruinas:  ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"]
    };
-@@ -2977,7 +3047,8 @@
+@@ -2988,7 +3058,8 @@
      if (layout.mode === "auto" && effMode() !== lastEff) { saveLayout(); applyMode("auto"); resize(); }
    });
    function applySkin(k) {
@@ -447,7 +451,7 @@
      document.documentElement.setAttribute("data-skin", k);
      state.tracks.forEach(function (t, i) { t.color = SKIN_COLORS[k][i]; });
      readTheme(); renderTracks(); ui.skinSel.value = k; layout.skin = k;
-@@ -2991,7 +3062,7 @@
+@@ -3002,7 +3073,7 @@
      var saved = null;
      try { saved = JSON.parse(lsGet(LKEY) || "null"); } catch (e) { saved = null; }
      if (saved) {
@@ -456,7 +460,7 @@
        if (saved.bottom) layout.bottom = saved.bottom;
      }
      applyOrder(layout.order, layout.collapsed); applyMode(layout.mode); applySkin(layout.skin);
-@@ -3014,7 +3085,7 @@
+@@ -3025,7 +3096,7 @@
    }
    function setLang(l) {
      if (LANGS.indexOf(l) < 0) l = "es";
@@ -465,7 +469,7 @@
      i18nStatic(); fillScenes(); fillCopyTo();
      renderTracks(); syncEditor(); renderChips(); updateSongStatus(); setPlayUI();
      renderPacks(); renderKitAll(); renderPList($("pList").value); relabelPanels(); relabelBass();
-@@ -3504,15 +3575,15 @@
+@@ -3515,15 +3586,15 @@
    /* ---------- Arpegiador (PROPUESTO: usa la progresión y la tónica del bajo) ---------- */
    var ARHY = { all: [1], cor: [1, 0], off: [0, 1], sinc: [1, 0, 1, 1, 0, 1, 0, 1], gal: [1, 0, 1, 1] };
    var ARP_PRESETS = [
@@ -489,7 +493,7 @@
    var arp = { on: false, mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.25, env: 0.5, dec: 0.3, vol: 0.6, ch: 2, nextK: 0, g: null, pre: "" };
    function arpNotes(cyc) {
      var pg = progOf(bass.prog), r = pg.d[chordIdxAt(cyc)], root = 12 * (arp.base + 1) + bass.root;
-@@ -3657,7 +3728,7 @@
+@@ -3668,7 +3739,7 @@
      cv.hidden = view === "bass"; cvB.hidden = view !== "bass";
      $("tabPerc").setAttribute("aria-selected", view === "perc" ? "true" : "false"); $("tabBass").setAttribute("aria-selected", view === "bass" ? "true" : "false");
      $("dialCap").textContent = view === "bass" ? tr("Bajo: cada anillo es un grado de la escala (fuera la octava, dentro la raíz del acorde). Toca un punto para poner la nota de ese paso; otra vez para acento; otra vez para quitarla.") : tr("Patrones: toca una letra para verla y editarla");
@@ -498,7 +502,7 @@
    }
    $("tabPerc").addEventListener("click", function () { setView("perc"); });
    $("tabBass").addEventListener("click", function () { setView("bass"); });
-@@ -3688,7 +3759,7 @@
+@@ -3699,7 +3770,7 @@
    }
  
    /* ---------- Sesión (autoguardado) ---------- */
@@ -507,7 +511,7 @@
    function captureSession() {
      var o = capturePreset("sesión");
      o.master = state.vol; o.kitAll = ui.kitAll.value; o.sel = state.sel; o.scene = ui.scene.value;
-@@ -3707,7 +3778,7 @@
+@@ -3718,7 +3789,7 @@
    function applyLayoutData(l) {
      if (!l) return;
      layout.order = (l.order || []).slice(); if (l.bottom) layout.bottom = l.bottom.slice();
@@ -516,7 +520,7 @@
      applyOrder(layout.order, l.collapsed || []); applyMode(layout.mode); applySkin(layout.skin); saveLayout(); resize();
    }
    function applySessionExtras(o) {
-@@ -3742,14 +3813,47 @@
+@@ -3753,14 +3824,47 @@
      location.reload();
    });
  
@@ -568,7 +572,7 @@
    var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
    function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
    for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
-@@ -3757,6 +3861,8 @@
+@@ -3768,6 +3872,8 @@
    var LFO_SHAPES = [["sin", "Seno"], ["tri", "Triángulo"], ["saw", "Sierra"], ["isaw", "Sierra inversa"], ["sqr", "Cuadrada"], ["rnd", "Aleatoria escalonada"]];
    var LFO_PERS = [[0.25, "¼ de vuelta"], [0.5, "½ vuelta"], [1, "1 vuelta"], [2, "2 vueltas"], [4, "4 vueltas"], [8, "8 vueltas"], [16, "16 vueltas"]];
    function genStatus(msg) { var e = $("genStatus"); if (e) e.textContent = msg || ""; }
@@ -577,7 +581,7 @@
    function genData() {
      return {
        evo: { on: gen.evo.on, n: gen.evo.n, amt: gen.evo.amt, scope: gen.evo.scope, anchor: gen.evo.anchor },
-@@ -4003,8 +4109,8 @@
+@@ -4014,8 +4120,8 @@
        allNotesOff();
        if (P.gen != null) { var chEl = $("midiCh"); if (chEl) { chEl.value = String(P.gen); chEl.dispatchEvent(new Event("input", { bubbles: true })); chEl.dispatchEvent(new Event("change", { bubbles: true })); } }
        state.tracks.forEach(function (t, i) { t.ch = P.tch(i); if (P.note) t.note = P.note(i); });
@@ -588,7 +592,7 @@
        midi.clockOut = true; ui.midiClock.checked = true;
        if (found) { midi.out = found; ui.midiOut.value = found.id; }
        resyncClock(); syncEditor(); renderTracks();
-@@ -4014,14 +4120,61 @@
+@@ -4025,14 +4131,61 @@
        var el = $(x[0]); if (el) el.addEventListener("click", function () { applyProfile(x[1]); });
      });
    })();
@@ -652,7 +656,7 @@
  
    /* ---------- Biblioteca de patterns ---------- */
    var LKEY = PKEY + ".lib", memLib = [];
-@@ -4116,18 +4269,19 @@
+@@ -4156,18 +4309,19 @@
  
    /* ---------- Inicio ---------- */
    i18nStatic(); $("langSel").value = LANG; showMon();

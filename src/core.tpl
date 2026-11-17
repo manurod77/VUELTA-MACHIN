@@ -216,6 +216,15 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
   .wrap.wide { max-width: 1080px; }
 }
 .lfo { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 6px; }
+
+/* ---- Barra fija y ajustes plegados ---- */
+.dock { position: sticky; top: 0; z-index: 40; display: flex; align-items: stretch; gap: 8px; padding: 6px 0; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.dock .strip { flex: 1; margin: 0; display: flex; align-items: center; min-width: 0; }
+.dock button { min-width: 44px; min-height: 44px; font-size: 18px; line-height: 1; padding: 0 12px; }
+.dockBpm { display: flex; gap: 4px; }
+@media (max-width: 640px) { .dock .strip { font-size: 11px; letter-spacing: 0.02em; padding: 4px 8px; } .dock { gap: 6px; } }
+details.adv > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 0; min-height: 32px; }
+details.adv[open] > summary { padding-bottom: 10px; }
 </style>
 
 <div class="wrap">
@@ -1080,6 +1089,8 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
     ["El archivo no contiene patterns válidos.", "The file has no valid patterns.", "O arquivo não contém patterns válidos.", "文件不含有效节奏型。", "В файле нет допустимых паттернов."],
     ["Importados {0} patterns.", "Imported {0} patterns.", "Importados {0} patterns.", "已导入 {0} 个节奏型。", "Импортировано паттернов: {0}."]
   ].forEach(R);
+
+  [["Ajustes de pantalla", "Display settings", "Ajustes de tela", "屏幕设置", "Настройки экрана"]].forEach(R);
 
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
@@ -4112,6 +4123,35 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
       };
       rd.readAsText(f);
     });
+  })();
+
+  /* ---------- Barra fija (tocar y tempo siempre a la vista) y ajustes plegados ---------- */
+  (function () {
+    var strip = $("strip"), play = $("play"), bpm = $("bpm"), tools = document.querySelector(".tools");
+    if (strip && strip.parentNode && play && bpm) {
+      var dock = document.createElement("div"); dock.className = "dock"; dock.id = "dock";
+      var dp = document.createElement("button"); dp.type = "button"; dp.id = "dockPlay";
+      var box = document.createElement("div"); box.className = "dockBpm";
+      var bm = document.createElement("button"); bm.type = "button"; bm.id = "dockMinus"; bm.textContent = "−"; bm.setAttribute("aria-label", "BPM −1");
+      var bp = document.createElement("button"); bp.type = "button"; bp.id = "dockPlus"; bp.textContent = "+"; bp.setAttribute("aria-label", "BPM +1");
+      strip.parentNode.insertBefore(dock, strip);
+      dock.appendChild(dp); dock.appendChild(strip); box.appendChild(bm); box.appendChild(bp); dock.appendChild(box);
+      var syncPlay = function () {
+        var on = play.getAttribute("aria-pressed") === "true";
+        dp.textContent = on ? "■" : "▶"; dp.setAttribute("aria-pressed", on ? "true" : "false"); dp.setAttribute("aria-label", (play.textContent || "").trim());
+      };
+      syncPlay();
+      new MutationObserver(syncPlay).observe(play, { attributes: true, childList: true, characterData: true, subtree: true });
+      dp.addEventListener("click", function () { play.click(); });
+      var nudge = function (d) { bpm.value = String(Math.max(+bpm.min, Math.min(+bpm.max, (+bpm.value) + d))); bpm.dispatchEvent(new Event("input", { bubbles: true })); };
+      bm.addEventListener("click", function () { nudge(-1); });
+      bp.addEventListener("click", function () { nudge(1); });
+    }
+    if (tools && tools.parentNode) {
+      var det = document.createElement("details"); det.className = "adv";
+      var sm = document.createElement("summary"); sm.textContent = "Ajustes de pantalla";
+      tools.parentNode.insertBefore(det, tools); det.appendChild(sm); det.appendChild(tools);
+    }
   })();
 
   /* ---------- Inicio ---------- */
