@@ -1,0 +1,379 @@
+--- core.tpl	2026-11-17 18:00:57.840438007 -0500
++++ de.tpl	2026-11-17 18:00:57.844994343 -0500
+@@ -1,4 +1,4 @@
+-<title>Dark Empaths Clave Circular</title>
++<title>Dark Empaths · Clave Circular DE</title>
+ <meta name="claude:viewport-fit-sides" content="cover">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Michroma&family=IBM+Plex+Sans:wght@400;500;600&family=Cinzel:wght@400;500&display=swap">
+ <style>
+@@ -224,10 +224,10 @@
+       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
+       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
+     </div>
+-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware {{N}}</span></div>
++    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE {{N}}</span></div>
+   </header>
+   <div class="tline" aria-hidden="true"></div>
+-  <div class="strip" id="strip" role="status" aria-live="off">FW {{N}}</div>
++  <div class="strip" id="strip" role="status" aria-live="off">FW DE {{N}}</div>
+   <div class="tools">
+     <label class="tool" for="skinSel"><span>Skin</span>
+       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
+@@ -500,7 +500,7 @@
+ 
+   <footer class="foot">
+     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
+-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW {{N}}</span><span>T_T</span>
++    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular · DE FW {{N}}</span><span>T_T</span>
+   </footer>
+ </div>
+ 
+@@ -936,6 +936,43 @@
+   ["Tresillos", "Triplets", "Tercinas", "Tresillos", "Tresillos"],
+   ["Quintas rodantes", "Rolling fifths", "Quintas rolantes", "Quintas rodantes", "Quintas rodantes"],
+   /* Escenas: categorías y nombres */
++  ["Dark wave y dark synth", "Dark wave and dark synth", "Dark wave e dark synth", "暗波与暗合成器", "Дарквейв и дарк-синт"],
++  ["EBM e industrial", "EBM and industrial", "EBM e industrial", "EBM 与工业", "EBM и индастриал"],
++  ["Jungle y drum & bass", "Jungle and drum & bass", "Jungle e drum & bass", "Jungle 与 Drum & bass", "Джангл и драм-н-бейс"],
++  ["Techno oscuro", "Dark techno", "Techno sombrio", "暗黑 Techno", "Тёмное техно"],
++  ["Cyberpunk", "Cyberpunk", "Cyberpunk", "赛博朋克", "Киберпанк"],
++  ["Oscuro", "Dark", "Sombrio", "暗黑", "Тёмный"],
++  ["Dark wave clásico", "Classic dark wave", "Dark wave clássico", "Dark wave clásico", "Dark wave clásico"],
++  ["Coldwave", "Coldwave", "Coldwave", "Coldwave", "Coldwave"],
++  ["Dark synth", "Dark synth", "Dark synth", "Dark synth", "Dark synth"],
++  ["EBM (estilo Front 242)", "EBM (Front 242 style)", "EBM (estilo Front 242)", "EBM (estilo Front 242)", "EBM (estilo Front 242)"],
++  ["EBM rápido / aggrotech", "Fast EBM / aggrotech", "EBM rápido / aggrotech", "EBM rápido / aggrotech", "EBM rápido / aggrotech"],
++  ["Industrial pesado (estilo NIN)", "Heavy industrial (NIN style)", "Industrial pesado (estilo NIN)", "Industrial pesado (estilo NIN)", "Industrial pesado (estilo NIN)"],
++  ["Industrial lento (half-time)", "Slow industrial (half-time)", "Industrial lento (half-time)", "Industrial lento (half-time)", "Industrial lento (half-time)"],
++  ["Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (Skinny Puppy style)", "Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (estilo Skinny Puppy)"],
++  ["Jungle (amen)", "Jungle (amen)", "Jungle (amen)", "Jungle (amen)", "Jungle (amen)"],
++  ["Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk"],
++  ["Drum & bass half-time", "Half-time drum & bass", "Drum & bass half-time", "Drum & bass half-time", "Drum & bass half-time"],
++  ["Techno industrial", "Industrial techno", "Techno industrial", "Techno industrial", "Techno industrial"],
++  ["Techno hipnótico", "Hypnotic techno", "Techno hipnótico", "Techno hipnótico", "Techno hipnótico"],
++  ["Cyberpunk · synth oscuro", "Cyberpunk · dark synth", "Cyberpunk · synth sombrio", "Cyberpunk · synth oscuro", "Cyberpunk · synth oscuro"],
++  ["Cyberpunk · combate", "Cyberpunk · combat", "Cyberpunk · combate", "Cyberpunk · combate", "Cyberpunk · combate"],
++  ["Cyberpunk · ciudad", "Cyberpunk · city", "Cyberpunk · cidade", "Cyberpunk · ciudad", "Cyberpunk · ciudad"],
++  ["EBM secuenciado", "Sequenced EBM", "EBM sequenciado", "EBM secuenciado", "EBM secuenciado"],
++  ["Contratiempo oscuro", "Dark offbeat", "Contratempo sombrio", "Contratiempo oscuro", "Contratiempo oscuro"],
++  ["Sub de drum & bass", "Drum & bass sub", "Sub de drum & bass", "Sub de drum & bass", "Sub de drum & bass"],
++  ["Rodante de techno", "Techno rolling bass", "Baixo rolante de techno", "Rodante de techno", "Rodante de techno"],
++  ["Pulso industrial", "Industrial pulse", "Pulso industrial", "Pulso industrial", "Pulso industrial"],
++  ["Arpegio cyberpunk", "Cyberpunk arpeggio", "Arpejo cyberpunk", "Arpegio cyberpunk", "Arpegio cyberpunk"],
++  ["Pedal grave", "Low pedal", "Pedal grave", "Pedal grave", "Pedal grave"],
++  ["Pedal con corcheas", "Pedal with eighths", "Pedal com colcheias", "Pedal con corcheas", "Pedal con corcheas"],
++  ["Dark synth pulsante", "Pulsing dark synth", "Dark synth pulsante", "Dark synth pulsante", "Dark synth pulsante"],
++  ["Cyberpunk cascada", "Cyberpunk cascade", "Cyberpunk cascata", "Cyberpunk cascada", "Cyberpunk cascada"],
++  ["Stab neurofunk", "Neurofunk stab", "Stab neurofunk", "Stab neurofunk", "Stab neurofunk"],
++  ["Coldwave gélido", "Icy coldwave", "Coldwave gélido", "Coldwave gélido", "Coldwave gélido"],
++  ["Secuencia EBM", "EBM sequence", "Sequência EBM", "Secuencia EBM", "Secuencia EBM"],
++  ["Hipnótico en tresillos", "Hypnotic triplets", "Hipnótico em tercinas", "Hipnótico en tresillos", "Hipnótico en tresillos"],
++  ["Industrial áspero", "Harsh industrial", "Industrial áspero", "Industrial áspero", "Industrial áspero"],
+   ["Latinos y afro", "Latin and Afro", "Latinos e afro", "拉丁与非洲", "Латино и афро"],
+   ["Trance y progresivo", "Trance and progressive", "Trance e progressivo", "Trance 与 Progressive", "Транс и прогрессив"],
+   ["Drum & bass y jungle", "Drum & bass and jungle", "Drum & bass e jungle", "Drum & bass 与 Jungle", "Драм-н-бейс и джангл"],
+@@ -952,7 +989,7 @@
+ 
+   var LANG = "es";
+   try {
+-    var sl = localStorage.getItem("cc.lang");
++    var sl = localStorage.getItem("ccde.lang");
+     if (sl && LANGS.indexOf(sl) >= 0) LANG = sl;
+     else {
+       var nl = ((navigator.language || "es") + "").toLowerCase().slice(0, 2);
+@@ -1136,6 +1173,7 @@
+   function P(n, list) { return { steps: n, base: fromPos(n, list), rot: 0 }; }
+   function E(n, k, rot) { return { steps: n, base: euclid(n, k), rot: rot || 0 }; }
+   function allSteps(n) { var a = []; for (var i = 1; i <= n; i++) a.push(i); return a; }
++  function SB(cat, name, bpm, t, bass) { var s = S(cat, name, bpm, t, 4); s.bass = bass; return s; }
+   function S(cat, name, bpm, t, beats) { return { cat: cat, name: name, bpm: bpm, beats: beats || 4, t: t }; }
+ 
+   var K4 = [1, 5, 9, 13], OFF = [3, 7, 11, 15], BP = [5, 13];
+@@ -1143,83 +1181,47 @@
+ 
+   /* PROPUESTO: patrones de referencia escritos para esta herramienta; ajusta lo que no coincida con tu oído. */
+   var SCENES = {
+-    rumba: S("Latinos y afro", "Clave de rumba", 100, {
+-      clave: P(16, [1, 4, 8, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(8, [1, 3, 5, 7]),
+-      hatC: E(16, 8), bombo: P(16, [1, 9]), caja: P(16, [5, 13]) }),
+-    son: S("Latinos y afro", "Clave de son", 100, {
+-      clave: P(16, [1, 4, 7, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(8, [1, 3, 5, 7]),
+-      hatC: E(16, 8), bombo: P(16, [1, 9]), caja: P(16, [5, 13]) }),
+-    bossa: S("Latinos y afro", "Bossa nova", 92, {
+-      clave: P(16, [1, 4, 7, 11, 14]), conga: P(16, [3, 7, 11, 15]), campana: P(8, [2, 4, 6, 8]),
+-      hatC: E(16, 16), bombo: P(16, [1, 4, 9, 12]) }),
+-    bembe: S("Latinos y afro", "Bembé (12/8)", 96, {
+-      clave: P(12, [1, 3, 5, 6, 8, 10, 12]), conga: E(12, 5), campana: P(12, [1, 4, 7, 10]),
+-      hatC: E(12, 6), bombo: P(12, [1, 7]), caja: P(12, [4, 10]) }),
+-
+-
+-    house: S("House", "House clásico", 124, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN) }),
+-    deep: S("House", "Deep house", 120, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 7), conga: E(16, 3, 2) }),
+-    tech: S("House", "Tech house", 126, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 10), conga: P(16, [4, 7, 12, 15]), campana: P(16, [7, 15]) }),
+-    afro: S("House", "Afro house", 122, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 11),
+-      conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(16, [1, 4, 7, 11, 14]) }),
+-
+-    techno: S("Techno", "Techno", 132, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, SIX), clave: E(16, 3) }),
+-    minimal: S("Techno", "Minimal techno", 128, {
+-      bombo: P(16, K4), clap: P(16, [13]), hatO: P(16, [8, 16]), hatC: P(16, [3, 6, 11, 14]), conga: E(16, 5, 2) }),
+-    industrial: S("Techno", "Industrial techno", 140, {
+-      bombo: P(16, [1, 5, 9, 11, 13]), caja: P(16, BP), hatC: P(16, SIX), campana: P(16, [4, 12]) }),
+-
+-    trance: S("Trance y progresivo", "Trance", 138, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, SIX) }),
+-    prog: S("Trance y progresivo", "Progressive house", 126, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 8), campana: P(16, [8, 16]) }),
+-
+-    breakbeat: S("Breaks", "Breakbeat", 130, {
+-      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
+-    bigbeat: S("Breaks", "Big beat", 120, {
+-      bombo: P(16, [1, 7, 11]), caja: P(16, BP), clap: P(16, BP), hatC: E(16, 8) }),
+-
+-    dnb: S("Drum & bass y jungle", "Drum & bass", 174, {
+-      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    jungle: S("Drum & bass y jungle", "Jungle", 165, {
+-      bombo: P(16, [1, 11]), caja: P(16, [5, 8, 13]), hatC: E(16, 12), conga: P(16, [3, 7, 10, 15]) }),
+-
+-    garage: S("UK garage", "2-step", 130, {
+-      bombo: P(16, [1, 11]), clap: P(16, BP), hatC: E(16, 10), hatO: P(16, [8, 16]) }),
+-
+-    boombap: S("Hip hop y trap", "Boom bap", 90, {
+-      bombo: P(16, [1, 8, 11]), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    trap: S("Hip hop y trap", "Trap", 140, {
+-      bombo: P(16, [1, 8, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, SIX), hatO: P(16, [16]) }),
+-
+-    dub: S("Dub y bass", "Dub (one drop)", 70, {
+-      bombo: P(16, [9]), caja: P(16, [9]), hatC: P(16, EIGHTH) }),
+-    dubstep: S("Dub y bass", "Dubstep (half-time)", 140, {
+-      bombo: P(16, [1, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, OFF), hatO: P(16, [16]) }),
+-
+-    dembow: S("Urbano latino", "Dembow", 95, {
+-      bombo: P(16, K4), caja: P(16, [4, 7, 12, 15]), hatC: P(16, EIGHTH) }),
+-
+-    electro: S("Electro y synth", "Electro", 128, {
+-      bombo: P(16, [1, 4, 11]), caja: P(16, BP), clap: P(16, BP), hatC: E(16, 8, 1) }),
+-    synthwave: S("Electro y synth", "Synthwave", 100, {
+-      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    electroclash: S("Electro y synth", "Electroclash", 120, {
+-      bombo: P(16, K4), clap: P(16, BP), hatC: P(16, OFF), hatO: P(16, [16]) }),
+-
+-    poli: S("Euclidiano y poliritmo", "Poliritmo euclidiano", 110, {
+-      clave: E(16, 5), conga: E(12, 5), campana: E(10, 3), hatO: E(14, 3), hatC: E(7, 4), clap: E(5, 2), caja: E(9, 4), bombo: E(8, 3) }),
+-    cinquillo: S("Euclidiano y poliritmo", "Cinquillo (8)", 100, {
+-      clave: P(8, [1, 3, 4, 6, 7]), conga: E(8, 3), bombo: P(8, [1, 5]), hatC: E(8, 8) }),
+-    tresillo: S("Euclidiano y poliritmo", "Tresillo E(3,8)", 100, {
+-      clave: E(8, 3), bombo: E(8, 3), hatC: E(8, 8), caja: P(8, [5]) })
++    darkwave: SB("Dark wave y dark synth", "Dark wave clásico", 110, {
++      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]), campana: P(16, [1]) }, {root:9,prog:"o1",pat:"corcheas",wave:"saw",cut:0.4,res:0.25,env:0.5,dec:0.35,glide:0,oct:2,cpc:1}),
++    coldwave: SB("Dark wave y dark synth", "Coldwave", 100, {
++      bombo: P(16, [1, 9, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), clave: P(16, [4, 12]) }, {root:4,prog:"o3",pat:"pedal2",wave:"sqr",cut:0.35,res:0.2,env:0.4,dec:0.4,glide:0,oct:2,cpc:1}),
++    darksynth: SB("Dark wave y dark synth", "Dark synth", 100, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, OFF) }, {root:9,prog:"o2",pat:"rodante",wave:"saw",cut:0.5,res:0.4,env:0.6,dec:0.3,glide:0.1,oct:2,cpc:1}),
++    ebm: SB("EBM e industrial", "EBM (estilo Front 242)", 120, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, SIX), clave: P(16, [4, 8, 12, 16]) }, {root:9,prog:"o4",pat:"ebm",wave:"saw",cut:0.55,res:0.35,env:0.55,dec:0.25,glide:0,oct:2,cpc:1}),
++    aggro: SB("EBM e industrial", "EBM rápido / aggrotech", 135, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, OFF), conga: P(16, [2, 6, 10, 14]) }, {root:9,prog:"o5",pat:"pulso",wave:"sqr",cut:0.6,res:0.45,env:0.6,dec:0.2,glide:0,oct:2,cpc:1}),
++    industrial: SB("EBM e industrial", "Industrial pesado (estilo NIN)", 96, {
++      bombo: P(16, [1, 4, 9, 12]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [1, 9]) }, {root:4,prog:"o1",pat:"pulso",wave:"sqr",cut:0.5,res:0.35,env:0.6,dec:0.3,glide:0,oct:2,cpc:1}),
++    indhalf: SB("EBM e industrial", "Industrial lento (half-time)", 78, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, EIGHTH) }, {root:4,prog:"o4",pat:"pedal",wave:"sub",cut:0.3,res:0.2,env:0.4,dec:0.6,glide:0,oct:1,cpc:1}),
++    electroind: SB("EBM e industrial", "Electro-industrial (estilo Skinny Puppy)", 110, {
++      bombo: P(16, [1, 4, 7, 11, 14]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, EVEN), campana: P(16, [3, 11]), conga: P(16, [6, 16]) }, {root:2,prog:"o6",pat:"ebm",wave:"saw",cut:0.5,res:0.5,env:0.7,dec:0.25,glide:0.15,oct:2,cpc:1}),
++    jungle: SB("Jungle y drum & bass", "Jungle (amen)", 165, {
++      bombo: P(16, [1, 3, 11]), caja: P(16, [5, 8, 10, 13, 16]), hatC: P(16, EIGHTH), conga: P(16, [4, 14]) }, {root:9,prog:"o4",pat:"dnbsub",wave:"sub",cut:0.35,res:0.15,env:0.3,dec:0.5,glide:0.05,oct:1,cpc:1}),
++    dnb: SB("Jungle y drum & bass", "Drum & bass", 174, {
++      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }, {root:9,prog:"o2",pat:"dnbsub",wave:"sub",cut:0.35,res:0.15,env:0.3,dec:0.5,glide:0.05,oct:1,cpc:1}),
++    darkstep: SB("Jungle y drum & bass", "Darkstep / neurofunk", 174, {
++      bombo: P(16, [1, 7, 11]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, EVEN), campana: P(16, [3]) }, {root:5,prog:"o4",pat:"dnbsub",wave:"saw",cut:0.45,res:0.5,env:0.7,dec:0.3,glide:0.05,oct:1,cpc:1}),
++    dnbhalf: SB("Jungle y drum & bass", "Drum & bass half-time", 87, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), hatC: P(16, SIX), hatO: P(16, [16]) }, {root:9,prog:"o3",pat:"pedal",wave:"sub",cut:0.3,res:0.2,env:0.4,dec:0.6,glide:0,oct:1,cpc:1}),
++    darktechno: SB("Techno oscuro", "Techno oscuro", 130, {
++      bombo: P(16, K4), hatO: P(16, OFF), hatC: P(16, EVEN), clap: P(16, BP) }, {root:9,prog:"o4",pat:"rodante",wave:"saw",cut:0.4,res:0.4,env:0.5,dec:0.25,glide:0,oct:2,cpc:1}),
++    indtechno: SB("Techno oscuro", "Techno industrial", 140, {
++      bombo: P(16, K4), hatC: P(16, SIX), hatO: P(16, OFF), conga: P(16, [4, 8, 12, 16]), clap: P(16, [13]) }, {root:4,prog:"o1",pat:"pulso",wave:"sqr",cut:0.55,res:0.45,env:0.6,dec:0.2,glide:0,oct:2,cpc:1}),
++    hypno: SB("Techno oscuro", "Techno hipnótico", 128, {
++      bombo: P(16, K4), hatO: P(16, OFF), conga: E(16, 5), campana: E(16, 3) }, {root:9,prog:"o7",pat:"offd",wave:"saw",cut:0.35,res:0.5,env:0.55,dec:0.3,glide:0.1,oct:2,cpc:1}),
++    cybersynth: SB("Cyberpunk", "Cyberpunk · synth oscuro", 105, {
++      bombo: P(16, [1, 4, 9, 12]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [1, 9]) }, {root:9,prog:"o1",pat:"cyber",wave:"saw",cut:0.45,res:0.35,env:0.55,dec:0.35,glide:0.1,oct:2,cpc:1}),
++    cybercombat: SB("Cyberpunk", "Cyberpunk · combate", 160, {
++      bombo: P(16, [1, 4, 11]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, SIX), hatO: P(16, [8, 16]) }, {root:5,prog:"o4",pat:"dnbsub",wave:"saw",cut:0.5,res:0.45,env:0.65,dec:0.3,glide:0.05,oct:1,cpc:1}),
++    cybercity: SB("Cyberpunk", "Cyberpunk · ciudad", 80, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), hatC: P(16, EIGHTH), campana: P(16, [5, 13]) }, {root:2,prog:"o3",pat:"pedal",wave:"sub",cut:0.3,res:0.25,env:0.4,dec:0.55,glide:0.1,oct:1,cpc:1})
+   };
+ 
++
++  var DE_ARP = {"darksynth": "dsynth", "cybersynth": "cyber", "darkstep": "neuro", "cybercombat": "neuro", "coldwave": "cold", "hypno": "hipno", "electroind": "ebmseq", "indtechno": "ind", "aggro": "ebmseq"};
++  Object.keys(DE_ARP).forEach(function (k) { SCENES[k].arp = DE_ARP[k]; });
+   var state = {
+     bpm: 100, beats: 4, vol: 0.8, playing: false, sel: 0, sync: "int",
+     tracks: TRACKS.map(function (t) {
+@@ -1250,7 +1252,14 @@
+     { id: "t3", g: "Tensión", sc: "phr", name: "i – ♭II – v° – i", d: [0, 1, 4, 0] },
+     { id: "t4", g: "Tensión", sc: "loc", name: "i° – ♭III – ♭V – i°", d: [0, 2, 4, 0] },
+     { id: "t5", g: "Tensión", sc: "hmin", name: "i – ii° – V – i", d: [0, 1, 4, 0] },
+-    { id: "t6", g: "Tensión", sc: "loc", name: "i° – ♭V (tritono)", d: [0, 4] }
++    { id: "t6", g: "Tensión", sc: "loc", name: "i° – ♭V (tritono)", d: [0, 4] },
++    { id: "o1", g: "Oscuro", sc: "min", name: "i – i – ♭VII – ♭VI", d: [0, 0, 6, 5] },
++    { id: "o2", g: "Oscuro", sc: "min", name: "i – ♭III – ♭VII – iv", d: [0, 2, 6, 3] },
++    { id: "o3", g: "Oscuro", sc: "min", name: "i – v – ♭VI – iv", d: [0, 4, 5, 3] },
++    { id: "o4", g: "Oscuro", sc: "phr", name: "i – ♭II – ♭VII – i", d: [0, 1, 6, 0] },
++    { id: "o5", g: "Oscuro", sc: "hmin", name: "i – V – i – ♭VI", d: [0, 4, 0, 5] },
++    { id: "o6", g: "Oscuro", sc: "hmin", name: "i – iv – V – i", d: [0, 3, 4, 0] },
++    { id: "o7", g: "Oscuro", sc: "dor", name: "i – IV – ♭VII – i", d: [0, 3, 6, 0] }
+   ];
+   var BPATS = {
+     sem: { n: "Semitono nervioso", p: [1, 3, 4, 7, 9, 11, 12, 15], a: [1, 9, 12], g: { 3: 1, 4: 1, 11: 1, 12: 1 } },
+@@ -1260,7 +1269,15 @@
+     contra: { n: "Contratiempos", p: [3, 7, 11, 15], a: [] },
+     sinc: { n: "Sincopado", p: [1, 4, 7, 9, 12, 15], a: [1, 9] },
+     tresillo: { n: "Tresillo", p: [1, 4, 7, 11, 14], a: [1] },
+-    motor: { n: "Motor en semicorcheas", p: allSteps(16), a: [1, 5, 9, 13] }
++    motor: { n: "Motor en semicorcheas", p: allSteps(16), a: [1, 5, 9, 13] },
++    ebm: { n: "EBM secuenciado", p: allSteps(16), a: [1, 5, 9, 13], g: { 8: 7, 16: 7 } },
++    offd: { n: "Contratiempo oscuro", p: [3, 7, 11, 15], a: [3] },
++    dnbsub: { n: "Sub de drum & bass", p: [1, 4, 7, 11, 14], a: [1, 11] },
++    rodante: { n: "Rodante de techno", p: [2, 3, 4, 6, 7, 8, 10, 11, 12, 14, 15, 16], a: [1, 9] },
++    pulso: { n: "Pulso industrial", p: [1, 2, 5, 6, 9, 10, 13, 14], a: [1, 5, 9, 13] },
++    cyber: { n: "Arpegio cyberpunk", p: [1, 3, 5, 7, 9, 11, 13, 15], a: [1, 9], g: { 3: 2, 5: 4, 7: 7, 9: 4, 11: 2, 13: 4, 15: 2 } },
++    pedal: { n: "Pedal grave", p: [1, 9], a: [] },
++    pedal2: { n: "Pedal con corcheas", p: [1, 5, 9, 13], a: [1] }
+   };
+   var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], deg: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "", tun: "eq" };
+   (function () { for (var i = 0; i < 16; i++) bass.base.push(0); [1, 4, 7, 9, 12, 15].forEach(function (p) { bass.base[p - 1] = 1; }); bass.base[0] = 2; bass.base[8] = 2; bass.pat = "sinc"; bass.deg = []; for (var j2 = 0; j2 < 16; j2++) bass.deg.push(0); })();
+@@ -1844,9 +1861,7 @@
+ 
+   /* ---------- Variaciones, fills e intros por género (PROPUESTO: reglas por familia, ajusta de oído) ---------- */
+   var PNAMES = ["Principal", "Variación", "Breakdown", "Subida", "Intro", "Fill corto", "Fill largo", "Final"];
+-  var FAM = { rumba: "latin", son: "latin", bossa: "latin", bembe: "latin",
+-    breakbeat: "breaks", bigbeat: "breaks", dnb: "breaks", jungle: "breaks", garage: "breaks", boombap: "breaks", trap: "breaks", dubstep: "breaks", dembow: "breaks", dub: "breaks",
+-    poli: "euclid", cinquillo: "euclid", tresillo: "euclid" };
++  var FAM = { jungle: "breaks", dnb: "breaks", darkstep: "breaks", dnbhalf: "breaks", cybercombat: "breaks" };
+   function famOf(key) { return FAM[key] || "club"; }
+   function gridOf(sc) {
+     var e = {};
+@@ -1928,6 +1943,8 @@
+   function loadScene(key) {
+     var sc = SCENES[key], full = $("sceneFull") ? $("sceneFull").checked : false;
+     state.bpm = sc.bpm; state.beats = sc.beats;
++    if (sc.bass) { var bd = bassData(); Object.keys(sc.bass).forEach(function (k) { bd[k] = sc.bass[k]; }); bd.on = true; bd.steps = 16; setBass(bd); applyBassPat(sc.bass.pat);
++      if (sc.arp) arpPreset(sc.arp, true); else if (arp.on) { arp.on = false; arpSyncUI(); allNotesOff(); } }
+     if (full) {
+       var set = buildSet(sc, key);
+       state.patterns = set.map(cloneSnap); state.cur = 0; state.queued = null; sch.pos = null;
+@@ -2175,7 +2192,7 @@
+ 
+   /* ---------- Sonido por pista ---------- */
+   /* ---------- Biblioteca de muestras y packs ---------- */
+-  var FW = "{{N}}";
++  var FW = "DE {{N}}";
+   var lib = [], libByKey = {};
+   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
+   var idb = null;
+@@ -2183,7 +2200,7 @@
+   function idbOpen() {
+     return new Promise(function (res) {
+       try {
+-        var r = indexedDB.open("clave-circular", 1);
++        var r = indexedDB.open("clave-circular-de", 1);
+         r.onupgradeneeded = function () { r.result.createObjectStore("samples", { keyPath: "key" }); };
+         r.onsuccess = function () { idb = r.result; res(idb); };
+         r.onerror = function () { res(null); };
+@@ -2507,7 +2524,7 @@
+ 
+   function draw() {
+     requestAnimationFrame(draw);
+-    var st = "FW {{N}} │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
++    var st = "FW DE {{N}} │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
+     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
+     if (!W) return;
+@@ -2584,7 +2601,7 @@
+   });
+ 
+   /* ---------- Presets ---------- */
+-  var PKEY = "cc.presets", memPresets = {};
++  var PKEY = "ccde.presets", memPresets = {};
+   function readPresets() { try { var r = localStorage.getItem(PKEY); return r ? JSON.parse(r) : memPresets; } catch (e) { return memPresets; } }
+   function writePresets(o) { memPresets = o; try { localStorage.setItem(PKEY, JSON.stringify(o)); return true; } catch (e) { return false; } }
+   function setPStatus(msg, kind) { ui.pStatus.textContent = msg; ui.pStatus.className = "status" + (kind ? " " + kind : ""); }
+@@ -2873,7 +2890,7 @@
+   });
+ 
+   /* ---------- Paneles, diseño y skin ---------- */
+-  var LKEY = "cc.layout";
++  var LKEY = "ccde.layout";
+   var panelEl = $("panel"), mainEl = $("main");
+   var panelB = $("panelB");
+   var DEF_BOTTOM = ["pistas", "editar", "sonido"];
+@@ -3014,7 +3031,7 @@
+   }
+   function setLang(l) {
+     if (LANGS.indexOf(l) < 0) l = "es";
+-    LANG = l; lsSet("cc.lang", l); $("langSel").value = l;
++    LANG = l; lsSet("ccde.lang", l); $("langSel").value = l;
+     i18nStatic(); fillScenes(); fillCopyTo();
+     renderTracks(); syncEditor(); renderChips(); updateSongStatus(); setPlayUI();
+     renderPacks(); renderKitAll(); renderPList($("pList").value); relabelPanels(); relabelBass();
+@@ -3504,15 +3521,15 @@
+   /* ---------- Arpegiador (PROPUESTO: usa la progresión y la tónica del bajo) ---------- */
+   var ARHY = { all: [1], cor: [1, 0], off: [0, 1], sinc: [1, 0, 1, 1, 0, 1, 0, 1], gal: [1, 0, 1, 1] };
+   var ARP_PRESETS = [
+-    { id: "clas", n: "Clásico ascendente", mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.2, env: 0.5, dec: 0.3, vol: 0.6 },
+-    { id: "tran", n: "Trance en subida", mode: "ud", chord: "sev", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.4, wave: "sqr", cut: 0.6, res: 0.3, env: 0.6, dec: 0.25, vol: 0.55 },
+-    { id: "lat", n: "Latino sincopado", mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "sinc", gate: 0.45, wave: "tri", cut: 0.55, res: 0.15, env: 0.4, dec: 0.3, vol: 0.65 },
+-    { id: "des", n: "Descendente suave", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.8, wave: "tri", cut: 0.4, res: 0.1, env: 0.3, dec: 0.5, vol: 0.6 },
+-    { id: "ale", n: "Aleatorio brillante", mode: "rand", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.65, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
+-    { id: "tre", n: "Tresillos", mode: "up", chord: "tri", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.2, env: 0.5, dec: 0.3, vol: 0.6 },
+-    { id: "tens", n: "Tritono tenso", mode: "alt", chord: "dim", steps: 16, oct: 2, base: 3, rhy: "gal", gate: 0.3, wave: "sqr", cut: 0.5, res: 0.45, env: 0.6, dec: 0.25, vol: 0.5 },
+-    { id: "pow", n: "Quintas rodantes", mode: "up", chord: "pow", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.45, res: 0.25, env: 0.5, dec: 0.25, vol: 0.55 }
++    { id: "dsynth", n: "Dark synth pulsante", mode: "ud", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.38, res: 0.35, env: 0.55, dec: 0.25, vol: 0.55 },
++    { id: "cyber", n: "Cyberpunk cascada", mode: "up", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.45, wave: "saw", cut: 0.5, res: 0.4, env: 0.6, dec: 0.3, vol: 0.55 },
++    { id: "neuro", n: "Stab neurofunk", mode: "rand", chord: "pow", steps: 16, oct: 2, base: 2, rhy: "sinc", gate: 0.3, wave: "sqr", cut: 0.55, res: 0.5, env: 0.7, dec: 0.2, vol: 0.5 },
++    { id: "cold", n: "Coldwave gélido", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.7, wave: "tri", cut: 0.6, res: 0.15, env: 0.35, dec: 0.45, vol: 0.55 },
++    { id: "ebmseq", n: "Secuencia EBM", mode: "up", chord: "pow", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.45, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
++    { id: "hipno", n: "Hipnótico en tresillos", mode: "up", chord: "sus", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.6, wave: "saw", cut: 0.35, res: 0.5, env: 0.4, dec: 0.35, vol: 0.5 },
++    { id: "ind", n: "Industrial áspero", mode: "alt", chord: "sev", steps: 16, oct: 2, base: 2, rhy: "gal", gate: 0.25, wave: "sqr", cut: 0.5, res: 0.55, env: 0.65, dec: 0.2, vol: 0.5 }
+   ];
++
+   var arp = { on: false, mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.25, env: 0.5, dec: 0.3, vol: 0.6, ch: 2, nextK: 0, g: null, pre: "" };
+   function arpNotes(cyc) {
+     var pg = progOf(bass.prog), r = pg.d[chordIdxAt(cyc)], root = 12 * (arp.base + 1) + bass.root;
+@@ -3657,7 +3674,7 @@
+     cv.hidden = view === "bass"; cvB.hidden = view !== "bass";
+     $("tabPerc").setAttribute("aria-selected", view === "perc" ? "true" : "false"); $("tabBass").setAttribute("aria-selected", view === "bass" ? "true" : "false");
+     $("dialCap").textContent = view === "bass" ? tr("Bajo: cada anillo es un grado de la escala (fuera la octava, dentro la raíz del acorde). Toca un punto para poner la nota de ese paso; otra vez para acento; otra vez para quitarla.") : tr("Patrones: toca una letra para verla y editarla");
+-    lsSet("cc.view", view);
++    lsSet("ccde.view", view);
+   }
+   $("tabPerc").addEventListener("click", function () { setView("perc"); });
+   $("tabBass").addEventListener("click", function () { setView("bass"); });
+@@ -3688,7 +3705,7 @@
+   }
+ 
+   /* ---------- Sesión (autoguardado) ---------- */
+-  var SKEY = "cc.session", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
++  var SKEY = "ccde.session", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
+   function captureSession() {
+     var o = capturePreset("sesión");
+     o.master = state.vol; o.kitAll = ui.kitAll.value; o.sel = state.sel; o.scene = ui.scene.value;
+@@ -4116,12 +4133,12 @@
+ 
+   /* ---------- Inicio ---------- */
+   i18nStatic(); $("langSel").value = LANG; showMon();
+-  ui.scene.value = "rumba";
+-  loadScene("rumba");
++  ui.scene.value = "ebm";
++  loadScene("ebm");
+   setupPanels();
+   renderPacks(); renderKitAll(); renderPList();
+   loadLayout();
+-  setView(lsGet("cc.view") === "bass" ? "bass" : "perc");
++  setView(lsGet("ccde.view") === "bass" ? "bass" : "perc");
+   idbOpen().then(idbLoad).then(function (items) {
+     if (items.length) {
+       addToLib(items.map(function (i) { return { pack: i.pack, name: i.name, blob: i.blob }; }), false);

@@ -1,0 +1,678 @@
+--- core.tpl	2026-11-17 18:00:57.840438007 -0500
++++ vanilla.tpl	2026-11-17 18:00:57.846476721 -0500
+@@ -1,4 +1,4 @@
+-<title>Dark Empaths Clave Circular</title>
++<title>Vanilla · Clave Circular</title>
+ <meta name="claude:viewport-fit-sides" content="cover">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Michroma&family=IBM+Plex+Sans:wght@400;500;600&family=Cinzel:wght@400;500&display=swap">
+ <style>
+@@ -139,6 +139,24 @@
+ .maker { font-family: var(--font-brand, var(--font-display)); }
+ .tline { display: none; height: 2px; border-radius: 2px; background: linear-gradient(90deg, #000 0%, #1d4ed8 34%, #ff2f9e 68%, #ff3b3b 100%); }
+ :root { --font-brand: var(--font-display); --banner: none; }
++html[data-skin="vanilla"] {
++  --bg: #fbefd6; --panel: rgba(255, 251, 241, 0.94); --panel-2: #fde4ee; --line: #e3a3c1;
++  --fg: #2a0e21; --muted: #8a4a70; --accent: #e6007e; --accent-ink: #ffffff;
++  --font-brand: "Cinzel", "Trajan Pro", Georgia, serif;
++  color-scheme: light;
++}
++html[data-skin="vanilla"] .tline { display: block; background: linear-gradient(90deg, #1a0a14 0%, #e6007e 50%, #fbd0e3 100%); }
++html[data-skin="vanilla"] .block, html[data-skin="vanilla"] .strip { box-shadow: 0 1px 0 rgba(230, 0, 126, 0.25), 0 6px 18px rgba(138, 74, 112, 0.12); }
++html[data-skin="vanilla"] .dial { background: radial-gradient(circle at 50% 50%, #fffaf0 0%, #fbdbe9 78%); border-color: #e6007e; box-shadow: 0 0 22px rgba(230, 0, 126, 0.18); }
++html[data-skin="vanilla"] .maker { font-weight: 400; letter-spacing: 0.24em; font-size: 24px; }
++html[data-skin="vanilla"] .sub { letter-spacing: 0.4em; }
++html[data-skin="vanilla"] .fw { color: var(--accent); }
++html[data-skin="vanilla"] .tg { color: var(--fg); }
++html[data-skin="vanilla"] body { background: linear-gradient(180deg, #fff6e2 0%, #fbefd6 55%, #f9d9e6 100%) fixed; }
++html[data-skin="vanilla"] header { background: #1a0a14; color: #fff3e0; border-radius: 6px; padding: 14px 18px; }
++html[data-skin="vanilla"] header .maker, html[data-skin="vanilla"] header h1 { color: #fff3e0; }
++html[data-skin="vanilla"] header .sub { color: #ff7ac0; }
++html[data-skin="vanilla"] .btn-primary, html[data-skin="vanilla"] button.primary { color: #fff; }
+ html[data-skin="eclipse"], html[data-skin="ruinas"] {
+   --bg: #05060a; --panel: rgba(12, 14, 24, 0.84); --panel-2: rgba(24, 28, 46, 0.92); --line: #2a2f48;
+   --fg: #e8ebf4; --muted: #8e96b2; --accent: #ff2f9e; --accent-ink: #14020c;
+@@ -215,27 +233,49 @@
+   .main.layL .block { margin-bottom: 0; }
+   .wrap.wide { max-width: 1080px; }
+ }
++html[data-skin="dark"] {
++  --bg: #1a0716; --panel: rgba(46, 14, 40, 0.88); --panel-2: rgba(66, 20, 58, 0.94); --line: #7a2a66;
++  --fg: #ffe6f3; --muted: #d99bc2; --accent: #ff4fa3; --accent-ink: #2a0418;
++  --font-brand: "Cinzel", "Trajan Pro", Georgia, serif;
++  color-scheme: dark;
++}
++html[data-skin="dark"] .tline { display: block; background: linear-gradient(90deg, #000 0%, #7a2a66 34%, #ff4fa3 68%, #ffd1e8 100%); }
++html[data-skin="dark"] .block, html[data-skin="dark"] .strip { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 0 1px rgba(255, 79, 163, 0.18), 0 0 18px rgba(255, 79, 163, 0.12); }
++html[data-skin="dark"] .dial { background: radial-gradient(circle at 50% 50%, #3a0f33 0%, var(--bg) 74%); border-color: #ff4fa3; box-shadow: 0 0 28px rgba(255, 79, 163, 0.25); }
++html[data-skin="dark"] .maker { font-weight: 400; letter-spacing: 0.24em; font-size: 24px; }
++html[data-skin="dark"] .sub { letter-spacing: 0.4em; }
++html[data-skin="dark"] .fw { color: var(--accent); }
++html[data-skin="dark"] .tg { color: var(--fg); }
++html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #4a1240 0%, var(--bg) 60%) fixed; }
++.undo-fab { position: fixed; right: 14px; bottom: 14px; z-index: 50; display: flex; gap: 6px; padding: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25); }
++.undo-fab button { border-radius: 999px; min-height: 36px; padding: 0 14px; }
++.undo-fab button:disabled { opacity: 0.4; cursor: default; }
++.bh button.rs { font-size: 15px; }
++.modesw { display: inline-flex; align-items: center; gap: 8px; }
+ .lfo { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 6px; }
+ </style>
+ 
++<div class="undo-fab" role="group" aria-label="Deshacer y rehacer"><button id="undoBtn" type="button" disabled>↶ Deshacer</button><button id="redoBtn" type="button" disabled>↷ Rehacer</button></div>
+ <div class="wrap">
+   <header class="brand">
+     <div class="lockup">
+       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
+-      <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
++      <div><div class="maker">Dark Empaths</div><div class="sub">Vanilla</div></div>
+     </div>
+-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware {{N}}</span></div>
++    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA {{N}}</span></div>
+   </header>
+   <div class="tline" aria-hidden="true"></div>
+-  <div class="strip" id="strip" role="status" aria-live="off">FW {{N}}</div>
++  <div class="strip" id="strip" role="status" aria-live="off">FW VA {{N}}</div>
+   <div class="tools">
+     <label class="tool" for="skinSel"><span>Skin</span>
+-      <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
++      <select id="skinSel"><option value="vanilla">Vanilla</option><option value="dark">Darth</option><option value="base">Base</option></select></label>
+     <label class="tool" for="layoutSel"><span>Diseño</span>
+       <select id="layoutSel"><option value="auto">Automático (según la pantalla)</option><option value="layL">En L · paneles bajo el círculo</option><option value="lay1">Lateral · 1 columna</option><option value="lay2">Lateral · 2 columnas</option><option value="lay3">Círculo arriba · 3 columnas</option></select></label>
+     <label class="tool" for="langSel"><span>Idioma</span>
+       <select id="langSel"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option><option value="zh">中文</option><option value="ru">Русский</option></select></label>
+     <button id="layoutReset" type="button">Restablecer diseño</button>
++    <button id="modeSw" type="button" aria-label="Cambiar entre modo Vanilla y modo Darth">☾ Modo Darth</button>
++    <button id="manualBtn" type="button">Manual</button>
+   </div>
+ 
+   <div class="main" id="main">
+@@ -500,7 +540,7 @@
+ 
+   <footer class="foot">
+     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
+-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW {{N}}</span><span>T_T</span>
++    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA {{N}}</span><span>T_T</span>
+   </footer>
+ </div>
+ 
+@@ -863,6 +903,16 @@
+   ["Automático (según la pantalla)", "Automatic (by screen size)", "Automático (conforme a tela)", "自动(按屏幕大小)", "Авто (по размеру экрана)"],
+   ["En L · paneles bajo el círculo", "L-shape · panels below the circle", "Em L · painéis sob o círculo", "L 形 · 面板置于圆环下方", "Г-образно · панели под кругом"],
+   ["Mover al otro lado", "Move to the other side", "Mover para o outro lado", "移到另一侧", "Переместить на другую сторону"],
++  /* Vanilla: reinicio, deshacer, modo */
++  ["Deshacer", "Undo", "Desfazer", "撤销", "Отменить"],
++  ["Rehacer", "Redo", "Refazer", "重做", "Повторить"],
++  ["Modo Darth", "Darth mode", "Modo Darth", "深色模式", "Тёмный режим"],
++  ["Modo Vanilla", "Vanilla mode", "Modo Vanilla", "香草模式", "Режим Vanilla"],
++  ["Manual", "Manual", "Manual", "手册", "Руководство"],
++  ["Reiniciar este módulo a cero", "Reset this module to zero", "Reiniciar este módulo a zero", "将此模块重置为零", "Сбросить этот модуль на ноль"],
++  ["— Pizarra en blanco —", "— Blank slate —", "— Lousa em branco —", "— 空白画布 —", "— Чистый лист —"],
++  ["↶ Deshacer", "↶ Undo", "↶ Desfazer", "↶ 撤销", "↶ Отменить"],
++  ["↷ Rehacer", "↷ Redo", "↷ Refazer", "↷ 重做", "↷ Повторить"],
+   /* Kits y tensión */
+   ["EBM potente", "Powerful EBM", "EBM potente", "强力 EBM", "Мощный EBM"],
+   ["IDM glitch", "Glitch IDM", "IDM glitch", "故障 IDM", "Глитч-IDM"],
+@@ -936,6 +986,43 @@
+   ["Tresillos", "Triplets", "Tercinas", "Tresillos", "Tresillos"],
+   ["Quintas rodantes", "Rolling fifths", "Quintas rolantes", "Quintas rodantes", "Quintas rodantes"],
+   /* Escenas: categorías y nombres */
++  ["Dark wave y dark synth", "Dark wave and dark synth", "Dark wave e dark synth", "暗波与暗合成器", "Дарквейв и дарк-синт"],
++  ["EBM e industrial", "EBM and industrial", "EBM e industrial", "EBM 与工业", "EBM и индастриал"],
++  ["Jungle y drum & bass", "Jungle and drum & bass", "Jungle e drum & bass", "Jungle 与 Drum & bass", "Джангл и драм-н-бейс"],
++  ["Techno oscuro", "Dark techno", "Techno sombrio", "暗黑 Techno", "Тёмное техно"],
++  ["Cyberpunk", "Cyberpunk", "Cyberpunk", "赛博朋克", "Киберпанк"],
++  ["Oscuro", "Dark", "Sombrio", "暗黑", "Тёмный"],
++  ["Dark wave clásico", "Classic dark wave", "Dark wave clássico", "Dark wave clásico", "Dark wave clásico"],
++  ["Coldwave", "Coldwave", "Coldwave", "Coldwave", "Coldwave"],
++  ["Dark synth", "Dark synth", "Dark synth", "Dark synth", "Dark synth"],
++  ["EBM (estilo Front 242)", "EBM (Front 242 style)", "EBM (estilo Front 242)", "EBM (estilo Front 242)", "EBM (estilo Front 242)"],
++  ["EBM rápido / aggrotech", "Fast EBM / aggrotech", "EBM rápido / aggrotech", "EBM rápido / aggrotech", "EBM rápido / aggrotech"],
++  ["Industrial pesado (estilo NIN)", "Heavy industrial (NIN style)", "Industrial pesado (estilo NIN)", "Industrial pesado (estilo NIN)", "Industrial pesado (estilo NIN)"],
++  ["Industrial lento (half-time)", "Slow industrial (half-time)", "Industrial lento (half-time)", "Industrial lento (half-time)", "Industrial lento (half-time)"],
++  ["Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (Skinny Puppy style)", "Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (estilo Skinny Puppy)", "Electro-industrial (estilo Skinny Puppy)"],
++  ["Jungle (amen)", "Jungle (amen)", "Jungle (amen)", "Jungle (amen)", "Jungle (amen)"],
++  ["Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk", "Darkstep / neurofunk"],
++  ["Drum & bass half-time", "Half-time drum & bass", "Drum & bass half-time", "Drum & bass half-time", "Drum & bass half-time"],
++  ["Techno industrial", "Industrial techno", "Techno industrial", "Techno industrial", "Techno industrial"],
++  ["Techno hipnótico", "Hypnotic techno", "Techno hipnótico", "Techno hipnótico", "Techno hipnótico"],
++  ["Cyberpunk · synth oscuro", "Cyberpunk · dark synth", "Cyberpunk · synth sombrio", "Cyberpunk · synth oscuro", "Cyberpunk · synth oscuro"],
++  ["Cyberpunk · combate", "Cyberpunk · combat", "Cyberpunk · combate", "Cyberpunk · combate", "Cyberpunk · combate"],
++  ["Cyberpunk · ciudad", "Cyberpunk · city", "Cyberpunk · cidade", "Cyberpunk · ciudad", "Cyberpunk · ciudad"],
++  ["EBM secuenciado", "Sequenced EBM", "EBM sequenciado", "EBM secuenciado", "EBM secuenciado"],
++  ["Contratiempo oscuro", "Dark offbeat", "Contratempo sombrio", "Contratiempo oscuro", "Contratiempo oscuro"],
++  ["Sub de drum & bass", "Drum & bass sub", "Sub de drum & bass", "Sub de drum & bass", "Sub de drum & bass"],
++  ["Rodante de techno", "Techno rolling bass", "Baixo rolante de techno", "Rodante de techno", "Rodante de techno"],
++  ["Pulso industrial", "Industrial pulse", "Pulso industrial", "Pulso industrial", "Pulso industrial"],
++  ["Arpegio cyberpunk", "Cyberpunk arpeggio", "Arpejo cyberpunk", "Arpegio cyberpunk", "Arpegio cyberpunk"],
++  ["Pedal grave", "Low pedal", "Pedal grave", "Pedal grave", "Pedal grave"],
++  ["Pedal con corcheas", "Pedal with eighths", "Pedal com colcheias", "Pedal con corcheas", "Pedal con corcheas"],
++  ["Dark synth pulsante", "Pulsing dark synth", "Dark synth pulsante", "Dark synth pulsante", "Dark synth pulsante"],
++  ["Cyberpunk cascada", "Cyberpunk cascade", "Cyberpunk cascata", "Cyberpunk cascada", "Cyberpunk cascada"],
++  ["Stab neurofunk", "Neurofunk stab", "Stab neurofunk", "Stab neurofunk", "Stab neurofunk"],
++  ["Coldwave gélido", "Icy coldwave", "Coldwave gélido", "Coldwave gélido", "Coldwave gélido"],
++  ["Secuencia EBM", "EBM sequence", "Sequência EBM", "Secuencia EBM", "Secuencia EBM"],
++  ["Hipnótico en tresillos", "Hypnotic triplets", "Hipnótico em tercinas", "Hipnótico en tresillos", "Hipnótico en tresillos"],
++  ["Industrial áspero", "Harsh industrial", "Industrial áspero", "Industrial áspero", "Industrial áspero"],
+   ["Latinos y afro", "Latin and Afro", "Latinos e afro", "拉丁与非洲", "Латино и афро"],
+   ["Trance y progresivo", "Trance and progressive", "Trance e progressivo", "Trance 与 Progressive", "Транс и прогрессив"],
+   ["Drum & bass y jungle", "Drum & bass and jungle", "Drum & bass e jungle", "Drum & bass 与 Jungle", "Драм-н-бейс и джангл"],
+@@ -952,14 +1039,14 @@
+ 
+   var LANG = "es";
+   try {
+-    var sl = localStorage.getItem("cc.lang");
++    var sl = localStorage.getItem("ccva.lang");
+     if (sl && LANGS.indexOf(sl) >= 0) LANG = sl;
+     else {
+       var nl = ((navigator.language || "es") + "").toLowerCase().slice(0, 2);
+       if (LANGS.indexOf(nl) >= 0) LANG = nl;
+     }
+   } catch (e) { /* sin almacenamiento */ }
+-  /* generativo: generativo, modulación, MIDI por pista */
++  /* VA {{N}}: generativo, modulación, MIDI por pista */
+   [
+   ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
+   ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
+@@ -1136,6 +1223,7 @@
+   function P(n, list) { return { steps: n, base: fromPos(n, list), rot: 0 }; }
+   function E(n, k, rot) { return { steps: n, base: euclid(n, k), rot: rot || 0 }; }
+   function allSteps(n) { var a = []; for (var i = 1; i <= n; i++) a.push(i); return a; }
++  function SB(cat, name, bpm, t, bass) { var s = S(cat, name, bpm, t, 4); s.bass = bass; return s; }
+   function S(cat, name, bpm, t, beats) { return { cat: cat, name: name, bpm: bpm, beats: beats || 4, t: t }; }
+ 
+   var K4 = [1, 5, 9, 13], OFF = [3, 7, 11, 15], BP = [5, 13];
+@@ -1143,83 +1231,47 @@
+ 
+   /* PROPUESTO: patrones de referencia escritos para esta herramienta; ajusta lo que no coincida con tu oído. */
+   var SCENES = {
+-    rumba: S("Latinos y afro", "Clave de rumba", 100, {
+-      clave: P(16, [1, 4, 8, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(8, [1, 3, 5, 7]),
+-      hatC: E(16, 8), bombo: P(16, [1, 9]), caja: P(16, [5, 13]) }),
+-    son: S("Latinos y afro", "Clave de son", 100, {
+-      clave: P(16, [1, 4, 7, 11, 13]), conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(8, [1, 3, 5, 7]),
+-      hatC: E(16, 8), bombo: P(16, [1, 9]), caja: P(16, [5, 13]) }),
+-    bossa: S("Latinos y afro", "Bossa nova", 92, {
+-      clave: P(16, [1, 4, 7, 11, 14]), conga: P(16, [3, 7, 11, 15]), campana: P(8, [2, 4, 6, 8]),
+-      hatC: E(16, 16), bombo: P(16, [1, 4, 9, 12]) }),
+-    bembe: S("Latinos y afro", "Bembé (12/8)", 96, {
+-      clave: P(12, [1, 3, 5, 6, 8, 10, 12]), conga: E(12, 5), campana: P(12, [1, 4, 7, 10]),
+-      hatC: E(12, 6), bombo: P(12, [1, 7]), caja: P(12, [4, 10]) }),
+-
+-
+-    house: S("House", "House clásico", 124, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, EVEN) }),
+-    deep: S("House", "Deep house", 120, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 7), conga: E(16, 3, 2) }),
+-    tech: S("House", "Tech house", 126, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 10), conga: P(16, [4, 7, 12, 15]), campana: P(16, [7, 15]) }),
+-    afro: S("House", "Afro house", 122, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 11),
+-      conga: P(16, [4, 7, 8, 12, 15, 16]), campana: P(16, [1, 4, 7, 11, 14]) }),
+-
+-    techno: S("Techno", "Techno", 132, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, SIX), clave: E(16, 3) }),
+-    minimal: S("Techno", "Minimal techno", 128, {
+-      bombo: P(16, K4), clap: P(16, [13]), hatO: P(16, [8, 16]), hatC: P(16, [3, 6, 11, 14]), conga: E(16, 5, 2) }),
+-    industrial: S("Techno", "Industrial techno", 140, {
+-      bombo: P(16, [1, 5, 9, 11, 13]), caja: P(16, BP), hatC: P(16, SIX), campana: P(16, [4, 12]) }),
+-
+-    trance: S("Trance y progresivo", "Trance", 138, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: P(16, SIX) }),
+-    prog: S("Trance y progresivo", "Progressive house", 126, {
+-      bombo: P(16, K4), clap: P(16, BP), hatO: P(16, OFF), hatC: E(16, 8), campana: P(16, [8, 16]) }),
+-
+-    breakbeat: S("Breaks", "Breakbeat", 130, {
+-      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }),
+-    bigbeat: S("Breaks", "Big beat", 120, {
+-      bombo: P(16, [1, 7, 11]), caja: P(16, BP), clap: P(16, BP), hatC: E(16, 8) }),
+-
+-    dnb: S("Drum & bass y jungle", "Drum & bass", 174, {
+-      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    jungle: S("Drum & bass y jungle", "Jungle", 165, {
+-      bombo: P(16, [1, 11]), caja: P(16, [5, 8, 13]), hatC: E(16, 12), conga: P(16, [3, 7, 10, 15]) }),
+-
+-    garage: S("UK garage", "2-step", 130, {
+-      bombo: P(16, [1, 11]), clap: P(16, BP), hatC: E(16, 10), hatO: P(16, [8, 16]) }),
+-
+-    boombap: S("Hip hop y trap", "Boom bap", 90, {
+-      bombo: P(16, [1, 8, 11]), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    trap: S("Hip hop y trap", "Trap", 140, {
+-      bombo: P(16, [1, 8, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, SIX), hatO: P(16, [16]) }),
+-
+-    dub: S("Dub y bass", "Dub (one drop)", 70, {
+-      bombo: P(16, [9]), caja: P(16, [9]), hatC: P(16, EIGHTH) }),
+-    dubstep: S("Dub y bass", "Dubstep (half-time)", 140, {
+-      bombo: P(16, [1, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, OFF), hatO: P(16, [16]) }),
+-
+-    dembow: S("Urbano latino", "Dembow", 95, {
+-      bombo: P(16, K4), caja: P(16, [4, 7, 12, 15]), hatC: P(16, EIGHTH) }),
+-
+-    electro: S("Electro y synth", "Electro", 128, {
+-      bombo: P(16, [1, 4, 11]), caja: P(16, BP), clap: P(16, BP), hatC: E(16, 8, 1) }),
+-    synthwave: S("Electro y synth", "Synthwave", 100, {
+-      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, EIGHTH) }),
+-    electroclash: S("Electro y synth", "Electroclash", 120, {
+-      bombo: P(16, K4), clap: P(16, BP), hatC: P(16, OFF), hatO: P(16, [16]) }),
+-
+-    poli: S("Euclidiano y poliritmo", "Poliritmo euclidiano", 110, {
+-      clave: E(16, 5), conga: E(12, 5), campana: E(10, 3), hatO: E(14, 3), hatC: E(7, 4), clap: E(5, 2), caja: E(9, 4), bombo: E(8, 3) }),
+-    cinquillo: S("Euclidiano y poliritmo", "Cinquillo (8)", 100, {
+-      clave: P(8, [1, 3, 4, 6, 7]), conga: E(8, 3), bombo: P(8, [1, 5]), hatC: E(8, 8) }),
+-    tresillo: S("Euclidiano y poliritmo", "Tresillo E(3,8)", 100, {
+-      clave: E(8, 3), bombo: E(8, 3), hatC: E(8, 8), caja: P(8, [5]) })
++    darkwave: SB("Dark wave y dark synth", "Dark wave clásico", 110, {
++      bombo: P(16, K4), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]), campana: P(16, [1]) }, {root:9,prog:"o1",pat:"corcheas",wave:"saw",cut:0.4,res:0.25,env:0.5,dec:0.35,glide:0,oct:2,cpc:1}),
++    coldwave: SB("Dark wave y dark synth", "Coldwave", 100, {
++      bombo: P(16, [1, 9, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), clave: P(16, [4, 12]) }, {root:4,prog:"o3",pat:"pedal2",wave:"sqr",cut:0.35,res:0.2,env:0.4,dec:0.4,glide:0,oct:2,cpc:1}),
++    darksynth: SB("Dark wave y dark synth", "Dark synth", 100, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, OFF) }, {root:9,prog:"o2",pat:"rodante",wave:"saw",cut:0.5,res:0.4,env:0.6,dec:0.3,glide:0.1,oct:2,cpc:1}),
++    ebm: SB("EBM e industrial", "EBM (estilo Front 242)", 120, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, SIX), clave: P(16, [4, 8, 12, 16]) }, {root:9,prog:"o4",pat:"ebm",wave:"saw",cut:0.55,res:0.35,env:0.55,dec:0.25,glide:0,oct:2,cpc:1}),
++    aggro: SB("EBM e industrial", "EBM rápido / aggrotech", 135, {
++      bombo: P(16, K4), caja: P(16, BP), clap: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, OFF), conga: P(16, [2, 6, 10, 14]) }, {root:9,prog:"o5",pat:"pulso",wave:"sqr",cut:0.6,res:0.45,env:0.6,dec:0.2,glide:0,oct:2,cpc:1}),
++    industrial: SB("EBM e industrial", "Industrial pesado (estilo NIN)", 96, {
++      bombo: P(16, [1, 4, 9, 12]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [1, 9]) }, {root:4,prog:"o1",pat:"pulso",wave:"sqr",cut:0.5,res:0.35,env:0.6,dec:0.3,glide:0,oct:2,cpc:1}),
++    indhalf: SB("EBM e industrial", "Industrial lento (half-time)", 78, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), clap: P(16, [9]), hatC: P(16, EIGHTH) }, {root:4,prog:"o4",pat:"pedal",wave:"sub",cut:0.3,res:0.2,env:0.4,dec:0.6,glide:0,oct:1,cpc:1}),
++    electroind: SB("EBM e industrial", "Electro-industrial (estilo Skinny Puppy)", 110, {
++      bombo: P(16, [1, 4, 7, 11, 14]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, EVEN), campana: P(16, [3, 11]), conga: P(16, [6, 16]) }, {root:2,prog:"o6",pat:"ebm",wave:"saw",cut:0.5,res:0.5,env:0.7,dec:0.25,glide:0.15,oct:2,cpc:1}),
++    jungle: SB("Jungle y drum & bass", "Jungle (amen)", 165, {
++      bombo: P(16, [1, 3, 11]), caja: P(16, [5, 8, 10, 13, 16]), hatC: P(16, EIGHTH), conga: P(16, [4, 14]) }, {root:9,prog:"o4",pat:"dnbsub",wave:"sub",cut:0.35,res:0.15,env:0.3,dec:0.5,glide:0.05,oct:1,cpc:1}),
++    dnb: SB("Jungle y drum & bass", "Drum & bass", 174, {
++      bombo: P(16, [1, 11]), caja: P(16, BP), hatC: P(16, EIGHTH), hatO: P(16, [16]) }, {root:9,prog:"o2",pat:"dnbsub",wave:"sub",cut:0.35,res:0.15,env:0.3,dec:0.5,glide:0.05,oct:1,cpc:1}),
++    darkstep: SB("Jungle y drum & bass", "Darkstep / neurofunk", 174, {
++      bombo: P(16, [1, 7, 11]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, EVEN), campana: P(16, [3]) }, {root:5,prog:"o4",pat:"dnbsub",wave:"saw",cut:0.45,res:0.5,env:0.7,dec:0.3,glide:0.05,oct:1,cpc:1}),
++    dnbhalf: SB("Jungle y drum & bass", "Drum & bass half-time", 87, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), hatC: P(16, SIX), hatO: P(16, [16]) }, {root:9,prog:"o3",pat:"pedal",wave:"sub",cut:0.3,res:0.2,env:0.4,dec:0.6,glide:0,oct:1,cpc:1}),
++    darktechno: SB("Techno oscuro", "Techno oscuro", 130, {
++      bombo: P(16, K4), hatO: P(16, OFF), hatC: P(16, EVEN), clap: P(16, BP) }, {root:9,prog:"o4",pat:"rodante",wave:"saw",cut:0.4,res:0.4,env:0.5,dec:0.25,glide:0,oct:2,cpc:1}),
++    indtechno: SB("Techno oscuro", "Techno industrial", 140, {
++      bombo: P(16, K4), hatC: P(16, SIX), hatO: P(16, OFF), conga: P(16, [4, 8, 12, 16]), clap: P(16, [13]) }, {root:4,prog:"o1",pat:"pulso",wave:"sqr",cut:0.55,res:0.45,env:0.6,dec:0.2,glide:0,oct:2,cpc:1}),
++    hypno: SB("Techno oscuro", "Techno hipnótico", 128, {
++      bombo: P(16, K4), hatO: P(16, OFF), conga: E(16, 5), campana: E(16, 3) }, {root:9,prog:"o7",pat:"offd",wave:"saw",cut:0.35,res:0.5,env:0.55,dec:0.3,glide:0.1,oct:2,cpc:1}),
++    cybersynth: SB("Cyberpunk", "Cyberpunk · synth oscuro", 105, {
++      bombo: P(16, [1, 4, 9, 12]), caja: P(16, BP), hatC: P(16, EIGHTH), campana: P(16, [1, 9]) }, {root:9,prog:"o1",pat:"cyber",wave:"saw",cut:0.45,res:0.35,env:0.55,dec:0.35,glide:0.1,oct:2,cpc:1}),
++    cybercombat: SB("Cyberpunk", "Cyberpunk · combate", 160, {
++      bombo: P(16, [1, 4, 11]), caja: P(16, BP), clap: P(16, [13]), hatC: P(16, SIX), hatO: P(16, [8, 16]) }, {root:5,prog:"o4",pat:"dnbsub",wave:"saw",cut:0.5,res:0.45,env:0.65,dec:0.3,glide:0.05,oct:1,cpc:1}),
++    cybercity: SB("Cyberpunk", "Cyberpunk · ciudad", 80, {
++      bombo: P(16, [1, 11]), caja: P(16, [9]), hatC: P(16, EIGHTH), campana: P(16, [5, 13]) }, {root:2,prog:"o3",pat:"pedal",wave:"sub",cut:0.3,res:0.25,env:0.4,dec:0.55,glide:0.1,oct:1,cpc:1})
+   };
+ 
++
++  var DE_ARP = {"darksynth": "dsynth", "cybersynth": "cyber", "darkstep": "neuro", "cybercombat": "neuro", "coldwave": "cold", "hypno": "hipno", "electroind": "ebmseq", "indtechno": "ind", "aggro": "ebmseq"};
++  Object.keys(DE_ARP).forEach(function (k) { SCENES[k].arp = DE_ARP[k]; });
+   var state = {
+     bpm: 100, beats: 4, vol: 0.8, playing: false, sel: 0, sync: "int",
+     tracks: TRACKS.map(function (t) {
+@@ -1250,7 +1302,14 @@
+     { id: "t3", g: "Tensión", sc: "phr", name: "i – ♭II – v° – i", d: [0, 1, 4, 0] },
+     { id: "t4", g: "Tensión", sc: "loc", name: "i° – ♭III – ♭V – i°", d: [0, 2, 4, 0] },
+     { id: "t5", g: "Tensión", sc: "hmin", name: "i – ii° – V – i", d: [0, 1, 4, 0] },
+-    { id: "t6", g: "Tensión", sc: "loc", name: "i° – ♭V (tritono)", d: [0, 4] }
++    { id: "t6", g: "Tensión", sc: "loc", name: "i° – ♭V (tritono)", d: [0, 4] },
++    { id: "o1", g: "Oscuro", sc: "min", name: "i – i – ♭VII – ♭VI", d: [0, 0, 6, 5] },
++    { id: "o2", g: "Oscuro", sc: "min", name: "i – ♭III – ♭VII – iv", d: [0, 2, 6, 3] },
++    { id: "o3", g: "Oscuro", sc: "min", name: "i – v – ♭VI – iv", d: [0, 4, 5, 3] },
++    { id: "o4", g: "Oscuro", sc: "phr", name: "i – ♭II – ♭VII – i", d: [0, 1, 6, 0] },
++    { id: "o5", g: "Oscuro", sc: "hmin", name: "i – V – i – ♭VI", d: [0, 4, 0, 5] },
++    { id: "o6", g: "Oscuro", sc: "hmin", name: "i – iv – V – i", d: [0, 3, 4, 0] },
++    { id: "o7", g: "Oscuro", sc: "dor", name: "i – IV – ♭VII – i", d: [0, 3, 6, 0] }
+   ];
+   var BPATS = {
+     sem: { n: "Semitono nervioso", p: [1, 3, 4, 7, 9, 11, 12, 15], a: [1, 9, 12], g: { 3: 1, 4: 1, 11: 1, 12: 1 } },
+@@ -1260,7 +1319,15 @@
+     contra: { n: "Contratiempos", p: [3, 7, 11, 15], a: [] },
+     sinc: { n: "Sincopado", p: [1, 4, 7, 9, 12, 15], a: [1, 9] },
+     tresillo: { n: "Tresillo", p: [1, 4, 7, 11, 14], a: [1] },
+-    motor: { n: "Motor en semicorcheas", p: allSteps(16), a: [1, 5, 9, 13] }
++    motor: { n: "Motor en semicorcheas", p: allSteps(16), a: [1, 5, 9, 13] },
++    ebm: { n: "EBM secuenciado", p: allSteps(16), a: [1, 5, 9, 13], g: { 8: 7, 16: 7 } },
++    offd: { n: "Contratiempo oscuro", p: [3, 7, 11, 15], a: [3] },
++    dnbsub: { n: "Sub de drum & bass", p: [1, 4, 7, 11, 14], a: [1, 11] },
++    rodante: { n: "Rodante de techno", p: [2, 3, 4, 6, 7, 8, 10, 11, 12, 14, 15, 16], a: [1, 9] },
++    pulso: { n: "Pulso industrial", p: [1, 2, 5, 6, 9, 10, 13, 14], a: [1, 5, 9, 13] },
++    cyber: { n: "Arpegio cyberpunk", p: [1, 3, 5, 7, 9, 11, 13, 15], a: [1, 9], g: { 3: 2, 5: 4, 7: 7, 9: 4, 11: 2, 13: 4, 15: 2 } },
++    pedal: { n: "Pedal grave", p: [1, 9], a: [] },
++    pedal2: { n: "Pedal con corcheas", p: [1, 5, 9, 13], a: [1] }
+   };
+   var bass = { on: false, root: 9, oct: 2, prog: "m1", cpc: 1, steps: 16, base: [], deg: [], acc: "oct", wave: "saw", cut: 0.45, res: 0.3, env: 0.6, dec: 0.35, glide: 0, vol: 0.8, ch: 1, nextK: 0, g: null, last: null, pat: "", tun: "eq" };
+   (function () { for (var i = 0; i < 16; i++) bass.base.push(0); [1, 4, 7, 9, 12, 15].forEach(function (p) { bass.base[p - 1] = 1; }); bass.base[0] = 2; bass.base[8] = 2; bass.pat = "sinc"; bass.deg = []; for (var j2 = 0; j2 < 16; j2++) bass.deg.push(0); })();
+@@ -1844,9 +1911,7 @@
+ 
+   /* ---------- Variaciones, fills e intros por género (PROPUESTO: reglas por familia, ajusta de oído) ---------- */
+   var PNAMES = ["Principal", "Variación", "Breakdown", "Subida", "Intro", "Fill corto", "Fill largo", "Final"];
+-  var FAM = { rumba: "latin", son: "latin", bossa: "latin", bembe: "latin",
+-    breakbeat: "breaks", bigbeat: "breaks", dnb: "breaks", jungle: "breaks", garage: "breaks", boombap: "breaks", trap: "breaks", dubstep: "breaks", dembow: "breaks", dub: "breaks",
+-    poli: "euclid", cinquillo: "euclid", tresillo: "euclid" };
++  var FAM = { jungle: "breaks", dnb: "breaks", darkstep: "breaks", dnbhalf: "breaks", cybercombat: "breaks" };
+   function famOf(key) { return FAM[key] || "club"; }
+   function gridOf(sc) {
+     var e = {};
+@@ -1928,6 +1993,8 @@
+   function loadScene(key) {
+     var sc = SCENES[key], full = $("sceneFull") ? $("sceneFull").checked : false;
+     state.bpm = sc.bpm; state.beats = sc.beats;
++    if (sc.bass) { var bd = bassData(); Object.keys(sc.bass).forEach(function (k) { bd[k] = sc.bass[k]; }); bd.on = true; bd.steps = 16; setBass(bd); applyBassPat(sc.bass.pat);
++      if (sc.arp) arpPreset(sc.arp, true); else if (arp.on) { arp.on = false; arpSyncUI(); allNotesOff(); } }
+     if (full) {
+       var set = buildSet(sc, key);
+       state.patterns = set.map(cloneSnap); state.cur = 0; state.queued = null; sch.pos = null;
+@@ -1994,7 +2061,7 @@
+   function syncAll() { renderTracks(); syncEditor(); syncTransport(); renderChips(); }
+ 
+   ui.play.addEventListener("click", function () { state.playing ? stop() : start(); });
+-  ui.scene.addEventListener("change", function () { loadScene(ui.scene.value); });
++  ui.scene.addEventListener("change", function () { if (ui.scene.value) loadScene(ui.scene.value); });
+   ui.bpm.addEventListener("input", function () { state.bpm = +ui.bpm.value; ui.bpmO.textContent = state.bpm; reanchor(); });
+   ui.beats.addEventListener("input", function () { reanchor(); state.beats = +ui.beats.value; ui.beatsO.textContent = state.beats; reanchor(); resyncClock(); });
+   ui.vol.addEventListener("input", function () { state.vol = +ui.vol.value / 100; ui.volO.textContent = ui.vol.value; if (master) master.gain.value = state.vol; });
+@@ -2175,7 +2242,7 @@
+ 
+   /* ---------- Sonido por pista ---------- */
+   /* ---------- Biblioteca de muestras y packs ---------- */
+-  var FW = "{{N}}";
++  var FW = "VA {{N}}";
+   var lib = [], libByKey = {};
+   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
+   var idb = null;
+@@ -2183,7 +2250,7 @@
+   function idbOpen() {
+     return new Promise(function (res) {
+       try {
+-        var r = indexedDB.open("clave-circular", 1);
++        var r = indexedDB.open("clave-circular-vanilla", 1);
+         r.onupgradeneeded = function () { r.result.createObjectStore("samples", { keyPath: "key" }); };
+         r.onsuccess = function () { idb = r.result; res(idb); };
+         r.onerror = function () { res(null); };
+@@ -2507,7 +2574,7 @@
+ 
+   function draw() {
+     requestAnimationFrame(draw);
+-    var st = "FW {{N}} │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
++    var st = "FW VA {{N}} │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
+     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
+     if (!W) return;
+@@ -2584,7 +2651,7 @@
+   });
+ 
+   /* ---------- Presets ---------- */
+-  var PKEY = "cc.presets", memPresets = {};
++  var PKEY = "ccva.presets", memPresets = {};
+   function readPresets() { try { var r = localStorage.getItem(PKEY); return r ? JSON.parse(r) : memPresets; } catch (e) { return memPresets; } }
+   function writePresets(o) { memPresets = o; try { localStorage.setItem(PKEY, JSON.stringify(o)); return true; } catch (e) { return false; } }
+   function setPStatus(msg, kind) { ui.pStatus.textContent = msg; ui.pStatus.className = "status" + (kind ? " " + kind : ""); }
+@@ -2643,6 +2710,7 @@
+     syncAll(); renderSong(); updateSongStatus();
+     Promise.all(jobs).then(function () {
+       syncAll();
++      if (p.name === "__hist") return;
+       setPStatus((p.name === "sesión" ? tr("Sesión anterior recuperada.") : tr("Preset «{0}» cargado.", p.name || tr("sin nombre"))) + (missing.length ? tr(" Faltan muestras (carga su pack): {0}", missing.join(", ")) : ""), missing.length ? "err" : "ok");
+     }).catch(function () { setPStatus(tr("Preset cargado, pero alguna muestra no se pudo decodificar."), "err"); });
+   }
+@@ -2742,7 +2810,7 @@
+     var tr = [], mpq = Math.round(60000000 / state.bpm);
+     tr.push(0x00, 0xFF, 0x51, 0x03, (mpq >> 16) & 255, (mpq >> 8) & 255, mpq & 255);
+     tr.push(0x00, 0xFF, 0x58, 0x04, state.beats & 255, 2, 24, 8);
+-    var name = "Clave Circular - Dark Empaths";
++    var name = "Clave Circular - Vanilla";
+     tr.push(0x00, 0xFF, 0x03, name.length);
+     for (var i = 0; i < name.length; i++) tr.push(name.charCodeAt(i) & 127);
+     var last = 0;
+@@ -2873,14 +2941,16 @@
+   });
+ 
+   /* ---------- Paneles, diseño y skin ---------- */
+-  var LKEY = "cc.layout";
++  var LKEY = "ccva.layout";
+   var panelEl = $("panel"), mainEl = $("main");
+   var panelB = $("panelB");
+   var DEF_BOTTOM = ["pistas", "editar", "sonido"];
+-  var layout = { order: [], bottom: DEF_BOTTOM.slice(), collapsed: [], mode: "auto", skin: "eclipse" };
++  var layout = { order: [], bottom: DEF_BOTTOM.slice(), collapsed: [], mode: "auto", skin: "vanilla" };
+   var defaultOrder = [];
+   var SKIN_COLORS = {
+     base:    ["#f2c14e", "#2dd4bf", "#ff6b6b", "#b8a1ff", "#f472b6", "#84cc16", "#fb923c", "#60a5fa"],
++    dark: ["#ff4fa3", "#ffe066", "#c77dff", "#ffffff", "#7ad7f0", "#ff9ecb", "#b5f5d6", "#ff6b6b"],
++    vanilla: ["#e6007e", "#d99a00", "#8b3dff", "#2a0e21", "#0aa5c9", "#ff5fa8", "#1fa97a", "#e5483f"],
+     eclipse: ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"],
+     ruinas:  ["#ffb347", "#38d0ff", "#ff3b4a", "#e6edf7", "#ff2f9e", "#ff7ac8", "#a855f7", "#3b82ff"]
+   };
+@@ -2977,7 +3047,8 @@
+     if (layout.mode === "auto" && effMode() !== lastEff) { saveLayout(); applyMode("auto"); resize(); }
+   });
+   function applySkin(k) {
+-    if (!SKIN_COLORS[k]) k = "eclipse";
++    if (!SKIN_COLORS[k] || k === "eclipse" || k === "ruinas") k = "vanilla";
++    var msw = document.getElementById("modeSw"); if (msw) msw.textContent = k === "dark" ? "☀ " + tr("Modo Vanilla") : "☾ " + tr("Modo Darth");
+     document.documentElement.setAttribute("data-skin", k);
+     state.tracks.forEach(function (t, i) { t.color = SKIN_COLORS[k][i]; });
+     readTheme(); renderTracks(); ui.skinSel.value = k; layout.skin = k;
+@@ -2991,7 +3062,7 @@
+     var saved = null;
+     try { saved = JSON.parse(lsGet(LKEY) || "null"); } catch (e) { saved = null; }
+     if (saved) {
+-      layout.order = saved.order || []; layout.collapsed = saved.collapsed || []; layout.mode = saved.mode || "auto"; layout.skin = saved.skin || "eclipse";
++      layout.order = saved.order || []; layout.collapsed = saved.collapsed || []; layout.mode = saved.mode || "auto"; layout.skin = saved.skin || "vanilla";
+       if (saved.bottom) layout.bottom = saved.bottom;
+     }
+     applyOrder(layout.order, layout.collapsed); applyMode(layout.mode); applySkin(layout.skin);
+@@ -3014,7 +3085,7 @@
+   }
+   function setLang(l) {
+     if (LANGS.indexOf(l) < 0) l = "es";
+-    LANG = l; lsSet("cc.lang", l); $("langSel").value = l;
++    LANG = l; lsSet("ccva.lang", l); $("langSel").value = l;
+     i18nStatic(); fillScenes(); fillCopyTo();
+     renderTracks(); syncEditor(); renderChips(); updateSongStatus(); setPlayUI();
+     renderPacks(); renderKitAll(); renderPList($("pList").value); relabelPanels(); relabelBass();
+@@ -3504,15 +3575,15 @@
+   /* ---------- Arpegiador (PROPUESTO: usa la progresión y la tónica del bajo) ---------- */
+   var ARHY = { all: [1], cor: [1, 0], off: [0, 1], sinc: [1, 0, 1, 1, 0, 1, 0, 1], gal: [1, 0, 1, 1] };
+   var ARP_PRESETS = [
+-    { id: "clas", n: "Clásico ascendente", mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.2, env: 0.5, dec: 0.3, vol: 0.6 },
+-    { id: "tran", n: "Trance en subida", mode: "ud", chord: "sev", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.4, wave: "sqr", cut: 0.6, res: 0.3, env: 0.6, dec: 0.25, vol: 0.55 },
+-    { id: "lat", n: "Latino sincopado", mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "sinc", gate: 0.45, wave: "tri", cut: 0.55, res: 0.15, env: 0.4, dec: 0.3, vol: 0.65 },
+-    { id: "des", n: "Descendente suave", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.8, wave: "tri", cut: 0.4, res: 0.1, env: 0.3, dec: 0.5, vol: 0.6 },
+-    { id: "ale", n: "Aleatorio brillante", mode: "rand", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.65, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
+-    { id: "tre", n: "Tresillos", mode: "up", chord: "tri", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.2, env: 0.5, dec: 0.3, vol: 0.6 },
+-    { id: "tens", n: "Tritono tenso", mode: "alt", chord: "dim", steps: 16, oct: 2, base: 3, rhy: "gal", gate: 0.3, wave: "sqr", cut: 0.5, res: 0.45, env: 0.6, dec: 0.25, vol: 0.5 },
+-    { id: "pow", n: "Quintas rodantes", mode: "up", chord: "pow", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.45, res: 0.25, env: 0.5, dec: 0.25, vol: 0.55 }
++    { id: "dsynth", n: "Dark synth pulsante", mode: "ud", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.35, wave: "saw", cut: 0.38, res: 0.35, env: 0.55, dec: 0.25, vol: 0.55 },
++    { id: "cyber", n: "Cyberpunk cascada", mode: "up", chord: "sev", steps: 16, oct: 3, base: 3, rhy: "all", gate: 0.45, wave: "saw", cut: 0.5, res: 0.4, env: 0.6, dec: 0.3, vol: 0.55 },
++    { id: "neuro", n: "Stab neurofunk", mode: "rand", chord: "pow", steps: 16, oct: 2, base: 2, rhy: "sinc", gate: 0.3, wave: "sqr", cut: 0.55, res: 0.5, env: 0.7, dec: 0.2, vol: 0.5 },
++    { id: "cold", n: "Coldwave gélido", mode: "down", chord: "tri", steps: 8, oct: 2, base: 4, rhy: "all", gate: 0.7, wave: "tri", cut: 0.6, res: 0.15, env: 0.35, dec: 0.45, vol: 0.55 },
++    { id: "ebmseq", n: "Secuencia EBM", mode: "up", chord: "pow", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.3, wave: "sqr", cut: 0.45, res: 0.3, env: 0.5, dec: 0.2, vol: 0.5 },
++    { id: "hipno", n: "Hipnótico en tresillos", mode: "up", chord: "sus", steps: 12, oct: 2, base: 3, rhy: "all", gate: 0.6, wave: "saw", cut: 0.35, res: 0.5, env: 0.4, dec: 0.35, vol: 0.5 },
++    { id: "ind", n: "Industrial áspero", mode: "alt", chord: "sev", steps: 16, oct: 2, base: 2, rhy: "gal", gate: 0.25, wave: "sqr", cut: 0.5, res: 0.55, env: 0.65, dec: 0.2, vol: 0.5 }
+   ];
++
+   var arp = { on: false, mode: "up", chord: "tri", steps: 16, oct: 2, base: 3, rhy: "all", gate: 0.5, wave: "saw", cut: 0.5, res: 0.25, env: 0.5, dec: 0.3, vol: 0.6, ch: 2, nextK: 0, g: null, pre: "" };
+   function arpNotes(cyc) {
+     var pg = progOf(bass.prog), r = pg.d[chordIdxAt(cyc)], root = 12 * (arp.base + 1) + bass.root;
+@@ -3657,7 +3728,7 @@
+     cv.hidden = view === "bass"; cvB.hidden = view !== "bass";
+     $("tabPerc").setAttribute("aria-selected", view === "perc" ? "true" : "false"); $("tabBass").setAttribute("aria-selected", view === "bass" ? "true" : "false");
+     $("dialCap").textContent = view === "bass" ? tr("Bajo: cada anillo es un grado de la escala (fuera la octava, dentro la raíz del acorde). Toca un punto para poner la nota de ese paso; otra vez para acento; otra vez para quitarla.") : tr("Patrones: toca una letra para verla y editarla");
+-    lsSet("cc.view", view);
++    lsSet("ccva.view", view);
+   }
+   $("tabPerc").addEventListener("click", function () { setView("perc"); });
+   $("tabBass").addEventListener("click", function () { setView("bass"); });
+@@ -3688,7 +3759,7 @@
+   }
+ 
+   /* ---------- Sesión (autoguardado) ---------- */
+-  var SKEY = "cc.session", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
++  var SKEY = "ccva.sesion2", sesLast = "", sesReady = false, sesSaved = null, sesBlock = false;
+   function captureSession() {
+     var o = capturePreset("sesión");
+     o.master = state.vol; o.kitAll = ui.kitAll.value; o.sel = state.sel; o.scene = ui.scene.value;
+@@ -3707,7 +3778,7 @@
+   function applyLayoutData(l) {
+     if (!l) return;
+     layout.order = (l.order || []).slice(); if (l.bottom) layout.bottom = l.bottom.slice();
+-    layout.mode = l.mode || "auto"; layout.skin = l.skin || "eclipse";
++    layout.mode = l.mode || "auto"; layout.skin = l.skin || "vanilla";
+     applyOrder(layout.order, l.collapsed || []); applyMode(layout.mode); applySkin(layout.skin); saveLayout(); resize();
+   }
+   function applySessionExtras(o) {
+@@ -3742,14 +3813,47 @@
+     location.reload();
+   });
+ 
+-  /* ---------- Generativo, modulación y MIDI por pista (generativo) ---------- */
+-  var EL2_CC = { 7: "Level", 10: "Pan", 71: "Resonance", 72: "EG Release", 73: "EG Attack", 74: "Cutoff", 80: "Osc Pitch", 81: "Osc Glide", 82: "Osc Edit", 83: "Filter EG Int", 85: "Mod Depth", 86: "Mod Speed", 87: "Insert FX Edit", 102: "TouchPad X", 103: "TouchPad Y", 104: "IFX On", 105: "MFX Send", 106: "TouchPad On/Off" };
+-  function ccLabel(n) { return EL2_CC[n] ? n + " · " + EL2_CC[n] : String(n); }
+-  function gSetCtl(id, v) {
++  /* ---------- Pizarra en blanco, reinicio por módulo, deshacer y rehacer, modo Vanilla/Dark ---------- */
++  var DEF_BASS = null, DEF_ARP = null, DEF_MIDI = null;
++  function blankPreset() {
++    var bd = JSON.parse(JSON.stringify(DEF_BASS || bassData())), ad = JSON.parse(JSON.stringify(DEF_ARP || arpData())), i, pats = [];
++    bd.on = false; bd.steps = 16; bd.base = []; bd.deg = []; for (i = 0; i < 16; i++) { bd.base.push(0); bd.deg.push(0); } bd.pat = "";
++    ad.on = false; ad.pre = "";
++    for (i = 0; i < 8; i++) pats.push(state.tracks.map(function () { return { steps: 16, base: euclid(16, 0), rot: 0 }; }));
++    return { v: 1, app: "Clave Circular " + FW, name: "__hist", names: null, bass: bd, arp: ad, bpm: 100, beats: 4, mode: "loop", cur: 0, song: [], patterns: pats,
++      tracks: TRACKS.map(function (t) { return { id: t.id, kit: "base", vol: 1, panv: 0, pitch: 0, dec: 1, rev: false, note: t.note, mute: false, sample: null }; }) };
++  }
++  function blankSlate() {
++    applyPreset(blankPreset()); ui.kitAll.value = "base";
++    DEF_BASS = JSON.parse(JSON.stringify(bassData())); DEF_ARP = JSON.parse(JSON.stringify(arpData()));
++    DEF_MIDI = { ch: ui.midiCh.value, vel: ui.midiVel.value, clock: ui.midiClock.checked, local: ui.midiLocal.checked };
++  }
++  function setCtl(id, v) {
+     var el = $(id); if (!el) return;
+     if (el.type === "checkbox") el.checked = !!v; else el.value = String(v);
+     el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true }));
+   }
++  function trackReset(c, only) {
++    var b = blankPreset();
++    c.tracks = c.tracks.map(function (t, i) {
++      if (only !== undefined && only !== i) return t;
++      var n = b.tracks[i]; n.note = t.note; if (only !== undefined) n.mute = t.mute; return n;
++    });
++    return c;
++  }
++  var RESETS = {
++    transport: function () { setCtl("bpm", 100); setCtl("beats", 4); setCtl("vol", 80); setCtl("kitAll", "base"); ui.scene.value = ""; },
++    arreglo: function () { var c = capturePreset("__hist"), b = blankPreset(); c.patterns = b.patterns; c.song = []; c.mode = "loop"; c.names = null; c.cur = 0; applyPreset(c); },
++    pistas: function () { applyPreset(trackReset(capturePreset("__hist"))); },
++    editar: function () { var n = TRACKS[state.sel] ? TRACKS[state.sel].note : 36; setCtl("steps", 16); setCtl("pulses", 0); setCtl("rot", 0); setCtl("note", n); $("clear").click(); },
++    sonido: function () { applyPreset(trackReset(capturePreset("__hist"), state.sel)); },
++    bajo: function () { setBass(blankPreset().bass); allNotesOff(); renderBassGrid(); },
++    arpegio: function () { setArp(blankPreset().arp); allNotesOff(); },
++    teoria: function () { setCtl("bCircle", "chrom"); setCtl("tMode", "eq"); },
++    audio: function () { setCtl("audSplit", false); setCtl("audOut", ""); },
++    midi: function () { setCtl("midiCh", DEF_MIDI.ch); setCtl("midiVel", DEF_MIDI.vel); setCtl("midiClock", DEF_MIDI.clock); setCtl("midiLocal", DEF_MIDI.local); }
++  };
++  /* ---------- Generativo, modulación y MIDI por pista (VA {{N}}) ---------- */
+   var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
+   function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
+   for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
+@@ -3757,6 +3861,8 @@
+   var LFO_SHAPES = [["sin", "Seno"], ["tri", "Triángulo"], ["saw", "Sierra"], ["isaw", "Sierra inversa"], ["sqr", "Cuadrada"], ["rnd", "Aleatoria escalonada"]];
+   var LFO_PERS = [[0.25, "¼ de vuelta"], [0.5, "½ vuelta"], [1, "1 vuelta"], [2, "2 vueltas"], [4, "4 vueltas"], [8, "8 vueltas"], [16, "16 vueltas"]];
+   function genStatus(msg) { var e = $("genStatus"); if (e) e.textContent = msg || ""; }
++  var EL2_CC = { 7: "Level", 10: "Pan", 71: "Resonance", 72: "EG Release", 73: "EG Attack", 74: "Cutoff", 80: "Osc Pitch", 81: "Osc Glide", 82: "Osc Edit", 83: "Filter EG Int", 85: "Mod Depth", 86: "Mod Speed", 87: "Insert FX Edit", 102: "TouchPad X", 103: "TouchPad Y", 104: "IFX On", 105: "MFX Send", 106: "TouchPad On/Off" };
++  function ccLabel(n) { return EL2_CC[n] ? n + " · " + EL2_CC[n] : String(n); }
+   function genData() {
+     return {
+       evo: { on: gen.evo.on, n: gen.evo.n, amt: gen.evo.amt, scope: gen.evo.scope, anchor: gen.evo.anchor },
+@@ -4003,8 +4109,8 @@
+       allNotesOff();
+       if (P.gen != null) { var chEl = $("midiCh"); if (chEl) { chEl.value = String(P.gen); chEl.dispatchEvent(new Event("input", { bubbles: true })); chEl.dispatchEvent(new Event("change", { bubbles: true })); } }
+       state.tracks.forEach(function (t, i) { t.ch = P.tch(i); if (P.note) t.note = P.note(i); });
+-      if (P.bCh != null) gSetCtl("bCh", P.bCh);
+-      if (P.aCh != null) gSetCtl("aCh", P.aCh);
++      if (P.bCh != null) setCtl("bCh", P.bCh);
++      if (P.aCh != null) setCtl("aCh", P.aCh);
+       midi.clockOut = true; ui.midiClock.checked = true;
+       if (found) { midi.out = found; ui.midiOut.value = found.id; }
+       resyncClock(); syncEditor(); renderTracks();
+@@ -4014,14 +4120,61 @@
+       var el = $(x[0]); if (el) el.addEventListener("click", function () { applyProfile(x[1]); });
+     });
+   })();
+-  if (typeof RESETS !== "undefined") {
+   RESETS.gen = function () {
+     state.tracks.forEach(function (t) { t.prob = 100; t.mut = null; });
+     var g = genData(); g.evo = null; g.lfo = gen.lfo.map(function (l) { return { on: l.on, ch: l.ch, cc: l.cc, sh: l.sh, per: l.per, min: l.min, max: l.max }; });
+     setGen(g); syncEditor(); genStatus("");
+   };
+   RESETS.mod = function () { var g = genData(); g.lfo = null; setGen(g); };
+-  }
++
++  function addResetButtons() {
++    Array.prototype.forEach.call(document.querySelectorAll(".block"), function (b) {
++      var id = b.getAttribute("data-id"), h = b.querySelector(".bh"), tg = h ? h.querySelector(".tg") : null;
++      if (!RESETS[id] || !h) return;
++      var bt = document.createElement("button"); bt.type = "button"; bt.className = "rs"; bt.textContent = "↺";
++      bt.setAttribute("aria-label", tr("Reiniciar este módulo a cero")); bt.title = tr("Reiniciar este módulo a cero");
++      bt.addEventListener("click", function () { histCommit(); RESETS[id](); histCommit(); });
++      h.insertBefore(bt, tg);
++    });
++  }
++  var HIST = [], HPOS = -1, hKeyLast = "", hPend = "", hReady = false;
++  function hCap() {
++    try { var o = capturePreset("__hist"), full = JSON.stringify(o); o.cur = 0; return { full: full, key: JSON.stringify(o) }; } catch (e) { return null; }
++  }
++  function histUI() {
++    var h = hCap(), pend = !!h && h.key !== hKeyLast;
++    $("undoBtn").disabled = !(HPOS > 0 || (pend && HPOS >= 0));
++    $("redoBtn").disabled = !(HPOS < HIST.length - 1) || pend;
++  }
++  function histCommit() {
++    var h = hCap(); if (!h || h.key === hKeyLast) return;
++    HIST = HIST.slice(0, HPOS + 1); HIST.push(h.full); if (HIST.length > 100) HIST.shift();
++    HPOS = HIST.length - 1; hKeyLast = h.key; histUI();
++  }
++  function histGo(d) {
++    histCommit();
++    var np = HPOS + d; if (np < 0 || np >= HIST.length) return;
++    HPOS = np; applyPreset(JSON.parse(HIST[HPOS]));
++    var h = hCap(); if (h) { HIST[HPOS] = h.full; hKeyLast = h.key; hPend = ""; }
++    histUI();
++  }
++  setInterval(function () {
++    if (!hReady) return;
++    var h = hCap(); if (!h) return;
++    if (h.key === hKeyLast) hPend = ""; else if (h.key === hPend) { histCommit(); hPend = ""; } else hPend = h.key;
++    histUI();
++  }, 300);
++  $("undoBtn").addEventListener("click", function () { histGo(-1); });
++  $("redoBtn").addEventListener("click", function () { histGo(1); });
++  document.addEventListener("keydown", function (e) {
++    if (!(e.ctrlKey || e.metaKey)) return;
++    var t = e.target, tag = t && t.tagName ? t.tagName : "", k = (e.key || "").toLowerCase();
++    if (tag === "TEXTAREA" || (tag === "INPUT" && (t.type === "text" || t.type === "number"))) return;
++    if (k === "z" && !e.shiftKey) { e.preventDefault(); histGo(-1); }
++    else if ((k === "z" && e.shiftKey) || k === "y") { e.preventDefault(); histGo(1); }
++  });
++  $("modeSw").addEventListener("click", function () { applySkin(layout.skin === "dark" ? "vanilla" : "dark"); saveLayout(); });
++  $("manualBtn").addEventListener("click", function () { window.open("manual/", "_blank", "noopener"); });
+ 
+   /* ---------- Biblioteca de patterns ---------- */
+   var LKEY = PKEY + ".lib", memLib = [];
+@@ -4116,18 +4269,19 @@
+ 
+   /* ---------- Inicio ---------- */
+   i18nStatic(); $("langSel").value = LANG; showMon();
+-  ui.scene.value = "rumba";
+-  loadScene("rumba");
++  blankSlate();
+   setupPanels();
++  addResetButtons();
++  (function () { var bo = document.createElement("option"); bo.value = ""; bo.textContent = tr("— Pizarra en blanco —"); ui.scene.insertBefore(bo, ui.scene.firstChild); ui.scene.value = ""; })();
+   renderPacks(); renderKitAll(); renderPList();
+   loadLayout();
+-  setView(lsGet("cc.view") === "bass" ? "bass" : "perc");
++  setView(lsGet("ccva.view") === "bass" ? "bass" : "perc");
+   idbOpen().then(idbLoad).then(function (items) {
+     if (items.length) {
+       addToLib(items.map(function (i) { return { pack: i.pack, name: i.name, blob: i.blob }; }), false);
+       setPackStatus(tr("{0} muestra(s) recuperadas de este navegador.", items.length), "ok");
+     }
+-  }).catch(function () { /* sin IndexedDB */ }).then(restoreSession);
++  }).catch(function () { /* sin IndexedDB */ }).then(restoreSession).then(function () { histCommit(); hReady = true; histUI(); });
+   setPlayUI();
+   updateSongStatus();
+   resize();
