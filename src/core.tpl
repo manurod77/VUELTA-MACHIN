@@ -225,6 +225,16 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 @media (max-width: 640px) { .dock .strip { font-size: 11px; letter-spacing: 0.02em; padding: 4px 8px; } .dock { gap: 6px; } }
 details.adv > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 0; min-height: 32px; }
 details.adv[open] > summary { padding-bottom: 10px; }
+
+/* ---- Módulos agrupados por color según su función ---- */
+.block[data-id="transport"], .block[data-id="arreglo"] { --g: #d9890b; }
+.block[data-id="pistas"], .block[data-id="editar"], .block[data-id="gen"], .block[data-id="mod"] { --g: #0e9fbd; }
+.block[data-id="sonido"], .block[data-id="packs"] { --g: #d6336c; }
+.block[data-id="bajo"], .block[data-id="arpegio"], .block[data-id="teoria"] { --g: #8b5cf6; }
+.block[data-id="midi"], .block[data-id="audio"], .block[data-id="exportar"] { --g: #1fa971; }
+.block[data-id="presets"], .block[data-id="biblioteca"] { --g: #6b82a8; }
+.block { border-left: 4px solid var(--g, var(--line)); }
+.block .label { color: color-mix(in srgb, var(--g, var(--muted)) 78%, var(--muted)); }
 </style>
 
 <div class="wrap">

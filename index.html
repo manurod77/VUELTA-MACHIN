@@ -225,6 +225,16 @@ html[data-skin="eclipse"] .tg, html[data-skin="ruinas"] .tg { color: var(--fg); 
 @media (max-width: 640px) { .dock .strip { font-size: 11px; letter-spacing: 0.02em; padding: 4px 8px; } .dock { gap: 6px; } }
 details.adv > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 0; min-height: 32px; }
 details.adv[open] > summary { padding-bottom: 10px; }
+
+/* ---- Módulos agrupados por color según su función ---- */
+.block[data-id="transport"], .block[data-id="arreglo"] { --g: #d9890b; }
+.block[data-id="pistas"], .block[data-id="editar"], .block[data-id="gen"], .block[data-id="mod"] { --g: #0e9fbd; }
+.block[data-id="sonido"], .block[data-id="packs"] { --g: #d6336c; }
+.block[data-id="bajo"], .block[data-id="arpegio"], .block[data-id="teoria"] { --g: #8b5cf6; }
+.block[data-id="midi"], .block[data-id="audio"], .block[data-id="exportar"] { --g: #1fa971; }
+.block[data-id="presets"], .block[data-id="biblioteca"] { --g: #6b82a8; }
+.block { border-left: 4px solid var(--g, var(--line)); }
+.block .label { color: color-mix(in srgb, var(--g, var(--muted)) 78%, var(--muted)); }
 </style>
 
 <div class="wrap">
@@ -233,10 +243,10 @@ details.adv[open] > summary { padding-bottom: 10px; }
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.22.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware 0.23.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW 0.22.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW 0.23.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -509,7 +519,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.22.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular FW 0.23.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -2186,7 +2196,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "0.22.0";
+  var FW = "0.23.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2518,7 +2528,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW 0.22.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW 0.23.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;

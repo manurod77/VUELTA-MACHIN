@@ -262,6 +262,16 @@ html[data-skin="dark"] body { background: radial-gradient(ellipse at 50% -10%, #
 @media (max-width: 640px) { .dock .strip { font-size: 11px; letter-spacing: 0.02em; padding: 4px 8px; } .dock { gap: 6px; } }
 details.adv > summary { cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 0; min-height: 32px; }
 details.adv[open] > summary { padding-bottom: 10px; }
+
+/* ---- Módulos agrupados por color según su función ---- */
+.block[data-id="transport"], .block[data-id="arreglo"] { --g: #d9890b; }
+.block[data-id="pistas"], .block[data-id="editar"], .block[data-id="gen"], .block[data-id="mod"] { --g: #0e9fbd; }
+.block[data-id="sonido"], .block[data-id="packs"] { --g: #d6336c; }
+.block[data-id="bajo"], .block[data-id="arpegio"], .block[data-id="teoria"] { --g: #8b5cf6; }
+.block[data-id="midi"], .block[data-id="audio"], .block[data-id="exportar"] { --g: #1fa971; }
+.block[data-id="presets"], .block[data-id="biblioteca"] { --g: #6b82a8; }
+.block { border-left: 4px solid var(--g, var(--line)); }
+.block .label { color: color-mix(in srgb, var(--g, var(--muted)) 78%, var(--muted)); }
 </style>
 
 <div class="undo-fab" role="group" aria-label="Deshacer y rehacer"><button id="undoBtn" type="button" disabled>↶ Deshacer</button><button id="redoBtn" type="button" disabled>↷ Rehacer</button></div>
@@ -271,10 +281,10 @@ details.adv[open] > summary { padding-bottom: 10px; }
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Vanilla</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.7.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.8.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.7.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.8.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="vanilla">Vanilla</option><option value="dark">Darth</option><option value="base">Base</option></select></label>
@@ -549,7 +559,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.7.0</span><span>T_T</span>
+    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.8.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -1055,7 +1065,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
       if (LANGS.indexOf(nl) >= 0) LANG = nl;
     }
   } catch (e) { /* sin almacenamiento */ }
-  /* VA 0.7.0: generativo, modulación, MIDI por pista */
+  /* VA 0.8.0: generativo, modulación, MIDI por pista */
   [
   ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
   ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
@@ -2253,7 +2263,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "VA 0.7.0";
+  var FW = "VA 0.8.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2585,7 +2595,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW VA 0.7.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW VA 0.8.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -3864,7 +3874,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
     audio: function () { setCtl("audSplit", false); setCtl("audOut", ""); },
     midi: function () { setCtl("midiCh", DEF_MIDI.ch); setCtl("midiVel", DEF_MIDI.vel); setCtl("midiClock", DEF_MIDI.clock); setCtl("midiLocal", DEF_MIDI.local); }
   };
-  /* ---------- Generativo, modulación y MIDI por pista (VA 0.7.0) ---------- */
+  /* ---------- Generativo, modulación y MIDI por pista (VA 0.8.0) ---------- */
   var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
   function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
   for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
