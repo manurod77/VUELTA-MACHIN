@@ -244,10 +244,10 @@ details.adv[open] > summary { padding-bottom: 10px; }
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Music 4 Machines</div></div>
     </div>
-    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.12.0</span></div>
+    <div class="model"><h1>Clave Circular · Dark Empaths</h1><span class="fw">Firmware DE 0.13.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.12.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW DE 0.13.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="eclipse">Dark Empaths · Eclipse</option><option value="ruinas">Dark Empaths · Ruinas</option><option value="base">Base</option></select></label>
@@ -512,6 +512,8 @@ details.adv[open] > summary { padding-bottom: 10px; }
         <div class="row wrap-row"><button id="esProfile" type="button">Perfil Electribe Sampler</button></div>
         <p class="note">Perfil Electribe Sampler (propuesta): busca una salida llamada «Electribe», «ESX» o «Korg», asigna los canales 1 a 8 a las ocho pistas (según Korg, la parte n recibe por el canal n) y activa el reloj. En el equipo, el modo de reloj debe ser Ext.MIDI (cable MIDI), Ext.USB (cable USB) o Auto. Pone la nota de cada pista en 60 (C4), la nota por defecto del equipo.</p>
         <div class="row wrap-row"><button id="r3Profile" type="button">Perfil Korg R3</button></div>
+        <div class="row wrap-row"><button id="abProfile" type="button">Perfil Ableton Live</button></div>
+        <p class="note">Perfil Ableton Live (propuesta): busca un puerto MIDI virtual (loopMIDI, IAC o con «Ableton» en el nombre), manda la percusión por el canal 10, el bajo por el canal 1 y el arpegio por el canal 2, y activa el reloj. En Live, activa Track y Sync en las preferencias MIDI para ese puerto, y en cada pista MIDI elige «MIDI From» con el canal correspondiente. Las notas de la percusión siguen las de cada pista (la rejilla 36–51 del Drum Rack).</p>
         <p class="note">Perfil Korg R3 (propuesta): busca una salida llamada «R3» o «Korg», pone todas las pistas, el bajo y el arpegio en el canal 1 y activa el reloj. En la R3, pon Clock en «Ext MIDI» (o «Auto»), como indica su manual, y ajusta su canal MIDI a 1. El manual consultado no da el canal por defecto: compruébalo en el equipo.</p>
         <p class="note">Notas por defecto: mapa de batería General MIDI (bombo 36, caja 38, clap 39, hi-hat 42 y 46, campana 56, conga 63, clave 75), canal 10. Para Ableton Live: en Windows crea un puerto con loopMIDI; en macOS activa el bus IAC. Luego, en Preferencias → Link, Tempo &amp; MIDI, activa Track en ese puerto (y Sync si usas el reloj).</p>
       </div>
@@ -520,7 +522,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular · DE FW 0.12.0</span><span>T_T</span>
+    <span>Dark Empaths · Music 4 Machines</span><span>Clave Circular · DE FW 0.13.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -1144,6 +1146,13 @@ details.adv[open] > summary { padding-bottom: 10px; }
     ["Vaciar todo", "Clear everything", "Limpar tudo", "全部清空", "Очистить всё"],
     ["¿Vaciar todo y empezar en blanco? Se pierde lo que no hayas guardado.", "Clear everything and start blank? Anything you have not saved is lost.", "Limpar tudo e começar em branco? O que você não salvou será perdido.", "清空全部并从空白开始？未保存的内容将丢失。", "Очистить всё и начать с чистого листа? Несохранённое будет потеряно."],
     ["— Pizarra en blanco —", "— Blank slate —", "— Lousa em branco —", "— 空白画布 —", "— Чистый лист —"]
+  ].forEach(R);
+
+  [
+    ["Perfil Ableton Live", "Ableton Live profile", "Perfil Ableton Live", "Ableton Live 配置", "Профиль Ableton Live"],
+    ["Perfil Ableton Live (propuesta): busca un puerto MIDI virtual (loopMIDI, IAC o con «Ableton» en el nombre), manda la percusión por el canal 10, el bajo por el canal 1 y el arpegio por el canal 2, y activa el reloj. En Live, activa Track y Sync en las preferencias MIDI para ese puerto, y en cada pista MIDI elige «MIDI From» con el canal correspondiente. Las notas de la percusión siguen las de cada pista (la rejilla 36–51 del Drum Rack).", "Ableton Live profile (proposal): looks for a virtual MIDI port (loopMIDI, IAC or one with “Ableton” in its name), sends drums on channel 10, bass on channel 1 and the arpeggio on channel 2, and turns the clock on. In Live, turn on Track and Sync in the MIDI preferences for that port, and on each MIDI track choose “MIDI From” with the matching channel. Drum notes follow each track’s note (the 36–51 Drum Rack grid).", "Perfil Ableton Live (proposta): procura uma porta MIDI virtual (loopMIDI, IAC ou com «Ableton» no nome), envia a percussão no canal 10, o baixo no canal 1 e o arpejo no canal 2, e liga o relógio. No Live, ative Track e Sync nas preferências MIDI dessa porta e, em cada pista MIDI, escolha «MIDI From» com o canal correspondente. As notas da percussão seguem as de cada pista (a grade 36–51 do Drum Rack).", "Ableton Live 配置（建议）：查找虚拟 MIDI 端口（loopMIDI、IAC 或名称含“Ableton”），鼓走通道 10，贝斯走通道 1，琶音走通道 2，并开启时钟。在 Live 的 MIDI 偏好设置中为该端口开启 Track 和 Sync，并在每条 MIDI 轨道的“MIDI From”中选择对应通道。鼓的音符沿用各音轨的音符（Drum Rack 的 36–51 网格）。", "Профиль Ableton Live (предложение): ищет виртуальный MIDI-порт (loopMIDI, IAC или с «Ableton» в названии), отправляет ударные на канал 10, бас на канал 1, арпеджио на канал 2 и включает синхронизацию. В Live включите Track и Sync в настройках MIDI для этого порта, а на каждой MIDI-дорожке выберите «MIDI From» с нужным каналом. Ноты ударных берутся с дорожек (сетка Drum Rack 36–51)."],
+    ["Perfil Ableton Live aplicado y salida «{0}» elegida.", "Ableton Live profile applied and output “{0}” chosen.", "Perfil Ableton Live aplicado e saída «{0}» escolhida.", "已应用 Ableton Live 配置并选择输出“{0}”。", "Профиль Ableton Live применён, выбран выход «{0}»."],
+    ["Perfil Ableton Live aplicado. No encontré un puerto MIDI virtual: crea uno (loopMIDI en Windows, IAC en Mac) y elígelo en Salida.", "Ableton Live profile applied. I found no virtual MIDI port: create one (loopMIDI on Windows, IAC on Mac) and choose it in Output.", "Perfil Ableton Live aplicado. Não encontrei uma porta MIDI virtual: crie uma (loopMIDI no Windows, IAC no Mac) e escolha-a em Saída.", "已应用 Ableton Live 配置。未找到虚拟 MIDI 端口：请创建一个（Windows 用 loopMIDI，Mac 用 IAC）并在“输出”中选择。", "Профиль Ableton Live применён. Виртуальный MIDI-порт не найден: создайте его (loopMIDI в Windows, IAC в Mac) и выберите в «Выход»."]
   ].forEach(R);
 
   function tr(k) {
@@ -2220,7 +2229,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "DE 0.12.0";
+  var FW = "DE 0.13.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2552,7 +2561,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW DE 0.12.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW DE 0.13.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -4039,6 +4048,8 @@ details.adv[open] > summary { padding-bottom: 10px; }
         ok: "Perfil Electribe ESX-1 aplicado y salida «{0}» elegida.", no: "Perfil Electribe ESX-1 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." },
       es: { re: /electribe|esx|korg/i, gen: null, tch: function (i) { return i; }, note: function () { return 60; }, bCh: null, aCh: null,
         ok: "Perfil Electribe Sampler aplicado y salida «{0}» elegida.", no: "Perfil Electribe Sampler aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." },
+      ab: { re: /loopmidi|ableton|iac|virtual/i, gen: 9, tch: function () { return null; }, note: null, bCh: 0, aCh: 1,
+        ok: "Perfil Ableton Live aplicado y salida «{0}» elegida.", no: "Perfil Ableton Live aplicado. No encontré un puerto MIDI virtual: crea uno (loopMIDI en Windows, IAC en Mac) y elígelo en Salida." },
       r3: { re: /r3|korg/i, gen: 0, tch: function () { return null; }, note: null, bCh: 0, aCh: 0,
         ok: "Perfil Korg R3 aplicado y salida «{0}» elegida.", no: "Perfil Korg R3 aplicado. No encontré una salida con ese nombre: conecta el MIDI y elígela en Salida." }
     };
@@ -4055,7 +4066,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
       resyncClock(); syncEditor(); renderTracks();
       setStatus(found ? tr(P.ok, found.name) : tr(P.no), found ? "ok" : "");
     }
-    [["fmProfile", "fm"], ["esxProfile", "esx"], ["esProfile", "es"], ["r3Profile", "r3"]].forEach(function (x) {
+    [["fmProfile", "fm"], ["esxProfile", "esx"], ["esProfile", "es"], ["r3Profile", "r3"], ["abProfile", "ab"]].forEach(function (x) {
       var el = $(x[0]); if (el) el.addEventListener("click", function () { applyProfile(x[1]); });
     });
   })();
