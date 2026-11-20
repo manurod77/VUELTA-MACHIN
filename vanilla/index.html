@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Vanilla · Clave Circular</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Michroma&family=IBM+Plex+Sans:wght@400;500;600&family=Cinzel:wght@400;500&display=swap">
@@ -281,10 +282,10 @@ details.adv[open] > summary { padding-bottom: 10px; }
       <svg class="pisces" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
       <div><div class="maker">Dark Empaths</div><div class="sub">Vanilla</div></div>
     </div>
-    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.8.0</span></div>
+    <div class="model"><h1>Clave Circular</h1><span class="fw">Firmware VA 0.9.0</span></div>
   </header>
   <div class="tline" aria-hidden="true"></div>
-  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.8.0</div>
+  <div class="strip" id="strip" role="status" aria-live="off">FW VA 0.9.0</div>
   <div class="tools">
     <label class="tool" for="skinSel"><span>Skin</span>
       <select id="skinSel"><option value="vanilla">Vanilla</option><option value="dark">Darth</option><option value="base">Base</option></select></label>
@@ -559,7 +560,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   <footer class="foot">
     <svg  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 3.5C11.5 8 11.5 16 6 20.5"/><path d="M18 3.5C12.5 8 12.5 16 18 20.5"/><path d="M4 12h16"/></svg>
-    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.8.0</span><span>T_T</span>
+    <span>Dark Empaths · Vanilla</span><span>Clave Circular · Vanilla FW VA 0.9.0</span><span>T_T</span>
   </footer>
 </div>
 
@@ -1065,7 +1066,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
       if (LANGS.indexOf(nl) >= 0) LANG = nl;
     }
   } catch (e) { /* sin almacenamiento */ }
-  /* VA 0.8.0: generativo, modulación, MIDI por pista */
+  /* VA 0.9.0: generativo, modulación, MIDI por pista */
   [
   ["Generativo", "Generative", "Generativo", "生成", "Генератив"],
   ["Pista seleccionada", "Selected track", "Pista selecionada", "所选轨道", "Выбранная дорожка"],
@@ -1188,6 +1189,12 @@ details.adv[open] > summary { padding-bottom: 10px; }
   ].forEach(R);
 
   [["Ajustes de pantalla", "Display settings", "Ajustes de tela", "屏幕设置", "Настройки экрана"]].forEach(R);
+
+  [
+    ["Vaciar todo", "Clear everything", "Limpar tudo", "全部清空", "Очистить всё"],
+    ["¿Vaciar todo y empezar en blanco? Se pierde lo que no hayas guardado.", "Clear everything and start blank? Anything you have not saved is lost.", "Limpar tudo e começar em branco? O que você não salvou será perdido.", "清空全部并从空白开始？未保存的内容将丢失。", "Очистить всё и начать с чистого листа? Несохранённое будет потеряно."],
+    ["— Pizarra en blanco —", "— Blank slate —", "— Lousa em branco —", "— 空白画布 —", "— Чистый лист —"]
+  ].forEach(R);
 
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
@@ -2263,7 +2270,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   /* ---------- Sonido por pista ---------- */
   /* ---------- Biblioteca de muestras y packs ---------- */
-  var FW = "VA 0.8.0";
+  var FW = "VA 0.9.0";
   var lib = [], libByKey = {};
   var AUDIO_RE = /\.(wav|wave|mp3|ogg|oga|flac|aif|aiff|m4a|aac|mpeg|mpga)$/i;
   var idb = null;
@@ -2595,7 +2602,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   function draw() {
     requestAnimationFrame(draw);
-    var st = "FW VA 0.8.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
+    var st = "FW VA 0.9.0 │ CLK " + (state.sync === "ext" ? "EXT" : "INT") + " │ " + state.bpm + " BPM │ MIDI " +
       (midi.out ? (midi.out.name || "OUT") : "OFF") + " │ PAT " + LETTERS[state.cur] + " │ " + (state.playing ? "RUN" : "STOP");
     if (st !== lastStrip) { lastStrip = st; $("strip").textContent = st; }
     if (!W) return;
@@ -3835,20 +3842,6 @@ details.adv[open] > summary { padding-bottom: 10px; }
   });
 
   /* ---------- Pizarra en blanco, reinicio por módulo, deshacer y rehacer, modo Vanilla/Dark ---------- */
-  var DEF_BASS = null, DEF_ARP = null, DEF_MIDI = null;
-  function blankPreset() {
-    var bd = JSON.parse(JSON.stringify(DEF_BASS || bassData())), ad = JSON.parse(JSON.stringify(DEF_ARP || arpData())), i, pats = [];
-    bd.on = false; bd.steps = 16; bd.base = []; bd.deg = []; for (i = 0; i < 16; i++) { bd.base.push(0); bd.deg.push(0); } bd.pat = "";
-    ad.on = false; ad.pre = "";
-    for (i = 0; i < 8; i++) pats.push(state.tracks.map(function () { return { steps: 16, base: euclid(16, 0), rot: 0 }; }));
-    return { v: 1, app: "Clave Circular " + FW, name: "__hist", names: null, bass: bd, arp: ad, bpm: 100, beats: 4, mode: "loop", cur: 0, song: [], patterns: pats,
-      tracks: TRACKS.map(function (t) { return { id: t.id, kit: "base", vol: 1, panv: 0, pitch: 0, dec: 1, rev: false, note: t.note, mute: false, sample: null }; }) };
-  }
-  function blankSlate() {
-    applyPreset(blankPreset()); ui.kitAll.value = "base";
-    DEF_BASS = JSON.parse(JSON.stringify(bassData())); DEF_ARP = JSON.parse(JSON.stringify(arpData()));
-    DEF_MIDI = { ch: ui.midiCh.value, vel: ui.midiVel.value, clock: ui.midiClock.checked, local: ui.midiLocal.checked };
-  }
   function setCtl(id, v) {
     var el = $(id); if (!el) return;
     if (el.type === "checkbox") el.checked = !!v; else el.value = String(v);
@@ -3874,7 +3867,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
     audio: function () { setCtl("audSplit", false); setCtl("audOut", ""); },
     midi: function () { setCtl("midiCh", DEF_MIDI.ch); setCtl("midiVel", DEF_MIDI.vel); setCtl("midiClock", DEF_MIDI.clock); setCtl("midiLocal", DEF_MIDI.local); }
   };
-  /* ---------- Generativo, modulación y MIDI por pista (VA 0.8.0) ---------- */
+  /* ---------- Generativo, modulación y MIDI por pista (VA 0.9.0) ---------- */
   var gen = { evo: { on: false, n: 2, amt: 2, scope: "all", anchor: true }, lfo: [], tn: null };
   function defLfo() { return { on: false, ch: 0, cc: 74, sh: "sin", per: 1, min: 0, max: 127, last: -1 }; }
   for (var gi = 0; gi < 3; gi++) gen.lfo.push(defLfo());
@@ -4197,6 +4190,22 @@ details.adv[open] > summary { padding-bottom: 10px; }
   $("modeSw").addEventListener("click", function () { applySkin(layout.skin === "dark" ? "vanilla" : "dark"); saveLayout(); });
   $("manualBtn").addEventListener("click", function () { window.open("manual/", "_blank", "noopener"); });
 
+  /* ---------- Pizarra en blanco (arranque vacío y botón «Vaciar todo») ---------- */
+  var DEF_BASS = null, DEF_ARP = null, DEF_MIDI = null;
+  function blankPreset() {
+    var bd = JSON.parse(JSON.stringify(DEF_BASS || bassData())), ad = JSON.parse(JSON.stringify(DEF_ARP || arpData())), i, pats = [];
+    bd.on = false; bd.steps = 16; bd.base = []; bd.deg = []; for (i = 0; i < 16; i++) { bd.base.push(0); bd.deg.push(0); } bd.pat = "";
+    ad.on = false; ad.pre = "";
+    for (i = 0; i < 8; i++) pats.push(state.tracks.map(function () { return { steps: 16, base: euclid(16, 0), rot: 0 }; }));
+    return { v: 1, app: "Clave Circular " + FW, name: "__hist", names: null, bass: bd, arp: ad, bpm: 100, beats: 4, mode: "loop", cur: 0, song: [], patterns: pats,
+      tracks: TRACKS.map(function (t) { return { id: t.id, kit: "base", vol: 1, panv: 0, pitch: 0, dec: 1, rev: false, note: t.note, mute: false, sample: null }; }) };
+  }
+  function blankSlate() {
+    applyPreset(blankPreset()); ui.kitAll.value = "base";
+    DEF_BASS = JSON.parse(JSON.stringify(bassData())); DEF_ARP = JSON.parse(JSON.stringify(arpData()));
+    DEF_MIDI = { ch: ui.midiCh.value, vel: ui.midiVel.value, clock: ui.midiClock.checked, local: ui.midiLocal.checked };
+  }
+
   /* ---------- Biblioteca de patterns ---------- */
   var LKEY = PKEY + ".lib", memLib = [];
   function readLib() { try { var r = localStorage.getItem(LKEY); var a = r ? JSON.parse(r) : memLib; return Array.isArray(a) ? a : []; } catch (e) { return memLib; } }
@@ -4315,6 +4324,18 @@ details.adv[open] > summary { padding-bottom: 10px; }
       var sm = document.createElement("summary"); sm.textContent = "Ajustes de pantalla";
       tools.parentNode.insertBefore(det, tools); det.appendChild(sm); det.appendChild(tools);
     }
+  })();
+
+  /* ---------- Botón «Vaciar todo» ---------- */
+  (function () {
+    var play = $("play"); if (!play || !play.parentNode) return;
+    var b = document.createElement("button"); b.type = "button"; b.id = "blankAll"; b.textContent = "Vaciar todo";
+    play.parentNode.appendChild(b);
+    b.addEventListener("click", function () {
+      if (!window.confirm(tr("¿Vaciar todo y empezar en blanco? Se pierde lo que no hayas guardado."))) return;
+      if (play.getAttribute("aria-pressed") === "true") play.click();
+      allNotesOff(); blankSlate(); ui.scene.value = ""; syncAll();
+    });
   })();
 
   /* ---------- Inicio ---------- */

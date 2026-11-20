@@ -1102,6 +1102,12 @@ details.adv[open] > summary { padding-bottom: 10px; }
 
   [["Ajustes de pantalla", "Display settings", "Ajustes de tela", "屏幕设置", "Настройки экрана"]].forEach(R);
 
+  [
+    ["Vaciar todo", "Clear everything", "Limpar tudo", "全部清空", "Очистить всё"],
+    ["¿Vaciar todo y empezar en blanco? Se pierde lo que no hayas guardado.", "Clear everything and start blank? Anything you have not saved is lost.", "Limpar tudo e começar em branco? O que você não salvou será perdido.", "清空全部并从空白开始？未保存的内容将丢失。", "Очистить всё и начать с чистого листа? Несохранённое будет потеряно."],
+    ["— Pizarra en blanco —", "— Blank slate —", "— Lousa em branco —", "— 空白画布 —", "— Чистый лист —"]
+  ].forEach(R);
+
   function tr(k) {
     var d = I18N[LANG], s = (d && d[k] !== undefined) ? d[k] : k;
     for (var i = 1; i < arguments.length; i++) s = s.split("{" + (i - 1) + "}").join(String(arguments[i]));
@@ -2015,7 +2021,7 @@ details.adv[open] > summary { padding-bottom: 10px; }
   function syncAll() { renderTracks(); syncEditor(); syncTransport(); renderChips(); }
 
   ui.play.addEventListener("click", function () { state.playing ? stop() : start(); });
-  ui.scene.addEventListener("change", function () { loadScene(ui.scene.value); });
+  ui.scene.addEventListener("change", function () { if (ui.scene.value) loadScene(ui.scene.value); });
   ui.bpm.addEventListener("input", function () { state.bpm = +ui.bpm.value; ui.bpmO.textContent = state.bpm; reanchor(); });
   ui.beats.addEventListener("input", function () { reanchor(); state.beats = +ui.beats.value; ui.beatsO.textContent = state.beats; reanchor(); resyncClock(); });
   ui.vol.addEventListener("input", function () { state.vol = +ui.vol.value / 100; ui.volO.textContent = ui.vol.value; if (master) master.gain.value = state.vol; });
@@ -4044,6 +4050,22 @@ details.adv[open] > summary { padding-bottom: 10px; }
   RESETS.mod = function () { var g = genData(); g.lfo = null; setGen(g); };
   }
 
+  /* ---------- Pizarra en blanco (arranque vacío y botón «Vaciar todo») ---------- */
+  var DEF_BASS = null, DEF_ARP = null, DEF_MIDI = null;
+  function blankPreset() {
+    var bd = JSON.parse(JSON.stringify(DEF_BASS || bassData())), ad = JSON.parse(JSON.stringify(DEF_ARP || arpData())), i, pats = [];
+    bd.on = false; bd.steps = 16; bd.base = []; bd.deg = []; for (i = 0; i < 16; i++) { bd.base.push(0); bd.deg.push(0); } bd.pat = "";
+    ad.on = false; ad.pre = "";
+    for (i = 0; i < 8; i++) pats.push(state.tracks.map(function () { return { steps: 16, base: euclid(16, 0), rot: 0 }; }));
+    return { v: 1, app: "Clave Circular " + FW, name: "__hist", names: null, bass: bd, arp: ad, bpm: 100, beats: 4, mode: "loop", cur: 0, song: [], patterns: pats,
+      tracks: TRACKS.map(function (t) { return { id: t.id, kit: "base", vol: 1, panv: 0, pitch: 0, dec: 1, rev: false, note: t.note, mute: false, sample: null }; }) };
+  }
+  function blankSlate() {
+    applyPreset(blankPreset()); ui.kitAll.value = "base";
+    DEF_BASS = JSON.parse(JSON.stringify(bassData())); DEF_ARP = JSON.parse(JSON.stringify(arpData()));
+    DEF_MIDI = { ch: ui.midiCh.value, vel: ui.midiVel.value, clock: ui.midiClock.checked, local: ui.midiLocal.checked };
+  }
+
   /* ---------- Biblioteca de patterns ---------- */
   var LKEY = PKEY + ".lib", memLib = [];
   function readLib() { try { var r = localStorage.getItem(LKEY); var a = r ? JSON.parse(r) : memLib; return Array.isArray(a) ? a : []; } catch (e) { return memLib; } }
@@ -4164,11 +4186,23 @@ details.adv[open] > summary { padding-bottom: 10px; }
     }
   })();
 
+  /* ---------- Botón «Vaciar todo» ---------- */
+  (function () {
+    var play = $("play"); if (!play || !play.parentNode) return;
+    var b = document.createElement("button"); b.type = "button"; b.id = "blankAll"; b.textContent = "Vaciar todo";
+    play.parentNode.appendChild(b);
+    b.addEventListener("click", function () {
+      if (!window.confirm(tr("¿Vaciar todo y empezar en blanco? Se pierde lo que no hayas guardado."))) return;
+      if (play.getAttribute("aria-pressed") === "true") play.click();
+      allNotesOff(); blankSlate(); ui.scene.value = ""; syncAll();
+    });
+  })();
+
   /* ---------- Inicio ---------- */
   i18nStatic(); $("langSel").value = LANG; showMon();
-  ui.scene.value = "rumba";
-  loadScene("rumba");
+  blankSlate();
   setupPanels();
+  (function () { var bo = document.createElement("option"); bo.value = ""; bo.textContent = tr("— Pizarra en blanco —"); ui.scene.insertBefore(bo, ui.scene.firstChild); ui.scene.value = ""; })();
   renderPacks(); renderKitAll(); renderPList();
   loadLayout();
   setView(lsGet("cc.view") === "bass" ? "bass" : "perc");

@@ -14,6 +14,8 @@ for name, c in cfg.items():
         if r.returncode != 0:
             print("FALLA el parche de", name, "\n", r.stdout, r.stderr); ok = False; continue
     out = open(work, encoding="utf-8", newline="").read().replace("{{N}}", c["version"])
+    if "<meta charset" not in out[:2048]:
+        out = '<meta charset="utf-8">\n' + out   # sin esto, al abrir el archivo suelto algunos navegadores muestran mal los acentos
     dest = os.path.join(ROOT, c["out"])
     if "--check" in sys.argv:
         same = os.path.exists(dest) and open(dest, encoding="utf-8", newline="").read() == out
